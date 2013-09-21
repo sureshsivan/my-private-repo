@@ -1,11 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
 								http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>in.v8delta.template.myWebAppTmpl</groupId>
 	<artifactId>myWebAppTmpl</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<packaging>pom</packaging>
 	<name>My Web App Template</name>
 	<description>
@@ -13,6 +12,8 @@
   		Core app is a normal maven project and the app is divided into sub modules.
   		[This is for Personal Use]
   	</description>
+
+	<!-- DEVELOPERS -->
 	<developers>
 		<developer>
 			<id>suresh</id>
@@ -20,7 +21,29 @@
 			<email>suresh.sivanantham@gmail.com</email>
 		</developer>
 	</developers>
+
+	<!-- PROPERTIES -->
+	<properties>
+		<jspUtils.version>1.0</jspUtils.version>
+		<models.version>1.0</models.version>
+		<services.version>1.0</services.version>
+		<web.version>1.0</web.version>
+		<spring.version>3.0.5.RELEASE</spring.version>
+		<junit.version>4.11</junit.version>
+		<jdk.version>1.6</jdk.version>
+		<servlet.version>3.0.1</servlet.version>
+		<jsp.version>2.2</jsp.version>
+		<taglib.version>1.1.2</taglib.version>
+		<log4j.version>1.2.15</log4j.version>
+		<jstl.version>1.2</jstl.version>
+	</properties>
+
+	<!-- MODULES -->
 	<modules>
+		<module>services</module>
+		<module>models</module>
 		<module>jspUtils</module>
+		<module>web</module>
 	</modules>
+
 </project>

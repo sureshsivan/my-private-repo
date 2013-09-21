@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>in.v8delta.template.myWebAppTmpl</groupId>
+		<artifactId>myWebAppTmpl</artifactId>
+		<version>1.0</version>
+	</parent>
+	<groupId>in.v8delta.template.myWebAppTmpl.services</groupId>
+	<artifactId>services</artifactId>
+	<name>My Web App Template :: Service API for the web app</name>
+
+	<dependencies>
+		<!-- OWN DEPENDENCIES -->
+		<dependency>
+			<groupId>in.v8delta.template.myWebAppTmpl.models</groupId>
+			<artifactId>models</artifactId>
+			<version>${models.version}</version>
+		</dependency>
+	</dependencies>
+
+</project>

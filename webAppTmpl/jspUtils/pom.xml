@@ -1,25 +1,31 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-			xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
 								http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>in.v8delta.template.myWebAppTmpl</groupId>
 		<artifactId>myWebAppTmpl</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0</version>
 	</parent>
 	<groupId>in.v8delta.template.myWebAppTmpl.jspUtils</groupId>
 	<artifactId>jspUtils</artifactId>
-	<name>My Web App Template >>> JSP Custom Tag Utilities</name>
+	<name>My Web App Template :: JSP Custom Tag Utilities</name>
 	<description>
 	  	This is a Sub Module of ${project.parent.artifactId}.
 	  	Holds the custom tags used in the application
   	</description>
-	<developers>
-		<developer>
-			<id>suresh</id>
-			<name>Suresh Sivanantham</name>
-			<email>suresh.sivanantham@gmail.com</email>
-		</developer>
-	</developers>
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>${jsp.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 </project>
