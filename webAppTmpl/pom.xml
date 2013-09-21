@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
 								http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>in.v8delta.template.myWebApp</groupId>
-	<artifactId>myWebApp</artifactId>
+	<groupId>in.v8delta.template.myWebAppTmpl</groupId>
+	<artifactId>myWebAppTmpl</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>myWebApp</name>
+	<name>My Web App Template</name>
 	<description>
   		This is template which can be used to create a web app. 
   		Core app is a normal maven project and the app is divided into sub modules.
@@ -20,4 +20,7 @@
 			<email>suresh.sivanantham@gmail.com</email>
 		</developer>
 	</developers>
+	<modules>
+		<module>jspUtils</module>
+	</modules>
 </project>
