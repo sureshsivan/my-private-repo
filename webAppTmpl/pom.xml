@@ -24,6 +24,7 @@
 
 	<!-- PROPERTIES -->
 	<properties>
+		<core.version>1.0</core.version>
 		<jspUtils.version>1.0</jspUtils.version>
 		<models.version>1.0</models.version>
 		<services.version>1.0</services.version>
@@ -44,6 +45,7 @@
 		<module>models</module>
 		<module>jspUtils</module>
 		<module>web</module>
+		<module>core</module>
 	</modules>
 
 </project>
