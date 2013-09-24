@@ -1,5 +1,7 @@
 package in.v8delta.template.myWebAppTmpl.core.crypt;
 
+import in.v8delta.template.myWebAppTmpl.core.utils.AppConstants;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -65,6 +67,11 @@ public class BaseEncoder implements Encoder{
 			throw new RuntimeException(e.getLocalizedMessage(), e.getCause());
 		}
 		return digestor;
+	}
+	
+	public static void main(String[] args) throws Exception {
+		BaseEncoder b = new BaseEncoder(AppConstants.DEFAULT_HASH_ENCODING);
+		System.out.println(new String(b.encode("suresh")));
 	}
 	
 }
