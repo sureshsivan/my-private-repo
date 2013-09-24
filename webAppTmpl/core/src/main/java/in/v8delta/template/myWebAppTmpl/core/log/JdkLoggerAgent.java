@@ -44,93 +44,76 @@ public class JdkLoggerAgent implements LoggerAgent{
 	}
 
 	public boolean isInfoEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.logger.isLoggable(Level.INFO) ||
+				this.logger.isLoggable(Level.CONFIG);
 	}
 
 	public boolean isWarnEnabled() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		return this.logger.isLoggable(Level.WARNING); 
+		}
 
 	public boolean isErrorEnabled() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		return this.logger.isLoggable(Level.SEVERE); 
+		}
 
 	public boolean isFatalEnabled() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		return this.logger.isLoggable(Level.SEVERE); 
+		}
 
 	public String getLevel() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.logger.getLevel().getName();
 	}
 
 	public void setLevel(String level) {
-		// TODO Auto-generated method stub
-		
+		this.logger.setLevel(Level.parse(level));
 	}
 
 	public void trace(Object message) {
-		// TODO Auto-generated method stub
-		
+		this.logger.finer(message.toString());
 	}
 
 	public void trace(Object message, Throwable t) {
-		// TODO Auto-generated method stub
-		
+		this.logger.log(Level.FINER, message.toString(), t);
 	}
 
 	public void debug(Object message) {
-		// TODO Auto-generated method stub
-		
+		this.logger.fine(message.toString());
 	}
 
 	public void debug(Object message, Throwable t) {
-		// TODO Auto-generated method stub
-		
+		this.logger.log(Level.FINE, message.toString(), t);		
 	}
 
 	public void info(Object message) {
-		// TODO Auto-generated method stub
-		
+		this.logger.info(message.toString());		
 	}
 
 	public void info(Object message, Throwable t) {
-		// TODO Auto-generated method stub
-		
+		this.logger.log(Level.INFO, message.toString(), t);		
 	}
 
 	public void warn(Object message) {
-		// TODO Auto-generated method stub
-		
+		this.logger.warning(message.toString());		
 	}
 
 	public void warn(Object message, Throwable t) {
-		// TODO Auto-generated method stub
-		
+		this.logger.log(Level.WARNING, message.toString(), t);		
 	}
 
 	public void error(Object message) {
-		// TODO Auto-generated method stub
-		
+		this.logger.severe(message.toString());		
 	}
 
 	public void error(Object message, Throwable t) {
-		// TODO Auto-generated method stub
-		
+		this.logger.log(Level.SEVERE, message.toString(), t);		
 	}
 
 	public void fatal(Object message) {
-		// TODO Auto-generated method stub
-		
+		this.logger.severe(message.toString());		
 	}
 
 	public void fatal(Object message, Throwable t) {
-		// TODO Auto-generated method stub
-		
+		this.logger.log(Level.SEVERE, message.toString(), t);		
 	}
 	
 }
