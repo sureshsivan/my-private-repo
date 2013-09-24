@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 /**
  * Agent for JDK logger Implementation
  * 
- * Level is varing between application logger type and JDK Logger implementations
+ * Level is varying between application logger type and JDK Logger implementations
  * Below is the matching betweek them.
  * 
  * <pre>
