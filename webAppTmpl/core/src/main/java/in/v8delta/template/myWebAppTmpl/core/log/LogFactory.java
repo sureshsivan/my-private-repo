@@ -4,7 +4,6 @@ import in.v8delta.template.myWebAppTmpl.core.utils.AppConstants;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 

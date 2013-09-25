@@ -11,6 +11,7 @@ import in.v8delta.template.myWebAppTmpl.core.log.LoggerType;
  * @author v8-suresh
  *
  */
+@SuppressWarnings({"unused", "rawtypes"})
 public class LogUtil {
 
 	/**
@@ -18,7 +19,7 @@ public class LogUtil {
 	 * @param name
 	 * @return
 	 */
-	public static LoggerAgent getLog4JLoggerLogger(String name){
+	private static LoggerAgent getLog4JLogger(String name){
 		return LogFactory.getLogger(LoggerType.LOG_4_J_LOGGER, name);
 	}
 	
@@ -27,8 +28,8 @@ public class LogUtil {
 	 * @param name
 	 * @return
 	 */
-	public static LoggerAgent getLog4JLoggerLogger(final Class cls){
-		return LogFactory.getLogger(LoggerType.LOG_4_J_LOGGER, cls.getName());
+	private static LoggerAgent getLog4JLogger(final Class cls){
+		return getLog4JLogger(cls.getName());
 	}
 	
 	
@@ -37,7 +38,7 @@ public class LogUtil {
 	 * @param name
 	 * @return
 	 */
-	public static LoggerAgent getJdkLoggerLogger(String name){
+	private static LoggerAgent getJdkLogger(String name){
 		return LogFactory.getLogger(LoggerType.JDK_LOGGER, name);
 	}
 	
@@ -46,9 +47,30 @@ public class LogUtil {
 	 * @param name
 	 * @return
 	 */
-	public static LoggerAgent getJdkLoggerLogger(final Class cls){
-		return LogFactory.getLogger(LoggerType.JDK_LOGGER, cls.getName());
+	private static LoggerAgent getJdkLogger(final Class cls){
+		return getJdkLogger(cls.getName());
 	}
 	
-	
+	/**
+	 * Single Gateway method get the Logger Agent for the Application
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public static LoggerAgent getAppLogger(String name){
+		return getLog4JLogger(name);
+	}
+
+	/**
+	 * Single Gateway method get the Logger Agent for the Application
+	 * 
+	 * @param cls
+	 * @return
+	 */
+	public static LoggerAgent getAppLogger(final Class cls){
+		return getAppLogger(cls.getName());
+	}
+
+
 }
+
