@@ -15,6 +15,17 @@ import in.v8delta.template.myWebAppTmpl.core.log.LoggerType;
 public class LogUtil {
 
 	/**
+	 * String Constants for various logging levels available in application
+	 */
+	public static final String LOG_LVL_TRACE = "info";
+	public static final String LOG_LVL_DEBUG = "debug";
+	public static final String LOG_LVL_INFO = "info";
+	public static final String LOG_LVL_WARN = "warn";
+	public static final String LOG_LVL_ERROR = "error";
+	public static final String LOG_LVL_FATAL = "fatal";
+	
+	
+	/**
 	 * Util method to get Log4J Logger from String 
 	 * @param name
 	 * @return
