@@ -18,14 +18,11 @@ public interface AppConstants {
 	public static final String CHARSET_UTF_8 = "UTF-8";
 	public static final String CHARSET_UTF_16 = "UTF-16";
 	
-	public static final String DEFAULT_DIGEST_CHARSET = CHARSET_UTF_8;
-	
 	public static final String ENCODING_SHA_256 = "SHA-256";
 	public static final String ENCODING_SHA_384 = "SHA-384";
 	public static final String ENCODING_SHA_512 = "SHA-512";
 	public static final String ENCODING_MD5 = "MD5";
 	
-	public static final String DEFAULT_HASH_ENCODING = ENCODING_SHA_512;
 	
 	
 }

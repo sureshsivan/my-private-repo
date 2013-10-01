@@ -58,7 +58,16 @@ public class LogUtil {
 	 * @return
 	 */
 	public static LoggerAgent getAppLogger(String name){
-		return getLog4JLogger(name);
+		switch (AppDefaults.LOGGER_TYPE) {
+		case LOG_4_J_LOGGER:
+			return getLog4JLogger(name); 
+		case JDK_LOGGER:
+			return getLog4JLogger(name);
+		case OTHER_LOGGER:
+			return getLog4JLogger(name); 
+		default:
+			return getLog4JLogger(name);
+		}
 	}
 
 	/**

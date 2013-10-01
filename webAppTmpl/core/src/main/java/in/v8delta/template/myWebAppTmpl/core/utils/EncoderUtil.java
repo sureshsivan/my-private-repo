@@ -3,6 +3,7 @@ package in.v8delta.template.myWebAppTmpl.core.utils;
 import in.v8delta.template.myWebAppTmpl.core.crypt.Encoder;
 import in.v8delta.template.myWebAppTmpl.core.crypt.EncoderFactory;
 import in.v8delta.template.myWebAppTmpl.core.crypt.HashingType;
+import in.v8delta.template.myWebAppTmpl.core.crypt.MD5Encoder;
 
 /**
  * Utility class for Endoder functions
@@ -55,7 +56,18 @@ public class EncoderUtil {
 	 * @return
 	 */
 	public static Encoder getAppEncoder(){
-		return getSHA512Encoder();
+		switch (AppDefaults.HASH_ENCODING) {
+		case MD5:
+			return getMD5Encoder();
+		case SHA_256:
+			return getSHA256Encoder();
+		case SHA_384:
+			return getSHA384Encoder();
+		case SHA_512:
+			return getSHA512Encoder();
+		default:
+			return getSHA512Encoder();
+		}
 	}
 	
 }
