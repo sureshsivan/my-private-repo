@@ -29,20 +29,36 @@ public class LoggerTag extends BodyTagSupport{
 	
 	private String level;
 	private String context;
+	
+	/**
+	 * @return the level
+	 */
 	public String getLevel() {
 		return level;
 	}
+
+	/**
+	 * @param level the level to set
+	 */
 	public void setLevel(String level) {
 		this.level = level;
 	}
+
+	/**
+	 * @return the context
+	 */
 	public String getContext() {
 		return context;
 	}
+
+	/**
+	 * @param context the context to set
+	 */
 	public void setContext(String context) {
 		this.context = context;
 	}
-	
-	
+
+
 	@Override
 	public int doEndTag() throws JspException {
 		if(this.level == null){
