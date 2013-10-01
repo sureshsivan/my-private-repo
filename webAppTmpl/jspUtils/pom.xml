@@ -17,6 +17,14 @@
   	</description>
 	<dependencies>
 		<dependency>
+			<groupId>in.v8delta.template.myWebAppTmpl.core</groupId>
+			<artifactId>core</artifactId>
+			<version>${core.version}</version>
+			<type>jar</type>
+		</dependency>
+		
+		
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${servlet.version}</version>
@@ -28,5 +36,22 @@
 			<version>${jsp.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		
+<!--     <dependency> -->
+<!--       <groupId>commons-dbcp</groupId> -->
+<!--       <artifactId>commons-dbcp</artifactId> -->
+<!--       <version>${commons-dbcp.version}</version> -->
+<!--     </dependency> -->
+<!--     <dependency> -->
+<!--       <groupId>commons-fileupload</groupId> -->
+<!--       <artifactId>commons-fileupload</artifactId> -->
+<!--       <version>${commons-fileupload.version}</version> -->
+<!--     </dependency> -->
+<!--     <dependency> -->
+<!--       <groupId>commons-io</groupId> -->
+<!--       <artifactId>commons-io</artifactId> -->
+<!--       <version>${commons-io.version}</version> -->
+<!--     </dependency> -->
+		
 	</dependencies>
 </project>
