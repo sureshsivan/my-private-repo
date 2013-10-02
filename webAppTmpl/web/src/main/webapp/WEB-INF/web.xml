@@ -13,14 +13,14 @@
 <!-- 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class> -->
 <!-- 	</listener> -->
 
-	<!-- Spring context -->
-<!-- 	<context-param> -->
-<!-- 		<param-name>contextConfigLocation</param-name> -->
-<!-- 		<param-value>classpath*:WEB-INF/spring/spring-servlet.xml</param-value> -->
-<!-- 	</context-param> -->
-<!-- 	<listener> -->
-<!-- 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> -->
-<!-- 	</listener> -->
+<!-- 	Spring context -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/spring-servlet.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 
 	<!-- Spring webapp -->
 	<servlet>
