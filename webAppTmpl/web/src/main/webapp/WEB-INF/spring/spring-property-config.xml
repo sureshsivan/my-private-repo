@@ -20,7 +20,7 @@
 				<value>classpath:i18n/labels</value>
 			</list>
 		</property>
-		<property name="cacheSeconds" value="0" />
+<!-- 		<property name="cacheSeconds" value="0" /> -->
 	</bean>
 
 </beans>
