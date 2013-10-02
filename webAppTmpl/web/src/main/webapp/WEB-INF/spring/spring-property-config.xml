@@ -9,9 +9,9 @@
 						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 						http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-<!-- 	<bean id="appSysProps" class="in.v8delta.template.myWebAppTmpl.core.spring.SystemPropertyInitializer"> -->
-<!-- 		<property name="location" value="/WEB-INF/config/sysProp.properties" /> -->
-<!-- 	</bean> -->
+	<bean id="appSysProps" class="in.v8delta.template.myWebAppTmpl.core.spring.SystemPropertyInitializer">
+		<property name="location" value="config/sysProp.properties" />
+	</bean>
 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">

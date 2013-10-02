@@ -1,0 +1,2 @@
+go to Run Configuration --> maven --> create new one 
+use goal : clean install tomcat:deploy -X
