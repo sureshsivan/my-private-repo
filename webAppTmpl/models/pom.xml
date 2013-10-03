@@ -10,4 +10,14 @@
 	<artifactId>models</artifactId>
 	<version>1.0</version>
 	<name>My Web App Template :: Models of the web app</name>
+	
+	<dependencies>
+		<!-- OWN DEPENDENCIES -->
+		<dependency>
+			<groupId>in.v8delta.template.myWebAppTmpl.core</groupId>
+			<artifactId>core</artifactId>
+			<version>${core.version}</version>
+		</dependency>
+	</dependencies>
+	
 </project>

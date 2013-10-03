@@ -14,7 +14,15 @@ public interface AppConstants {
 	public static final String STR_HYPHEN = "-";
 	public static final String STR_COLON = ":";
 	public static final String STR_SEMI_COLON = ":";
+	public static final String STR_COMMA = ",";
+	public static final String STR_SQUARE_BRACE_LEFT = "[";
+	public static final String STR_SQUARE_BRACE_RIGHT = "]";
+	public static final String STR_FLOWER_BRACE_LEFT = "{";
+	public static final String STR_FLOWER_BRACE_RIGHT = "}";
+	public static final String STR_NORMAL_BRACE_LEFT = "(";
+	public static final String STR_NORMAL_BRACE_RIGHT = ")";
 
+	
 	public static final String CHARSET_UTF_8 = "UTF-8";
 	public static final String CHARSET_UTF_16 = "UTF-16";
 	

@@ -122,6 +122,11 @@
 		
 <!-- 		OWN DEPENDENCIES -->
 		<dependency>
+			<groupId>in.v8delta.template.myWebAppTmpl.core</groupId>
+			<artifactId>core</artifactId>
+			<version>${core.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>in.v8delta.template.myWebAppTmpl.models</groupId>
 			<artifactId>models</artifactId>
 			<version>${models.version}</version>
