@@ -65,23 +65,13 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		StringBuilder out = new StringBuilder();
-
-		out.append(this.getClass().getCanonicalName());
-		out.append(AppConstants.STR_COLON);
-		out.append(AppConstants.STR_SQUARE_BRACE_LEFT);
-		out.append("username:");
-		out.append(this.username);
-		out.append(AppConstants.STR_COMMA);
-		out.append("email:");
-		out.append(this.email);
-		out.append(AppConstants.STR_COMMA);
-		out.append("password:");
-		out.append(this.password);
-		out.append(AppConstants.STR_SQUARE_BRACE_RIGHT);
-		return super.toString();
+		return "User [username=" + username + ", email=" + email
+				+ ", password=" + password + "]";
 	}
 
 }
