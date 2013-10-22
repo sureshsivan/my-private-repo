@@ -48,7 +48,7 @@
 		<!-- build -->
 		<sencha.extjs.build.dir.name>build</sencha.extjs.build.dir.name>
 		<!-- testing/production -->
-		<sencha.build.param.args.environment>production</sencha.build.param.args.environment>
+		<sencha.build.param.args.environment>testing</sencha.build.param.args.environment>
 		<!-- true/false -->
 		<sencha.build.param.skip.sass>false</sencha.build.param.skip.sass>
 		<!-- true/false -->
