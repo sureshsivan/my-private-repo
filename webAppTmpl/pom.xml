@@ -45,15 +45,30 @@
 		<mybatis.version>3.0.1</mybatis.version>
 		<spring-ibatis.version>2.0.8</spring-ibatis.version>
 		
+		<!-- build -->
+		<sencha.extjs.build.dir.name>build</sencha.extjs.build.dir.name>
+		<!-- testing/production -->
+		<sencha.build.param.args.environment>production</sencha.build.param.args.environment>
+		<!-- true/false -->
+		<sencha.build.param.skip.sass>false</sencha.build.param.skip.sass>
+		<!-- true/false -->
+		<sencha.build.param.skip.sass>false</sencha.build.param.skip.sass>
+
+		<sencha.client.dir>../web/src/main/webapp/client</sencha.client.dir>		
+		
+		<!-- dev/prod -->
+		<app.build.profile>dev</app.build.profile>      
 	</properties>
 
 	<!-- MODULES -->
 	<modules>
+		<module>core</module>
 		<module>services</module>
 		<module>models</module>
 		<module>jspUtils</module>
+		<module>webUi</module>
 		<module>web</module>
-		<module>core</module>
+		
 	</modules>
 
 </project>
