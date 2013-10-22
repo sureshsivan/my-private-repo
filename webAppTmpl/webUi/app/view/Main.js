@@ -1,4 +1,4 @@
-Ext.define('web-ui.view.Main', {
+Ext.define('webUi.view.Main', {
     extend: 'Ext.container.Container',
     requires:[
         'Ext.tab.Panel',

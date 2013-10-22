@@ -1,5 +1,5 @@
-Ext.define('web-ui.Application', {
-    name: 'web-ui',
+Ext.define('webUi.Application', {
+    name: 'webUi',
 
     extend: 'Ext.app.Application',
 

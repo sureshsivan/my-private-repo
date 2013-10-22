@@ -1,8 +1,8 @@
-Ext.define('web-ui.view.Viewport', {
+Ext.define('webUi.view.Viewport', {
     extend: 'Ext.container.Viewport',
     requires:[
         'Ext.layout.container.Fit',
-        'web-ui.view.Main'
+        'webUi.view.Main'
     ],
 
     layout: {

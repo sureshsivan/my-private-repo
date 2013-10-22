@@ -5,17 +5,16 @@
  * metadata-driven class system features 
  */
 Ext.Loader.addClassPathMappings({
-  "web-ui": "app",
   " Ext.Msg": "ext/src/window/MessageBox.js",
   "Ext": "ext/src",
+  "webUi": "app",
   "Ext.rtl.EventObjectImpl": "ext/src/rtl/EventObject.js",
-  "web-ui.Application": "app/application.js"
+  "webUi.Application": "app/application.js"
 });
 Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.BoxReorderer": [],
   "Ext.ux.grid.filter.Filter": [],
   "Ext.ux.GroupTabRenderer": [],
-  "web-ui.view.Viewport": [],
   "Ext.ux.ajax.DataSimlet": [],
   "Ext.ux.grid.TransformGrid": [],
   "Ext.ux.FieldReplicator": [],
@@ -26,7 +25,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.DataView.DragSelector": [],
   "Ext.ux.grid.menu.ListMenu": [],
   "Ext.ux.GMapPanel": [],
-  "web-ui.controller.Main": [],
   "Ext.ux.form.MultiSelect": [
     "Ext.ux.Multiselect"
   ],
@@ -40,7 +38,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.ajax.SimXhr": [],
   "Ext.ux.event.RecorderManager": [],
   "Ext.ux.ProgressBarPager": [],
-  "web-ui.view.Main": [],
   "Ext.ux.CellDragDrop": [],
   "Ext.ux.statusbar.StatusBar": [
     "Ext.ux.StatusBar"
@@ -54,6 +51,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.event.Recorder": [],
   "Ext.ux.event.Player": [],
   "Ext.ux.ajax.SimManager": [],
+  "webUi.view.Main": [],
+  "webUi.Application": [],
   "Ext.ux.grid.filter.BooleanFilter": [],
   "Ext.ux.ToolbarDroppable": [],
   "Ext.ux.event.Maker": [],
@@ -74,10 +73,11 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.ajax.JsonSimlet": [],
   "Ext.ux.Spotlight": [],
   "Ext.ux.grid.FiltersFeature": [],
+  "webUi.view.Viewport": [],
+  "webUi.controller.Main": [],
   "Ext.ux.data.PagingMemoryProxy": [
     "Ext.data.PagingMemoryProxy"
-  ],
-  "web-ui.Application": []
+  ]
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.BoxReorderer": [],
@@ -85,7 +85,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.GroupTabRenderer": [
     "plugin.grouptabrenderer"
   ],
-  "web-ui.view.Viewport": [],
   "Ext.ux.ajax.DataSimlet": [],
   "Ext.ux.grid.TransformGrid": [],
   "Ext.ux.FieldReplicator": [],
@@ -102,7 +101,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.GMapPanel": [
     "widget.gmappanel"
   ],
-  "web-ui.controller.Main": [],
   "Ext.ux.form.MultiSelect": [
     "widget.multiselect",
     "widget.multiselectfield"
@@ -127,9 +125,6 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.eventrecordermanager"
   ],
   "Ext.ux.ProgressBarPager": [],
-  "web-ui.view.Main": [
-    "widget.app-main"
-  ],
   "Ext.ux.CellDragDrop": [
     "plugin.celldragdrop"
   ],
@@ -149,6 +144,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.event.Recorder": [],
   "Ext.ux.event.Player": [],
   "Ext.ux.ajax.SimManager": [],
+  "webUi.view.Main": [
+    "widget.app-main"
+  ],
+  "webUi.Application": [],
   "Ext.ux.grid.filter.BooleanFilter": [
     "gridfilter.boolean"
   ],
@@ -192,8 +191,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.grid.FiltersFeature": [
     "feature.filters"
   ],
+  "webUi.view.Viewport": [],
+  "webUi.controller.Main": [],
   "Ext.ux.data.PagingMemoryProxy": [
     "proxy.pagingmemory"
-  ],
-  "web-ui.Application": []
+  ]
 });

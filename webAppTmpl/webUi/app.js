@@ -8,9 +8,9 @@
 //@require @packageOverrides
 
 Ext.application({
-    name: 'web-ui',
+    name: 'webUi',
 
-    extend: 'web-ui.Application',
+    extend: 'webUi.Application',
     
     autoCreateViewport: true
 });
