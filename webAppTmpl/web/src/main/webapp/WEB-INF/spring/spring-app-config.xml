@@ -12,11 +12,13 @@
 
 	<mvc:annotation-driven />
 
+	<context:component-scan base-package="mock,in.v8delta.web.controller.async" /> 
+
 	<mvc:interceptors>
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 	</mvc:interceptors>
 
-	<mvc:resources mapping="/static/**" location="static" />
+<!-- 	<mvc:resources mapping="/static/**" location="static" /> -->
 
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
