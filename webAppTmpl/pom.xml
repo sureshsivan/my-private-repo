@@ -68,6 +68,7 @@
 		<module>models</module>
 		<module>jspUtils</module>
 		<module>webUi</module>
+		<module>mobileUi</module>
 		<module>web</module>
 		
 	</modules>

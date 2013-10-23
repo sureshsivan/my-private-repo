@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>in.v8delta.template.myWebAppTmpl</groupId>
+		<artifactId>myWebAppTmpl</artifactId>
+		<version>1.0</version>
+	</parent>
+	<groupId>in.v8delta.template.myWebAppTmpl.mobileUi</groupId>
+	<artifactId>mobileUi</artifactId>
+	<version>1.0</version>
+	<name>My Web App Template[mobileUi] :: Sencha based UI for mobile Devices</name>
+
+	<dependencies>
+		<!-- Contains only client side code - so no dependencies -->
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>sencha-build</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<property name="build.environment" value="${sencha.build.param.args.environment}" />
+								<property name="skip.sass" value="${sencha.build.param.skip.sass}" />
+								<property name="skip.slice" value="${sencha.build.param.skip.slice}" />
+								<ant target="build" inheritRefs="true" inheritAll="true" />
+								<delete dir="${sencha.mobile.client.dir}" />
+								<copy todir="${sencha.mobile.client.dir}">
+									<fileset
+										dir="${sencha.extjs.build.dir.name}/${sencha.build.param.args.environment}/${artifactId}" />
+								</copy>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+
+
+</project>
