@@ -18,14 +18,19 @@ jspUtils - All custom tags will go here.
 services - All Persistance services will go here
 model - All model object will be placed here(This is not a good idea. Need to lookout for a abetter option).
 web - All Web module related source stays here
+webUi - UI designed in Sencha Ext JS for Desktop
+mobileUi - UI designed in Sencha Touch for Desktop
 
 This Project uses below tools 
 -----------------------------
-###### Spring [version:]
-###### Maven [version:]
-###### myBatis [version:]
-###### jQuery [version:]
-###### twitter bootstrap [version:]
+###### Spring - For MVC and Dependency Injection
+###### Maven - Entire application is managed thrrough maven
+###### Ant - Used for Building sencha Ext JS, Sencha touch files
+###### myBatis - As ORM mapper
+###### jQuery - tentative
+###### twitter bootstrap - tentative
 ###### maven - as build tool
+###### Sencha Ext JS - for Desktop UI
+###### Sencha touch - for Mobile UI
 
 

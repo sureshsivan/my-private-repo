@@ -70,7 +70,6 @@
 		<module>webUi</module>
 		<module>mobileUi</module>
 		<module>web</module>
-		
 	</modules>
 
 </project>

@@ -9,7 +9,7 @@
 	<groupId>in.v8delta.template.myWebAppTmpl.web</groupId>
 	<artifactId>web</artifactId>
 	<packaging>war</packaging>
-	<name>My Web App Template :: Web Module for the web app</name>
+	<name>My Web App Template[web] :: Web Module for the web app</name>
 	<description>
 	  	This is web Module of ${project.parent.artifactId}.
 	  	Holds the web files used in the application

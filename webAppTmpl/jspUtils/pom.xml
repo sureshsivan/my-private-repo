@@ -10,7 +10,7 @@
 	<groupId>in.v8delta.template.myWebAppTmpl.jspUtils</groupId>
 	<artifactId>jspUtils</artifactId>
 	<version>1.0</version>
-	<name>My Web App Template :: JSP Custom Tag Utilities</name>
+	<name>My Web App Template[jspUtils] :: JSP Custom Tag Utilities</name>
 	<description>
 	  	This is a Sub Module of ${project.parent.artifactId}.
 	  	Holds the custom tags used in the application

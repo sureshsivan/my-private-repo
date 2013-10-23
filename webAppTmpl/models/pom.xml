@@ -9,7 +9,7 @@
 	<groupId>in.v8delta.template.myWebAppTmpl.models</groupId>
 	<artifactId>models</artifactId>
 	<version>1.0</version>
-	<name>My Web App Template :: Models of the web app</name>
+	<name>My Web App Template[models] :: Models of the web app</name>
 	
 	<dependencies>
 		<!-- OWN DEPENDENCIES -->

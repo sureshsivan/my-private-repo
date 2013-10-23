@@ -9,7 +9,7 @@
 	<groupId>in.v8delta.template.myWebAppTmpl.services</groupId>
 	<artifactId>services</artifactId>
 	<version>1.0</version>
-	<name>My Web App Template :: Service API for the web app</name>
+	<name>My Web App Template[services] :: Service API for the web app</name>
 
 	<dependencies>
 		<!-- OWN DEPENDENCIES -->
