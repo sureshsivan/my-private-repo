@@ -54,7 +54,8 @@
 		<!-- true/false -->
 		<sencha.build.param.skip.sass>false</sencha.build.param.skip.sass>
 
-		<sencha.client.dir>../web/src/main/webapp/client</sencha.client.dir>		
+		<sencha.desktop.client.dir>../web/src/main/webapp/desktop</sencha.desktop.client.dir>		
+		<sencha.mobile.client.dir>../web/src/main/webapp/mobile</sencha.mobile.client.dir>
 		
 		<!-- dev/prod -->
 		<app.build.profile>dev</app.build.profile>      

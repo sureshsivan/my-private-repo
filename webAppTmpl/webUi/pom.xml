@@ -33,8 +33,8 @@
 								<property name="skip.sass" value="${sencha.build.param.skip.sass}" />
 								<property name="skip.slice" value="${sencha.build.param.skip.slice}" />
 								<ant target="build" inheritRefs="true" inheritAll="true" />
-								<delete dir="${sencha.client.dir}" />
-								<copy todir="${sencha.client.dir}">
+								<delete dir="${sencha.desktop.client.dir}" />
+								<copy todir="${sencha.desktop.client.dir}">
 									<fileset
 										dir="${sencha.extjs.build.dir.name}/${artifactId}/${sencha.build.param.args.environment}" />
 								</copy>

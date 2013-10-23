@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="maven-antrun-" default="main"  >
 <target name="main">
-  <property name="args.environment" value="production"/>
+  <property name="args.environment" value="testing"/>
   <property name="skip.sass" value="false"/>
   <property name="skip.slice" value="${sencha.build.param.skip.slice}"/>
   <ant inheritRefs="true" target="build" inheritAll="true"/>
-  <delete dir="../web/src/main/webapp/client"/>
-  <copy todir="../web/src/main/webapp/client">
-    <fileset dir="build/webUi/production"/>
+  <delete dir="../web/src/main/webapp/desktop"/>
+  <copy todir="../web/src/main/webapp/desktop">
+    <fileset dir="build/webUi/testing"/>
   </copy>
 </target>
 </project>
