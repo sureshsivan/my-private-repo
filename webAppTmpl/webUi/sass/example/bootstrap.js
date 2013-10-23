@@ -76,8 +76,15 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.statusbar.ValidationStatus": [],
   "webUi.Application": [],
   "webUi.controller.Main": [],
+  "webUi.ui.Label": [],
   "webUi.view.Main": [],
-  "webUi.view.Viewport": []
+  "webUi.view.Rootpanel": [],
+  "webUi.view.Viewport": [],
+  "webUi.view.common.Copyright": [],
+  "webUi.view.common.Footer": [],
+  "webUi.view.common.FooterContact": [],
+  "webUi.view.common.FooterLogo": [],
+  "webUi.view.common.GuestHeader": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.BoxReorderer": [],
@@ -192,8 +199,27 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.statusbar.ValidationStatus": [],
   "webUi.Application": [],
   "webUi.controller.Main": [],
+  "webUi.ui.Label": [],
   "webUi.view.Main": [
     "widget.app-main"
   ],
-  "webUi.view.Viewport": []
+  "webUi.view.Rootpanel": [
+    "widget.d-rootpanel"
+  ],
+  "webUi.view.Viewport": [],
+  "webUi.view.common.Copyright": [
+    "widget.d-copyright"
+  ],
+  "webUi.view.common.Footer": [
+    "widget.d-footer"
+  ],
+  "webUi.view.common.FooterContact": [
+    "widget.d-footer-contact"
+  ],
+  "webUi.view.common.FooterLogo": [
+    "widget.d-footer-logo"
+  ],
+  "webUi.view.common.GuestHeader": [
+    "widget.d-guest-header"
+  ]
 });

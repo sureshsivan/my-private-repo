@@ -103178,414 +103178,6 @@ at http://www.sencha.com/contact.
 Build date: 2013-05-16 14:36:50 (f9be68accb407158ba2b1be2c226a6ce1f649314)
 */
 /**
- * This layout manages multiple child Components, each fitted to the Container, where only a single child Component can be
- * visible at any given time.  This layout style is most commonly used for wizards, tab implementations, etc.
- * This class is intended to be extended or created via the layout:'card' {@link Ext.container.Container#layout} config,
- * and should generally not need to be created directly via the new keyword.
- *
- * The CardLayout's focal method is {@link #setActiveItem}.  Since only one panel is displayed at a time,
- * the only way to move from one Component to the next is by calling setActiveItem, passing the next panel to display
- * (or its id or index).  The layout itself does not provide a user interface for handling this navigation,
- * so that functionality must be provided by the developer.
- *
- * To change the active card of a container, call the setActiveItem method of its layout:
- *
- *     @example
- *     var p = Ext.create('Ext.panel.Panel', {
- *         layout: 'card',
- *         items: [
- *             { html: 'Card 1' },
- *             { html: 'Card 2' }
- *         ],
- *         renderTo: Ext.getBody()
- *     });
- *
- *     p.getLayout().setActiveItem(1);
- * 
- * The {@link Ext.Component#beforedeactivate beforedeactivate} and {@link Ext.Component#beforeactivate beforeactivate}
- * events can be used to prevent a card from activating or deactivating by returning `false`.
- * 
- *     @example   
- *     var active = 0;
- *     var main = Ext.create('Ext.panel.Panel', {
- *         renderTo: Ext.getBody(),
- *         width: 200,
- *         height: 200,
- *         layout: 'card',
- *         tbar: [{
- *             text: 'Next',
- *             handler: function(){
- *                 var layout = main.getLayout();
- *                 ++active;
- *                 layout.setActiveItem(active);
- *                 active = main.items.indexOf(layout.getActiveItem());
- *             }
- *         }],
- *         items: [{
- *             title: 'P1'
- *         }, {
- *             title: 'P2'
- *         }, {
- *             title: 'P3',
- *             listeners: {
- *                 beforeactivate: function(){
- *                     return false;
- *                 }
- *             }
- *         }]
- *     });
- *
- * In the following example, a simplistic wizard setup is demonstrated.  A button bar is added
- * to the footer of the containing panel to provide navigation buttons.  The buttons will be handled by a
- * common navigation routine.  Note that other uses of a CardLayout (like a tab control) would require a
- * completely different implementation.  For serious implementations, a better approach would be to extend
- * CardLayout to provide the custom functionality needed.
- *
- *     @example
- *     var navigate = function(panel, direction){
- *         // This routine could contain business logic required to manage the navigation steps.
- *         // It would call setActiveItem as needed, manage navigation button state, handle any
- *         // branching logic that might be required, handle alternate actions like cancellation
- *         // or finalization, etc.  A complete wizard implementation could get pretty
- *         // sophisticated depending on the complexity required, and should probably be
- *         // done as a subclass of CardLayout in a real-world implementation.
- *         var layout = panel.getLayout();
- *         layout[direction]();
- *         Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
- *         Ext.getCmp('move-next').setDisabled(!layout.getNext());
- *     };
- *
- *     Ext.create('Ext.panel.Panel', {
- *         title: 'Example Wizard',
- *         width: 300,
- *         height: 200,
- *         layout: 'card',
- *         bodyStyle: 'padding:15px',
- *         defaults: {
- *             // applied to each contained panel
- *             border: false
- *         },
- *         // just an example of one possible navigation scheme, using buttons
- *         bbar: [
- *             {
- *                 id: 'move-prev',
- *                 text: 'Back',
- *                 handler: function(btn) {
- *                     navigate(btn.up("panel"), "prev");
- *                 },
- *                 disabled: true
- *             },
- *             '->', // greedy spacer so that the buttons are aligned to each side
- *             {
- *                 id: 'move-next',
- *                 text: 'Next',
- *                 handler: function(btn) {
- *                     navigate(btn.up("panel"), "next");
- *                 }
- *             }
- *         ],
- *         // the panels (or "cards") within the layout
- *         items: [{
- *             id: 'card-0',
- *             html: '<h1>Welcome to the Wizard!</h1><p>Step 1 of 3</p>'
- *         },{
- *             id: 'card-1',
- *             html: '<p>Step 2 of 3</p>'
- *         },{
- *             id: 'card-2',
- *             html: '<h1>Congratulations!</h1><p>Step 3 of 3 - Complete</p>'
- *         }],
- *         renderTo: Ext.getBody()
- *     });
- */
-Ext.define('Ext.layout.container.Card', {
-
-    /* Begin Definitions */
-
-    extend:  Ext.layout.container.Fit ,
-
-    alternateClassName: 'Ext.layout.CardLayout',
-
-    alias: 'layout.card',
-
-    /* End Definitions */
-
-    type: 'card',
-
-    hideInactive: true,
-
-    /**
-     * @cfg {Boolean} deferredRender
-     * True to render each contained item at the time it becomes active, false to render all contained items
-     * as soon as the layout is rendered (defaults to false).  If there is a significant amount of content or
-     * a lot of heavy controls being rendered into panels that are not displayed by default, setting this to
-     * true might improve performance.
-     */
-    deferredRender : false,
-    
-    getRenderTree: function () {
-        var me = this,
-            activeItem = me.getActiveItem();
-
-        if (activeItem) {
-
-            // If they veto the activate, we have no active item
-            if (activeItem.hasListeners.beforeactivate && activeItem.fireEvent('beforeactivate', activeItem) === false) {
- 
-                // We must null our activeItem reference, AND the one in our owning Container.
-                // Because upon layout invalidation, renderChildren will use this.getActiveItem which
-                // uses this.activeItem || this.owner.activeItem
-                activeItem = me.activeItem = me.owner.activeItem = null;
-            }
-            
-            // Item is to be the active one. Fire event after it is first layed out
-            else if (activeItem.hasListeners.activate) {
-                activeItem.on({
-                    boxready: function() {
-                        activeItem.fireEvent('activate', activeItem);
-                    },
-                    single: true
-                });
-            }
-
-            if (me.deferredRender) {
-                if (activeItem) {
-                    return me.getItemsRenderTree([activeItem]);
-                }
-            } else {
-                return me.callParent(arguments);
-            }
-        }
-    },
-
-    renderChildren: function () {
-        var me = this,
-            active = me.getActiveItem();
-            
-        if (!me.deferredRender) {
-            me.callParent();
-        } else if (active) {
-            // ensure the active item is configured for the layout
-            me.renderItems([active], me.getRenderTarget());
-        }
-    },
-
-    isValidParent : function(item, target, position) {
-        // Note: Card layout does not care about order within the target because only one is ever visible.
-        // We only care whether the item is a direct child of the target.
-        var itemEl = item.el ? item.el.dom : Ext.getDom(item);
-        return (itemEl && itemEl.parentNode === (target.dom || target)) || false;
-    },
-
-    /**
-     * Return the active (visible) component in the layout.
-     * @returns {Ext.Component}
-     */
-    getActiveItem: function() {
-        var me = this,
-            // Ensure the calculated result references a Component
-            result = me.parseActiveItem(me.activeItem || (me.owner && me.owner.activeItem));
-
-        // Sanitize the result in case the active item is no longer there.
-        if (result && me.owner.items.indexOf(result) != -1) {
-            me.activeItem = result;
-        } else {
-            me.activeItem = null;
-        }
-
-        return me.activeItem;
-    },
-
-    // @private
-    parseActiveItem: function(item) {
-        if (item && item.isComponent) {
-            return item;
-        } else if (typeof item == 'number' || item === undefined) {
-            return this.getLayoutItems()[item || 0];
-        } else {
-            return this.owner.getComponent(item);
-        }
-    },
-
-    // @private. Called before both dynamic render, and bulk render.
-    // Ensure that the active item starts visible, and inactive ones start invisible
-    configureItem: function(item) {
-        if (item === this.getActiveItem()) {
-            item.hidden = false;
-        } else {
-            item.hidden = true;
-        }
-        this.callParent(arguments);
-    },
-
-    onRemove: function(component) {
-        var me = this;
-        
-        if (component === me.activeItem) {
-            me.activeItem = null;
-        }
-    },
-
-    // @private
-    getAnimation: function(newCard, owner) {
-        var newAnim = (newCard || {}).cardSwitchAnimation;
-        if (newAnim === false) {
-            return false;
-        }
-        return newAnim || owner.cardSwitchAnimation;
-    },
-
-    /**
-     * Return the active (visible) component in the layout to the next card
-     * @returns {Ext.Component} The next component or false.
-     */
-    getNext: function() {
-        var wrap = arguments[0],
-            items = this.getLayoutItems(),
-            index = Ext.Array.indexOf(items, this.activeItem);
-            
-        return items[index + 1] || (wrap ? items[0] : false);
-    },
-
-    /**
-     * Sets the active (visible) component in the layout to the next card
-     * @return {Ext.Component} the activated component or false when nothing activated.
-     */
-    next: function() {
-        var anim = arguments[0], 
-            wrap = arguments[1];
-        return this.setActiveItem(this.getNext(wrap), anim);
-    },
-
-    /**
-     * Return the active (visible) component in the layout to the previous card
-     * @returns {Ext.Component} The previous component or false.
-     */
-    getPrev: function() {
-        var wrap = arguments[0],
-            items = this.getLayoutItems(),
-            index = Ext.Array.indexOf(items, this.activeItem);
-            
-        return items[index - 1] || (wrap ? items[items.length - 1] : false);
-    },
-
-    /**
-     * Sets the active (visible) component in the layout to the previous card
-     * @return {Ext.Component} the activated component or false when nothing activated.
-     */
-    prev: function() {
-        var anim = arguments[0], 
-            wrap = arguments[1];
-        return this.setActiveItem(this.getPrev(wrap), anim);
-    },
-
-    /**
-     * Makes the given card active.
-     *
-     *     var card1 = Ext.create('Ext.panel.Panel', {itemId: 'card-1'});
-     *     var card2 = Ext.create('Ext.panel.Panel', {itemId: 'card-2'});
-     *     var panel = Ext.create('Ext.panel.Panel', {
-     *         layout: 'card',
-     *         activeItem: 0,
-     *         items: [card1, card2]
-     *     });
-     *     // These are all equivalent
-     *     panel.getLayout().setActiveItem(card2);
-     *     panel.getLayout().setActiveItem('card-2');
-     *     panel.getLayout().setActiveItem(1);
-     *
-     * @param {Ext.Component/Number/String} newCard  The component, component {@link Ext.Component#id id},
-     * {@link Ext.Component#itemId itemId}, or index of component.
-     * @return {Ext.Component} the activated component or false when nothing activated.
-     * False is returned also when trying to activate an already active card.
-     */
-    setActiveItem: function(newCard) {
-        var me = this,
-            owner = me.owner,
-            oldCard = me.activeItem,
-            rendered = owner.rendered,
-            newIndex;
-
-        newCard = me.parseActiveItem(newCard);
-        newIndex = owner.items.indexOf(newCard);
-
-        // If the card is not a child of the owner, then add it.
-        // Without doing a layout!
-        if (newIndex == -1) {
-            newIndex = owner.items.items.length;
-            Ext.suspendLayouts();
-            newCard = owner.add(newCard);
-            Ext.resumeLayouts();
-        }
-
-        // Is this a valid, different card?
-        if (newCard && oldCard != newCard) {
-            // Fire the beforeactivate and beforedeactivate events on the cards
-            if (newCard.fireEvent('beforeactivate', newCard, oldCard) === false) {
-                return false;
-            }
-            if (oldCard && oldCard.fireEvent('beforedeactivate', oldCard, newCard) === false) {
-                return false;
-            }
-
-            if (rendered) {
-                Ext.suspendLayouts();
-
-                // If the card has not been rendered yet, now is the time to do so.
-                if (!newCard.rendered) {
-                    me.renderItem(newCard, me.getRenderTarget(), owner.items.length);
-                }
-
-                if (oldCard) {
-                    if (me.hideInactive) {
-                        oldCard.hide();
-                        oldCard.hiddenByLayout = true;
-                    }
-                    oldCard.fireEvent('deactivate', oldCard, newCard);
-                }
-                // Make sure the new card is shown
-                if (newCard.hidden) {
-                    newCard.show();
-                }
-
-                // Layout needs activeItem to be correct, so set it if the show has not been vetoed
-                if (!newCard.hidden) {
-                    me.activeItem = newCard;
-                }
-                Ext.resumeLayouts(true);
-            } else {
-                me.activeItem = newCard;
-            }
-
-            newCard.fireEvent('activate', newCard, oldCard);
-
-            return me.activeItem;
-        }
-        return false;
-    }
-});
-
-/*
-This file is part of Ext JS 4.2
-
-Copyright (c) 2011-2013 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-GNU General Public License Usage
-This file may be used under the terms of the GNU General Public License version 3.0 as
-published by the Free Software Foundation and appearing in the file LICENSE included in the
-packaging of this file.
-
-Please review the following information to ensure the GNU General Public License version 3.0
-requirements will be met: http://www.gnu.org/copyleft/gpl.html.
-
-If you are unsure which license is appropriate for your use, please contact the sales department
-at http://www.sencha.com/contact.
-
-Build date: 2013-05-16 14:36:50 (f9be68accb407158ba2b1be2c226a6ce1f649314)
-*/
-/**
  * A base class for all menu items that require menu-related functionality such as click handling,
  * sub-menus, icons, etc.
  *
@@ -107170,409 +106762,6 @@ at http://www.sencha.com/contact.
 Build date: 2013-05-16 14:36:50 (f9be68accb407158ba2b1be2c226a6ce1f649314)
 */
 /**
- * @author Ed Spencer
- * 
- * Represents a single Tab in a {@link Ext.tab.Panel TabPanel}. A Tab is simply a slightly customized {@link Ext.button.Button Button}, 
- * styled to look like a tab. Tabs are optionally closable, and can also be disabled. 99% of the time you will not
- * need to create Tabs manually as the framework does so automatically when you use a {@link Ext.tab.Panel TabPanel}
- */
-Ext.define('Ext.tab.Tab', {
-    extend:  Ext.button.Button ,
-    alias: 'widget.tab',
-
-               
-                         
-      
-
-    /**
-     * @property {Boolean} isTab
-     * `true` in this class to identify an object as an instantiated Tab, or subclass thereof.
-     */
-    isTab: true,
-
-    baseCls: Ext.baseCSSPrefix + 'tab',
-    closeElOverCls: Ext.baseCSSPrefix + 'tab-close-btn-over',
-
-    /**
-     * @cfg {String} activeCls
-     * The CSS class to be applied to a Tab when it is active.
-     * Providing your own CSS for this class enables you to customize the active state.
-     */
-    activeCls: 'active',
-
-    /**
-     * @cfg {String} [disabledCls='x-tab-disabled']
-     * The CSS class to be applied to a Tab when it is disabled.
-     */
-
-    /**
-     * @cfg {String} closableCls
-     * The CSS class which is added to the tab when it is closable
-     */
-    closableCls: 'closable',
-
-    /**
-     * @cfg {Boolean} closable
-     * True to make the Tab start closable (the close icon will be visible).
-     */
-    closable: true,
-
-    //<locale>
-    /**
-     * @cfg {String} closeText
-     * The accessible text label for the close button link; only used when {@link #cfg-closable} = true.
-     */
-    closeText: 'Close Tab',
-    //</locale>
-
-    /**
-     * @property {Boolean} active
-     * Indicates that this tab is currently active. This is NOT a public configuration.
-     * @readonly
-     */
-    active: false,
-
-    /**
-     * @property {Boolean} closable
-     * True if the tab is currently closable
-     */
-
-    childEls: [
-        'closeEl'
-    ],
-
-    scale: false,
-
-    position: 'top',
-
-    initComponent: function() {
-        var me = this;
-
-        me.addEvents(
-            /**
-             * @event activate
-             * Fired when the tab is activated.
-             * @param {Ext.tab.Tab} this
-             */
-            'activate',
-
-            /**
-             * @event deactivate
-             * Fired when the tab is deactivated.
-             * @param {Ext.tab.Tab} this
-             */
-            'deactivate',
-
-            /**
-             * @event beforeclose
-             * Fires if the user clicks on the Tab's close button, but before the {@link #close} event is fired. Return
-             * false from any listener to stop the close event being fired
-             * @param {Ext.tab.Tab} tab The Tab object
-             */
-            'beforeclose',
-
-            /**
-             * @event close
-             * Fires to indicate that the tab is to be closed, usually because the user has clicked the close button.
-             * @param {Ext.tab.Tab} tab The Tab object
-             */
-            'close'
-        );
-
-        me.callParent(arguments);
-
-        if (me.card) {
-            me.setCard(me.card);
-        }
-
-        me.overCls = ['over', me.position + '-over'];
-    },
-
-    getTemplateArgs: function() {
-        var me = this,
-            result = me.callParent();
-
-        result.closable = me.closable;
-        result.closeText = me.closeText;
-
-        return result;
-    },
-    
-    getFramingInfoCls: function(){
-        return this.baseCls + '-' + this.ui + '-' + this.position;
-    },
-
-    beforeRender: function() {
-        var me = this,
-            tabBar = me.up('tabbar'),
-            tabPanel = me.up('tabpanel');
-        
-        me.callParent();
-        
-        me.addClsWithUI(me.position);
-
-        if (me.active) {
-            me.addClsWithUI([me.activeCls, me.position + '-' + me.activeCls]);
-        }
-
-        // Set all the state classNames, as they need to include the UI
-        // me.disabledCls = me.getClsWithUIs('disabled');
-
-        me.syncClosableUI();
-
-        // Propagate minTabWidth and maxTabWidth settings from the owning TabBar then TabPanel
-        if (!me.minWidth) {
-            me.minWidth = (tabBar) ? tabBar.minTabWidth : me.minWidth;
-            if (!me.minWidth && tabPanel) {
-                me.minWidth = tabPanel.minTabWidth;
-            }
-            if (me.minWidth && me.iconCls) {
-                me.minWidth += 25;
-            }
-        }
-        if (!me.maxWidth) {
-            me.maxWidth = (tabBar) ? tabBar.maxTabWidth : me.maxWidth;
-            if (!me.maxWidth && tabPanel) {
-                me.maxWidth = tabPanel.maxTabWidth;
-            }
-        }
-    },
-
-    onRender: function() {
-        var me = this;
-
-        me.setElOrientation();
-
-        me.callParent(arguments);
-
-        if (me.closable) {
-            me.closeEl.addClsOnOver(me.closeElOverCls);
-        }
-
-        me.keyNav = new Ext.util.KeyNav(me.el, {
-            enter: me.onEnterKey,
-            del: me.onDeleteKey,
-            scope: me
-        });
-    },
-
-    setElOrientation: function() {
-        var position = this.position;
-
-        if (position === 'left' || position === 'right') {
-            this.el.setVertical(position === 'right' ? 90 : 270);
-        }
-    },
-
-    // inherit docs
-    enable : function(silent) {
-        var me = this;
-
-        me.callParent(arguments);
-
-        me.removeClsWithUI(me.position + '-disabled');
-
-        return me;
-    },
-
-    // inherit docs
-    disable : function(silent) {
-        var me = this;
-
-        me.callParent(arguments);
-
-        me.addClsWithUI(me.position + '-disabled');
-
-        return me;
-    },
-
-    onDestroy: function() {
-        var me = this;
-
-        Ext.destroy(me.keyNav);
-        delete me.keyNav;
-
-        me.callParent(arguments);
-    },
-
-    /**
-     * Sets the tab as either closable or not.
-     * @param {Boolean} closable Pass false to make the tab not closable. Otherwise the tab will be made closable (eg a
-     * close button will appear on the tab)
-     */
-    setClosable: function(closable) {
-        var me = this;
-
-        // Closable must be true if no args
-        closable = (!arguments.length || !!closable);
-
-        if (me.closable != closable) {
-            me.closable = closable;
-
-            // set property on the user-facing item ('card'):
-            if (me.card) {
-                me.card.closable = closable;
-            }
-
-            me.syncClosableUI();
-
-            if (me.rendered) {
-                me.syncClosableElements();
-
-                // Tab will change width to accommodate close icon
-                me.updateLayout();
-            }
-        }
-    },
-
-    /**
-     * This method ensures that the closeBtn element exists or not based on 'closable'.
-     * @private
-     */
-    syncClosableElements: function () {
-        var me = this,
-            closeEl = me.closeEl;
-
-        if (me.closable) {
-            if (!closeEl) {
-                closeEl = me.closeEl = me.btnWrap.insertSibling({
-                    tag: 'a',
-                    cls: me.baseCls + '-close-btn',
-                    href: '#',
-                    title: me.closeText
-                }, 'after');
-            }
-            closeEl.addClsOnOver(me.closeElOverCls);
-        } else if (closeEl) {
-            closeEl.remove();
-            delete me.closeEl;
-        }
-    },
-
-    /**
-     * This method ensures that the UI classes are added or removed based on 'closable'.
-     * @private
-     */
-    syncClosableUI: function () {
-        var me = this,
-            classes = [me.closableCls, me.closableCls + '-' + me.position];
-
-        if (me.closable) {
-            me.addClsWithUI(classes);
-        } else {
-            me.removeClsWithUI(classes);
-        }
-    },
-
-    /**
-     * Sets this tab's attached card. Usually this is handled automatically by the {@link Ext.tab.Panel} that this Tab
-     * belongs to and would not need to be done by the developer
-     * @param {Ext.Component} card The card to set
-     */
-    setCard: function(card) {
-        var me = this;
-
-        me.card = card;
-        me.setText(me.title || card.title);
-        me.setIconCls(me.iconCls || card.iconCls);
-        me.setIcon(me.icon || card.icon);
-        me.setGlyph(me.glyph || card.glyph);
-    },
-
-    /**
-     * @private
-     * Listener attached to click events on the Tab's close button
-     */
-    onCloseClick: function() {
-        var me = this;
-
-        if (me.fireEvent('beforeclose', me) !== false) {
-            if (me.tabBar) {
-                if (me.tabBar.closeTab(me) === false) {
-                    // beforeclose on the panel vetoed the event, stop here
-                    return;
-                }
-            } else {
-                // if there's no tabbar, fire the close event
-                me.fireClose();
-            }
-        }
-    },
-
-    /**
-     * Fires the close event on the tab.
-     * @private
-     */
-    fireClose: function(){
-        this.fireEvent('close', this);
-    },
-
-    /**
-     * @private
-     */
-    onEnterKey: function(e) {
-        var me = this;
-
-        if (me.tabBar) {
-            me.tabBar.onClick(e, me.el);
-        }
-    },
-
-   /**
-     * @private
-     */
-    onDeleteKey: function(e) {
-        if (this.closable) {
-            this.onCloseClick();
-        }
-    },
-
-    // @private
-    activate : function(supressEvent) {
-        var me = this;
-
-        me.active = true;
-        me.addClsWithUI([me.activeCls, me.position + '-' + me.activeCls]);
-
-        if (supressEvent !== true) {
-            me.fireEvent('activate', me);
-        }
-    },
-
-    // @private
-    deactivate : function(supressEvent) {
-        var me = this;
-
-        me.active = false;
-        me.removeClsWithUI([me.activeCls, me.position + '-' + me.activeCls]);
-
-        if (supressEvent !== true) {
-            me.fireEvent('deactivate', me);
-        }
-    }
-});
-
-/*
-This file is part of Ext JS 4.2
-
-Copyright (c) 2011-2013 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-GNU General Public License Usage
-This file may be used under the terms of the GNU General Public License version 3.0 as
-published by the Free Software Foundation and appearing in the file LICENSE included in the
-packaging of this file.
-
-Please review the following information to ensure the GNU General Public License version 3.0
-requirements will be met: http://www.gnu.org/copyleft/gpl.html.
-
-If you are unsure which license is appropriate for your use, please contact the sales department
-at http://www.sencha.com/contact.
-
-Build date: 2013-05-16 14:36:50 (f9be68accb407158ba2b1be2c226a6ce1f649314)
-*/
-/**
  * Represents a 2D point with x and y properties, useful for comparison and instantiation
  * from an event:
  *
@@ -107701,1194 +106890,6 @@ at http://www.sencha.com/contact.
 Build date: 2013-05-16 14:36:50 (f9be68accb407158ba2b1be2c226a6ce1f649314)
 */
 /**
- * @author Ed Spencer
- * TabBar is used internally by a {@link Ext.tab.Panel TabPanel} and typically should not need to be created manually.
- * The tab bar automatically removes the default title provided by {@link Ext.panel.Header}
- */
-Ext.define('Ext.tab.Bar', {
-    extend:  Ext.panel.Header ,
-    alias: 'widget.tabbar',
-    baseCls: Ext.baseCSSPrefix + 'tab-bar',
-
-               
-                      
-                        
-      
-
-    /**
-     * @property {Boolean} isTabBar
-     * `true` in this class to identify an object as an instantiated Tab Bar, or subclass thereof.
-     */
-    isTabBar: true,
-    
-    /**
-     * @cfg {String} title @hide
-     */
-    
-    /**
-     * @cfg {String} iconCls @hide
-     */
-
-    // @private
-    defaultType: 'tab',
-
-    /**
-     * @cfg {Boolean} plain
-     * True to not show the full background on the tabbar
-     */
-    plain: false,
-
-    childEls: [
-        'body', 'strip'
-    ],
-
-    // @private
-    renderTpl: [
-        '<div id="{id}-body" class="{baseCls}-body {bodyCls} {bodyTargetCls}{childElCls}<tpl if="ui"> {baseCls}-body-{ui}<tpl for="uiCls"> {parent.baseCls}-body-{parent.ui}-{.}</tpl></tpl>"<tpl if="bodyStyle"> style="{bodyStyle}"</tpl>>',
-            '{%this.renderContainer(out,values)%}',
-        '</div>',
-        '<div id="{id}-strip" class="{baseCls}-strip {baseCls}-strip-{dock}{childElCls}',
-            '<tpl if="ui"> {baseCls}-strip-{ui}',
-                '<tpl for="uiCls"> {parent.baseCls}-strip-{parent.ui}-{.}</tpl>',
-            '</tpl>">',
-        '</div>'
-    ],
-
-    /**
-     * @cfg {Number} minTabWidth
-     * The minimum width for a tab in this tab Bar. Defaults to the tab Panel's {@link Ext.tab.Panel#minTabWidth minTabWidth} value.
-     * @deprecated This config is deprecated. It is much easier to use the {@link Ext.tab.Panel#minTabWidth minTabWidth} config on the TabPanel.
-     */
-
-    /**
-     * @cfg {Number} maxTabWidth
-     * The maximum width for a tab in this tab Bar. Defaults to the tab Panel's {@link Ext.tab.Panel#maxTabWidth maxTabWidth} value.
-     * @deprecated This config is deprecated. It is much easier to use the {@link Ext.tab.Panel#maxTabWidth maxTabWidth} config on the TabPanel.
-     */
-
-    _reverseDockNames: {
-        left: 'right',
-        right: 'left'
-    },
-
-    // @private
-    initComponent: function() {
-        var me = this;
-
-        if (me.plain) {
-            me.addCls(me.baseCls + '-plain');
-        }
-
-        me.addClsWithUI(me.orientation);
-
-        me.addEvents(
-            /**
-             * @event change
-             * Fired when the currently-active tab has changed
-             * @param {Ext.tab.Bar} tabBar The TabBar
-             * @param {Ext.tab.Tab} tab The new Tab
-             * @param {Ext.Component} card The card that was just shown in the TabPanel
-             */
-            'change'
-        );
-
-        // Element onClick listener added by Header base class
-        me.callParent(arguments);
-        Ext.merge(me.layout, me.initialConfig.layout);
-
-        // TabBar must override the Header's align setting.
-        me.layout.align = (me.orientation == 'vertical') ? 'left' : 'top';
-        me.layout.overflowHandler = new Ext.layout.container.boxOverflow.Scroller(me.layout);
-
-        me.remove(me.titleCmp);
-        delete me.titleCmp;
-
-        Ext.apply(me.renderData, {
-            bodyCls: me.bodyCls,
-            dock: me.dock
-        });
-    },
-
-    onRender: function() {
-        var me = this;
-
-        me.callParent();
-
-        if (me.orientation === 'vertical' && (Ext.isIE8 || Ext.isIE9) && Ext.isStrict) {
-            me.el.on({
-                mousemove: me.onMouseMove, 
-                scope: me
-            });
-        }
-    },
-
-    afterRender: function() {
-        var layout = this.layout;
-
-        this.callParent();
-        if (Ext.isIE9 && Ext.isStrict && this.orientation === 'vertical') {
-            // EXTJSIV-8765: focusing a vertically-oriented tab in IE9 strict can cause
-            // the innerCt to scroll if the tabs have bordering.  
-            layout.innerCt.on('scroll', function() {
-                layout.innerCt.dom.scrollLeft = 0;
-            });
-        }
-    },
-
-    afterLayout: function() {
-        this.adjustTabPositions();
-        this.callParent(arguments);
-    },
-
-    adjustTabPositions: function() {
-        var items = this.items.items,
-            i = items.length,
-            tab;
-
-        // When tabs are rotated vertically we don't have a reliable way to position
-        // them using CSS in modern browsers.  This is because of the way transform-orign
-        // works - it requires the width to be known, and the width is not known in css.
-        // Consequently we have to make an adjustment to the tab's position in these browsers.
-        // This is similar to what we do in Ext.panel.Header#adjustTitlePosition
-        if (!Ext.isIE9m) {
-            if (this.dock === 'right') {
-                // rotated 90 degrees around using the top left corner as the axis.
-                // tabs need to be shifted to the right by their width
-                while (i--) {
-                    tab = items[i];
-                    if (tab.isVisible()) {
-                        tab.el.setStyle('left', tab.lastBox.width + 'px');
-                    }
-                }
-            } else if (this.dock === 'left') {
-                // rotated 270 degrees around using the top left corner as the axis.
-                // tabs need to be shifted down by their height
-                while (i--) {
-                    tab = items[i];
-                    if (tab.isVisible()) {
-                        tab.el.setStyle('left', -tab.lastBox.height + 'px');
-                    }
-                }
-            }
-        }
-    },
-
-    getLayout: function() {
-        var me = this;
-        me.layout.type = (me.orientation === 'horizontal') ? 'hbox' : 'vbox';
-        return me.callParent(arguments);
-    },
-
-    // @private
-    onAdd: function(tab) {
-        tab.position = this.dock;
-        this.callParent(arguments);
-    },
-    
-    onRemove: function(tab) {
-        var me = this;
-        
-        if (tab === me.previousTab) {
-            me.previousTab = null;
-        }
-        me.callParent(arguments);    
-    },
-
-    afterComponentLayout : function(width) {
-        var me = this,
-            needsScroll = me.needsScroll;
-        
-        me.callParent(arguments);
-            
-        if (needsScroll) {
-            me.layout.overflowHandler.scrollToItem(me.activeTab);
-        }    
-        delete me.needsScroll;
-    },
-
-    // @private
-    onClick: function(e, target) {
-        var me = this,
-            tabPanel = me.tabPanel,
-            tabEl, tab, isCloseClick, tabInfo;
-
-        if (e.getTarget('.' + Ext.baseCSSPrefix + 'box-scroller')) {
-            return;
-        }
-
-        if (me.orientation === 'vertical' && (Ext.isIE8 || Ext.isIE9) && Ext.isStrict) {
-            tabInfo = me.getTabInfoFromPoint(e.getXY());
-            tab = tabInfo.tab;
-            isCloseClick = tabInfo.close;
-        } else {
-            // The target might not be a valid tab el.
-            tabEl = e.getTarget('.' + Ext.tab.Tab.prototype.baseCls);
-            tab = tabEl && Ext.getCmp(tabEl.id);
-            isCloseClick = tab && tab.closeEl && (target === tab.closeEl.dom);
-        }
-
-        if (isCloseClick) {
-            e.preventDefault();
-        }
-        if (tab && tab.isDisabled && !tab.isDisabled()) {
-            if (tab.closable && isCloseClick) {
-                tab.onCloseClick();
-            } else {
-                if (tabPanel) {
-                    // TabPanel will card setActiveTab of the TabBar
-                    tabPanel.setActiveTab(tab.card);
-                } else {
-                    me.setActiveTab(tab);
-                }
-                tab.focus();
-            }
-        }
-    },
-
-    // private
-    onMouseMove: function(e) {
-        var me = this,
-            overTab = me._overTab,
-            tabInfo, tab;
-
-        if (e.getTarget('.' + Ext.baseCSSPrefix + 'box-scroller')) {
-            return;
-        }
-
-        tabInfo = me.getTabInfoFromPoint(e.getXY());
-        tab = tabInfo.tab;
-
-        if (tab !== overTab) {
-            if (overTab && overTab.rendered) {
-                overTab.onMouseLeave(e);
-                me._overTab = null;
-            }
-            if (tab) {
-                tab.onMouseEnter(e);
-                me._overTab = tab;
-                if (!tab.disabled) {
-                    me.el.setStyle('cursor', 'pointer');
-                }
-            } else {
-                me.el.setStyle('cursor', 'default');
-            }
-        }
-    },
-
-    onMouseLeave: function(e) {
-        var overTab = this._overTab;
-
-        if (overTab && overTab.rendered) {
-            overTab.onMouseLeave(e);
-        }
-    },
-
-    // @private
-    // in IE8 and IE9 the clickable region of a rotated element is not its new rotated
-    // position, but it's original unrotated position.  The result is that rotated tabs do
-    // not capture click and mousenter/mosueleave events correctly.  This method accepts
-    // an xy position and calculates if the coordinates are within a tab and if they
-    // are within the tab's close icon (if any)
-    getTabInfoFromPoint: function(xy) {
-        var me = this,
-            tabs = me.items.items,
-            length = tabs.length,
-            innerCt = me.layout.innerCt,
-            innerCtXY = innerCt.getXY(),
-            point = new Ext.util.Point(xy[0], xy[1]),
-            i = 0,
-            lastBox, tabRegion, closeEl, close, closeXY, closeX, closeY, closeWidth,
-            closeHeight, tabX, tabY, tabWidth, tabHeight, closeRegion, isTabReversed,
-            direction, tab;
-
-        for (; i < length; i++) {
-            lastBox = tabs[i].lastBox;
-            tabX = innerCtXY[0] + lastBox.x;
-            tabY = innerCtXY[1] - innerCt.dom.scrollTop + lastBox.y;
-            tabWidth = lastBox.width;
-            tabHeight = lastBox.height;
-            tabRegion = new Ext.util.Region(
-                tabY,
-                tabX + tabWidth,
-                tabY + tabHeight,
-                tabX
-            );
-            if (tabRegion.contains(point)) {
-                tab = tabs[i];
-                closeEl = tab.closeEl;
-                if (closeEl) {
-                    closeXY = closeEl.getXY();
-                    closeWidth = closeEl.getWidth();
-                    closeHeight = closeEl.getHeight();
-                    // Read the dom to determine if the contents of the tab are reversed
-                    // (rotated 180 degrees).  If so, we can cache the result becuase
-                    // it's safe to assume all tabs in the tabbar will be the same
-                    if (me._isTabReversed === undefined) {
-                        me._isTabReversed = isTabReversed =
-                        // use currentStyle because getComputedStyle won't get the
-                        // filter property in IE9
-                        (tab.btnWrap.dom.currentStyle.filter.indexOf('rotation=2') !== -1);
-                    }
-
-                    direction = isTabReversed ? this._reverseDockNames[me.dock] : me.dock;
-
-                    if (direction === 'right') {
-                        closeX = tabX + tabWidth - ((closeXY[1] - tabY) + closeEl.getHeight()); 
-                        closeY = tabY + (closeXY[0] - tabX); 
-                    } else {
-                        closeX = tabX + (closeXY[1] - tabY);
-                        closeY = tabY + tabX + tabHeight - closeXY[0] - closeEl.getWidth();
-                    }
-                        
-                    closeRegion = new Ext.util.Region(
-                        closeY,
-                        closeX + closeWidth,
-                        closeY + closeHeight,
-                        closeX
-                    );
-
-                    close = closeRegion.contains(point);
-                }
-                break;
-            }
-        }
-            
-        return {
-            tab: tab,
-            close: close
-        };
-    },
-
-    /**
-     * @private
-     * Closes the given tab by removing it from the TabBar and removing the corresponding card from the TabPanel
-     * @param {Ext.tab.Tab} toClose The tab to close
-     */
-    closeTab: function(toClose) {
-        var me = this,
-            card = toClose.card,
-            tabPanel = me.tabPanel,
-            toActivate;
-
-        if (card && card.fireEvent('beforeclose', card) === false) {
-            return false;
-        }
-        
-        // If we are closing the active tab, revert to the previously active tab (or the previous or next enabled sibling if
-        // there *is* no previously active tab, or the previously active tab is the one that's being closed or the previously
-        // active tab has since been disabled)
-        toActivate = me.findNextActivatable(toClose);
-
-        // We are going to remove the associated card, and then, if that was sucessful, remove the Tab,
-        // And then potentially activate another Tab. We should not layout for each of these operations.
-        Ext.suspendLayouts();
-
-        if (tabPanel && card) {
-            // Remove the ownerCt so the tab doesn't get destroyed if the remove is successful
-            // We need this so we can have the tab fire it's own close event.
-            delete toClose.ownerCt;
-            
-            // we must fire 'close' before removing the card from panel, otherwise
-            // the event will no loger have any listener
-            card.fireEvent('close', card);
-            tabPanel.remove(card);
-            
-            // Remove succeeded
-            if (!tabPanel.getComponent(card)) {
-                /*
-                 * Force the close event to fire. By the time this function returns,
-                 * the tab is already destroyed and all listeners have been purged
-                 * so the tab can't fire itself.
-                 */
-                toClose.fireClose();
-                me.remove(toClose);
-            } else {
-                // Restore the ownerCt from above
-                toClose.ownerCt = me;
-                Ext.resumeLayouts(true);
-                return false;
-            }
-        }
-
-        // If we are closing the active tab, revert to the previously active tab (or the previous sibling or the nnext sibling)
-        if (toActivate) {
-            // Our owning TabPanel calls our setActiveTab method, so only call that if this Bar is being used
-            // in some other context (unlikely)
-            if (tabPanel) {
-                tabPanel.setActiveTab(toActivate.card);
-            } else {
-                me.setActiveTab(toActivate);
-            }
-            toActivate.focus();
-        }
-        Ext.resumeLayouts(true);
-    },
-
-    // private - used by TabPanel too.
-    // Works out the next tab to activate when one tab is closed.
-    findNextActivatable: function(toClose) {
-        var me = this;
-        if (toClose.active && me.items.getCount() > 1) {
-            return (me.previousTab && me.previousTab !== toClose && !me.previousTab.disabled) ? me.previousTab : (toClose.next('tab[disabled=false]') || toClose.prev('tab[disabled=false]'));
-        }
-    },
-
-    /**
-     * @private
-     * Marks the given tab as active
-     * @param {Ext.tab.Tab} tab The tab to mark active
-     * @param {Boolean} initial True if we're setting the tab during setup
-     */
-    setActiveTab: function(tab, initial) {
-        var me = this;
-
-        if (!tab.disabled && tab !== me.activeTab) {
-            if (me.activeTab) {
-                if (me.activeTab.isDestroyed) {
-                    me.previousTab = null;
-                } else {
-                    me.previousTab = me.activeTab;
-                    me.activeTab.deactivate();
-                }
-            }
-            tab.activate();
-
-            me.activeTab = tab;
-            me.needsScroll = true;
-            
-            // We don't fire the change event when setting the first tab.
-            // Also no need to run a layout
-            if (!initial) {
-                me.fireEvent('change', me, tab, tab.card);
-                // Ensure that after the currently in progress layout, the active tab is scrolled into view
-                me.updateLayout();
-            }
-        }
-    }
-});
-
-/*
-This file is part of Ext JS 4.2
-
-Copyright (c) 2011-2013 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-GNU General Public License Usage
-This file may be used under the terms of the GNU General Public License version 3.0 as
-published by the Free Software Foundation and appearing in the file LICENSE included in the
-packaging of this file.
-
-Please review the following information to ensure the GNU General Public License version 3.0
-requirements will be met: http://www.gnu.org/copyleft/gpl.html.
-
-If you are unsure which license is appropriate for your use, please contact the sales department
-at http://www.sencha.com/contact.
-
-Build date: 2013-05-16 14:36:50 (f9be68accb407158ba2b1be2c226a6ce1f649314)
-*/
-/**
- * @author Ed Spencer, Tommy Maintz, Brian Moeskau
- *
- * A basic tab container. TabPanels can be used exactly like a standard {@link Ext.panel.Panel} for
- * layout purposes, but also have special support for containing child Components
- * (`{@link Ext.container.Container#cfg-items items}`) that are managed using a
- * {@link Ext.layout.container.Card CardLayout layout manager}, and displayed as separate tabs.
- *
- * **Note:** By default, a tab's close tool _destroys_ the child tab Component and all its descendants.
- * This makes the child tab Component, and all its descendants **unusable**.  To enable re-use of a tab,
- * configure the TabPanel with `{@link #autoDestroy autoDestroy: false}`.
- *
- * ## TabPanel's layout
- *
- * TabPanels use a Dock layout to position the {@link Ext.tab.Bar TabBar} at the top of the widget.
- * Panels added to the TabPanel will have their header hidden by default because the Tab will
- * automatically take the Panel's configured title and icon.
- *
- * TabPanels use their {@link Ext.panel.Header header} or {@link Ext.panel.Panel#fbar footer}
- * element (depending on the {@link #tabPosition} configuration) to accommodate the tab selector buttons.
- * This means that a TabPanel will not display any configured title, and will not display any configured
- * header {@link Ext.panel.Panel#tools tools}.
- *
- * To display a header, embed the TabPanel in a {@link Ext.panel.Panel Panel} which uses
- * `{@link Ext.container.Container#layout layout: 'fit'}`.
- *
- * ## Controlling tabs
- *
- * Configuration options for the {@link Ext.tab.Tab} that represents the component can be passed in
- * by specifying the tabConfig option:
- *
- *     @example
- *     Ext.create('Ext.tab.Panel', {
- *         width: 400,
- *         height: 400,
- *         renderTo: document.body,
- *         items: [{
- *             title: 'Foo'
- *         }, {
- *             title: 'Bar',
- *             tabConfig: {
- *                 title: 'Custom Title',
- *                 tooltip: 'A button tooltip'
- *             }
- *         }]
- *     });
- * 
- * ## Vetoing Changes
- * 
- * User interaction when changing the tabs can be vetoed by listening to the {@link #beforetabchange} event.
- * By returning `false`, the tab change will not occur.
- * 
- *     @example
- *     Ext.create('Ext.tab.Panel', {
- *         renderTo: Ext.getBody(),
- *         width: 200,
- *         height: 200,
- *         listeners: {
- *             beforetabchange: function(tabs, newTab, oldTab) {
- *                 return newTab.title != 'P2';
- *             }
- *         },
- *         items: [{
- *             title: 'P1'
- *         }, {
- *             title: 'P2'
- *         }, {
- *             title: 'P3'
- *         }]
- *     }); 
- *
- * # Examples
- *
- * Here is a basic TabPanel rendered to the body. This also shows the useful configuration {@link #activeTab},
- * which allows you to set the active tab on render. If you do not set an {@link #activeTab}, no tabs will be
- * active by default.
- *
- *     @example
- *     Ext.create('Ext.tab.Panel', {
- *         width: 300,
- *         height: 200,
- *         activeTab: 0,
- *         items: [
- *             {
- *                 title: 'Tab 1',
- *                 bodyPadding: 10,
- *                 html : 'A simple tab'
- *             },
- *             {
- *                 title: 'Tab 2',
- *                 html : 'Another one'
- *             }
- *         ],
- *         renderTo : Ext.getBody()
- *     });
- *
- * It is easy to control the visibility of items in the tab bar. Specify hidden: true to have the
- * tab button hidden initially. Items can be subsequently hidden and show by accessing the
- * tab property on the child item.
- *
- *     @example
- *     var tabs = Ext.create('Ext.tab.Panel', {
- *         width: 400,
- *         height: 400,
- *         renderTo: document.body,
- *         items: [{
- *             title: 'Home',
- *             html: 'Home',
- *             itemId: 'home'
- *         }, {
- *             title: 'Users',
- *             html: 'Users',
- *             itemId: 'users',
- *             hidden: true
- *         }, {
- *             title: 'Tickets',
- *             html: 'Tickets',
- *             itemId: 'tickets'
- *         }]
- *     });
- *
- *     setTimeout(function(){
- *         tabs.child('#home').tab.hide();
- *         var users = tabs.child('#users');
- *         users.tab.show();
- *         tabs.setActiveTab(users);
- *     }, 1000);
- *
- * You can remove the background of the TabBar by setting the {@link #plain} property to `true`.
- *
- *     @example
- *     Ext.create('Ext.tab.Panel', {
- *         width: 300,
- *         height: 200,
- *         activeTab: 0,
- *         plain: true,
- *         items: [
- *             {
- *                 title: 'Tab 1',
- *                 bodyPadding: 10,
- *                 html : 'A simple tab'
- *             },
- *             {
- *                 title: 'Tab 2',
- *                 html : 'Another one'
- *             }
- *         ],
- *         renderTo : Ext.getBody()
- *     });
- *
- * Another useful configuration of TabPanel is {@link #tabPosition}. This allows you to change the
- * position where the tabs are displayed. The available options for this are `'top'` (default) and
- * `'bottom'`.
- *
- *     @example
- *     Ext.create('Ext.tab.Panel', {
- *         width: 300,
- *         height: 200,
- *         activeTab: 0,
- *         bodyPadding: 10,
- *         tabPosition: 'bottom',
- *         items: [
- *             {
- *                 title: 'Tab 1',
- *                 html : 'A simple tab'
- *             },
- *             {
- *                 title: 'Tab 2',
- *                 html : 'Another one'
- *             }
- *         ],
- *         renderTo : Ext.getBody()
- *     });
- *
- * The {@link #setActiveTab} is a very useful method in TabPanel which will allow you to change the
- * current active tab. You can either give it an index or an instance of a tab. For example:
- *
- *     @example
- *     var tabs = Ext.create('Ext.tab.Panel', {
- *         items: [
- *             {
- *                 id   : 'my-tab',
- *                 title: 'Tab 1',
- *                 html : 'A simple tab'
- *             },
- *             {
- *                 title: 'Tab 2',
- *                 html : 'Another one'
- *             }
- *         ],
- *         renderTo : Ext.getBody()
- *     });
- *
- *     var tab = Ext.getCmp('my-tab');
- *
- *     Ext.create('Ext.button.Button', {
- *         renderTo: Ext.getBody(),
- *         text    : 'Select the first tab',
- *         scope   : this,
- *         handler : function() {
- *             tabs.setActiveTab(tab);
- *         }
- *     });
- *
- *     Ext.create('Ext.button.Button', {
- *         text    : 'Select the second tab',
- *         scope   : this,
- *         handler : function() {
- *             tabs.setActiveTab(1);
- *         },
- *         renderTo : Ext.getBody()
- *     });
- *
- * The {@link #getActiveTab} is a another useful method in TabPanel which will return the current active tab.
- *
- *     @example
- *     var tabs = Ext.create('Ext.tab.Panel', {
- *         items: [
- *             {
- *                 title: 'Tab 1',
- *                 html : 'A simple tab'
- *             },
- *             {
- *                 title: 'Tab 2',
- *                 html : 'Another one'
- *             }
- *         ],
- *         renderTo : Ext.getBody()
- *     });
- *
- *     Ext.create('Ext.button.Button', {
- *         text    : 'Get active tab',
- *         scope   : this,
- *         handler : function() {
- *             var tab = tabs.getActiveTab();
- *             alert('Current tab: ' + tab.title);
- *         },
- *         renderTo : Ext.getBody()
- *     });
- *
- * Adding a new tab is very simple with a TabPanel. You simple call the {@link #method-add} method with an config
- * object for a panel.
- *
- *     @example
- *     var tabs = Ext.create('Ext.tab.Panel', {
- *         items: [
- *             {
- *                 title: 'Tab 1',
- *                 html : 'A simple tab'
- *             },
- *             {
- *                 title: 'Tab 2',
- *                 html : 'Another one'
- *             }
- *         ],
- *         renderTo : Ext.getBody()
- *     });
- *
- *     Ext.create('Ext.button.Button', {
- *         text    : 'New tab',
- *         scope   : this,
- *         handler : function() {
- *             var tab = tabs.add({
- *                 // we use the tabs.items property to get the length of current items/tabs
- *                 title: 'Tab ' + (tabs.items.length + 1),
- *                 html : 'Another one'
- *             });
- *
- *             tabs.setActiveTab(tab);
- *         },
- *         renderTo : Ext.getBody()
- *     });
- *
- * Additionally, removing a tab is very also simple with a TabPanel. You simple call the {@link #method-remove} method
- * with an config object for a panel.
- *
- *     @example
- *     var tabs = Ext.create('Ext.tab.Panel', {
- *         items: [
- *             {
- *                 title: 'Tab 1',
- *                 html : 'A simple tab'
- *             },
- *             {
- *                 id   : 'remove-this-tab',
- *                 title: 'Tab 2',
- *                 html : 'Another one'
- *             }
- *         ],
- *         renderTo : Ext.getBody()
- *     });
- *
- *     Ext.create('Ext.button.Button', {
- *         text    : 'Remove tab',
- *         scope   : this,
- *         handler : function() {
- *             var tab = Ext.getCmp('remove-this-tab');
- *             tabs.remove(tab);
- *         },
- *         renderTo : Ext.getBody()
- *     });
- */
-Ext.define('Ext.tab.Panel', {
-    extend:  Ext.panel.Panel ,
-    alias: 'widget.tabpanel',
-    alternateClassName: ['Ext.TabPanel'],
-
-                                                           
-
-    /**
-     * @cfg {"top"/"bottom"/"left"/"right"} tabPosition
-     * The position where the tab strip should be rendered. Can be `top`, `bottom`,
-     * `left` or `right`
-     */
-    tabPosition : 'top',
-
-    /**
-     * @cfg {String/Number} activeItem
-     * Doesn't apply for {@link Ext.tab.Panel TabPanel}, use {@link #activeTab} instead.
-     */
-
-    /**
-     * @cfg {String/Number/Ext.Component} activeTab
-     * The tab to activate initially. Either an ID, index or the tab component itself.
-     */
-
-    /**
-     * @cfg {Object} tabBar
-     * Optional configuration object for the internal {@link Ext.tab.Bar}.
-     * If present, this is passed straight through to the TabBar's constructor
-     */
-
-    /**
-     * @cfg {Ext.enums.Layout/Object} layout
-     * Optional configuration object for the internal {@link Ext.layout.container.Card card layout}.
-     * If present, this is passed straight through to the layout's constructor
-     */
-
-    /**
-     * @cfg {Boolean} removePanelHeader
-     * True to instruct each Panel added to the TabContainer to not render its header element.
-     * This is to ensure that the title of the panel does not appear twice.
-     */
-    removePanelHeader: true,
-
-    /**
-     * @cfg {Boolean} plain
-     * True to not show the full background on the TabBar.
-     */
-    plain: false,
-
-    /**
-     * @cfg {String} [itemCls='x-tabpanel-child']
-     * The class added to each child item of this TabPanel.
-     */
-    itemCls: Ext.baseCSSPrefix + 'tabpanel-child',
-
-    /**
-     * @cfg {Number} minTabWidth
-     * The minimum width for a tab in the {@link #cfg-tabBar}.
-     */
-    minTabWidth: undefined,
-
-    /**
-     * @cfg {Number} maxTabWidth The maximum width for each tab.
-     */
-    maxTabWidth: undefined,
-
-    /**
-     * @cfg {Boolean} deferredRender
-     *
-     * True by default to defer the rendering of child {@link Ext.container.Container#cfg-items items} to the browsers DOM
-     * until a tab is activated. False will render all contained {@link Ext.container.Container#cfg-items items} as soon as
-     * the {@link Ext.layout.container.Card layout} is rendered. If there is a significant amount of content or a lot of
-     * heavy controls being rendered into panels that are not displayed by default, setting this to true might improve
-     * performance.
-     *
-     * The deferredRender property is internally passed to the layout manager for TabPanels ({@link
-     * Ext.layout.container.Card}) as its {@link Ext.layout.container.Card#deferredRender} configuration value.
-     *
-     * **Note**: leaving deferredRender as true means that the content within an unactivated tab will not be available
-     */
-    deferredRender : true,
-
-    //inherit docs
-    initComponent: function() {
-        var me = this,
-            dockedItems = [].concat(me.dockedItems || []),
-            activeTab = me.activeTab || (me.activeTab = 0),
-            tabPosition = me.tabPosition;
-
-        // Configure the layout with our deferredRender, and with our activeTeb
-        me.layout = new Ext.layout.container.Card(Ext.apply({
-            owner: me,
-            deferredRender: me.deferredRender,
-            itemCls: me.itemCls,
-            activeItem: activeTab
-        }, me.layout));
-
-        /**
-         * @property {Ext.tab.Bar} tabBar Internal reference to the docked TabBar
-         */
-        me.tabBar = new Ext.tab.Bar(Ext.apply({
-            ui: me.ui,
-            dock: me.tabPosition,
-            orientation: (tabPosition == 'top' || tabPosition == 'bottom') ? 'horizontal' : 'vertical',
-            plain: me.plain,
-            cardLayout: me.layout,
-            tabPanel: me
-        }, me.tabBar));
-
-        dockedItems.push(me.tabBar);
-        me.dockedItems = dockedItems;
-
-        me.addEvents(
-            /**
-             * @event
-             * Fires before a tab change (activated by {@link #setActiveTab}). Return false in any listener to cancel
-             * the tabchange
-             * @param {Ext.tab.Panel} tabPanel The TabPanel
-             * @param {Ext.Component} newCard The card that is about to be activated
-             * @param {Ext.Component} oldCard The card that is currently active
-             */
-            'beforetabchange',
-
-            /**
-             * @event
-             * Fires when a new tab has been activated (activated by {@link #setActiveTab}).
-             * @param {Ext.tab.Panel} tabPanel The TabPanel
-             * @param {Ext.Component} newCard The newly activated item
-             * @param {Ext.Component} oldCard The previously active item
-             */
-            'tabchange'
-        );
-
-        me.callParent(arguments);
-
-        // We have to convert the numeric index/string ID config into its component reference
-        activeTab = me.activeTab = me.getComponent(activeTab);
-
-        // Ensure that the active child's tab is rendered in the active UI state
-        if (activeTab) {
-        	me.tabBar.setActiveTab(activeTab.tab, true);
-        }
-    },
-
-    /**
-     * Makes the given card active. Makes it the visible card in the TabPanel's CardLayout and highlights the Tab.
-     * @param {String/Number/Ext.Component} card The card to make active. Either an ID, index or the component itself.
-     * @return {Ext.Component} The resulting active child Component. The call may have been vetoed, or otherwise
-     * modified by an event listener.
-     */
-    setActiveTab: function(card) {
-        var me = this,
-            previous;
-
-        card = me.getComponent(card);
-        if (card) {
-            previous = me.getActiveTab();
-
-            if (previous !== card && me.fireEvent('beforetabchange', me, card, previous) === false) {
-                return false;
-            }
-
-            // We may be passed a config object, so add it.
-            // Without doing a layout!
-            if (!card.isComponent) {
-                Ext.suspendLayouts();
-                card = me.add(card);
-                Ext.resumeLayouts();
-            }
-
-            // MUST set the activeTab first so that the machinery which listens for show doesn't
-            // think that the show is "driving" the activation and attempt to recurse into here.
-            me.activeTab = card;
-
-            // Attempt to switch to the requested card. Suspend layouts because if that was successful
-            // we have to also update the active tab in the tab bar which is another layout operation
-            // and we must coalesce them.
-            Ext.suspendLayouts();
-            me.layout.setActiveItem(card);
-
-            // Read the result of the card layout. Events dear boy, events!
-            card = me.activeTab = me.layout.getActiveItem();
-
-            // Card switch was not vetoed by an event listener
-            if (card && card !== previous) {
-
-                // Update the active tab in the tab bar and resume layouts.
-                me.tabBar.setActiveTab(card.tab);
-                Ext.resumeLayouts(true);
-
-                // previous will be undefined or this.activeTab at instantiation
-                if (previous !== card) {
-                    me.fireEvent('tabchange', me, card, previous);
-                }
-            }
-            // Card switch was vetoed by an event listener. Resume layouts (Nothing should have changed on a veto).
-            else {
-                Ext.resumeLayouts(true);
-            }
-            return card;
-        }
-    },
-
-    /**
-     * Returns the item that is currently active inside this TabPanel.
-     * @return {Ext.Component} The currently active item.
-     */
-    getActiveTab: function() {
-        var me = this,
-            // Ensure the calculated result references a Component
-            result = me.getComponent(me.activeTab);
-
-        // Sanitize the result in case the active tab is no longer there.
-        if (result && me.items.indexOf(result) != -1) {
-            me.activeTab = result;
-        } else {
-            me.activeTab = null;
-        }
-
-        return me.activeTab;
-    },
-
-    /**
-     * Returns the {@link Ext.tab.Bar} currently used in this TabPanel
-     * @return {Ext.tab.Bar} The TabBar
-     */
-    getTabBar: function() {
-        return this.tabBar;
-    },
-
-    /**
-     * @protected
-     * Makes sure we have a Tab for each item added to the TabPanel
-     */
-    onAdd: function(item, index) {
-        var me = this,
-            cfg = item.tabConfig || {},
-            defaultConfig = {
-                xtype: 'tab',
-                ui: me.tabBar.ui,
-                card: item,
-                disabled: item.disabled,
-                closable: item.closable,
-                hidden: item.hidden && !item.hiddenByLayout, // only hide if it wasn't hidden by the layout itself
-                tooltip: item.tooltip,
-                tabBar: me.tabBar,
-                position: me.tabPosition,
-                closeText: item.closeText
-            };
-
-        cfg = Ext.applyIf(cfg, defaultConfig);
-
-        // Create the correspondiong tab in the tab bar
-        item.tab = me.tabBar.insert(index, cfg);
-
-        item.on({
-            scope : me,
-            enable: me.onItemEnable,
-            disable: me.onItemDisable,
-            beforeshow: me.onItemBeforeShow,
-            iconchange: me.onItemIconChange,
-            iconclschange: me.onItemIconClsChange,
-            titlechange: me.onItemTitleChange
-        });
-
-        if (item.isPanel) {
-            if (me.removePanelHeader) {
-                if (item.rendered) {
-                    if (item.header) {
-                        item.header.hide();
-                    }
-                } else {
-                    item.header = false;
-                }
-            }
-            if (item.isPanel && me.border) {
-                item.setBorder(false);
-            }
-        }
-    },
-
-    /**
-     * @private
-     * Enable corresponding tab when item is enabled.
-     */
-    onItemEnable: function(item){
-        item.tab.enable();
-    },
-
-    /**
-     * @private
-     * Disable corresponding tab when item is enabled.
-     */
-    onItemDisable: function(item){
-        item.tab.disable();
-    },
-
-    /**
-     * @private
-     * Sets activeTab before item is shown.
-     */
-    onItemBeforeShow: function(item) {
-        if (item !== this.activeTab) {
-            this.setActiveTab(item);
-            return false;
-        }
-    },
-
-    /**
-     * @private
-     * Update the tab icon when panel icon has been set or changed.
-     */
-    onItemIconChange: function(item, newIcon) {
-        item.tab.setIcon(newIcon);
-    },
-    
-    /**
-     * @private
-     * Update the tab iconCls when panel iconCls has been set or changed.
-     */
-    onItemIconClsChange: function(item, newIconCls) {
-        item.tab.setIconCls(newIconCls);
-    },
-
-    /**
-     * @private
-     * Update the tab title when panel title has been set or changed.
-     */
-    onItemTitleChange: function(item, newTitle) {
-        item.tab.setText(newTitle);
-    },
-
-    /**
-     * @private
-     * Unlink the removed child item from its (@link Ext.tab.Tab Tab}.
-     * 
-     * If we're removing the currently active tab, activate the nearest one. The item is removed when we call super,
-     * so we can do preprocessing before then to find the card's index
-     */
-    doRemove: function(item, autoDestroy) {
-        var me = this,
-            toActivate;
-
-        // Destroying, or removing the last item, nothing to activate
-        if (me.destroying || me.items.getCount() == 1) {
-            me.activeTab = null;
-        }
-
-        // Ask the TabBar which tab to activate next.
-        // Set the active child panel using the index of that tab
-        else if ((toActivate = me.tabBar.items.indexOf(me.tabBar.findNextActivatable(item.tab))) !== -1) {
-             me.setActiveTab(toActivate);
-        }
-        this.callParent(arguments);
-
-        // Remove the two references
-        delete item.tab.card;
-        delete item.tab;
-    },
-
-    /**
-     * @private
-     * Makes sure we remove the corresponding Tab when an item is removed
-     */
-    onRemove: function(item, destroying) {
-        var me = this;
-
-        item.un({
-            scope : me,
-            enable: me.onItemEnable,
-            disable: me.onItemDisable,
-            beforeshow: me.onItemBeforeShow
-        });
-        if (!me.destroying && item.tab.ownerCt === me.tabBar) {
-            me.tabBar.remove(item.tab);
-        }
-    }
-});
-
-/*
-This file is part of Ext JS 4.2
-
-Copyright (c) 2011-2013 Sencha Inc
-
-Contact:  http://www.sencha.com/contact
-
-GNU General Public License Usage
-This file may be used under the terms of the GNU General Public License version 3.0 as
-published by the Free Software Foundation and appearing in the file LICENSE included in the
-packaging of this file.
-
-Please review the following information to ensure the GNU General Public License version 3.0
-requirements will be met: http://www.gnu.org/copyleft/gpl.html.
-
-If you are unsure which license is appropriate for your use, please contact the sales department
-at http://www.sencha.com/contact.
-
-Build date: 2013-05-16 14:36:50 (f9be68accb407158ba2b1be2c226a6ce1f649314)
-*/
-/**
  * @class Ext.util.Grouper
 
 Represents a single grouper that can be applied to a Store. The grouper works
@@ -108916,55 +106917,201 @@ Ext.define('Ext.util.Grouper', {
         return instance.get(this.property);
     }
 });
+Ext.define('webUi.controller.Main', {
+    extend:  Ext.app.Controller ,
+    init: function(){
+		this.control({
+			'viewport > app-main' : {
+				render : this.onMainWindowRendered
+			}
+		});
+	},
+	onMainWindowRendered: function(){
+		console.log('Main Window Rendered');
+	},
+	onMainWindowTabRendered: function(){
+		console.log('Main Window TAB Rendered');
+	},
+	onMainWindowClicked: function(){
+		console.log('Main Window Clicked');
+	},
+	onMainWindowTabClicked: function(){
+		console.log('Main Window Clicked');
+	},
+	onPanelCollapse: function(){
+		console.log('Panel Collapsed');
+	},
+	onPanelExpand: function(){
+		console.log('Panel Expanded');
+	}
+});
+
 Ext.define('webUi.Application', {
     name: 'webUi',
-
+    appFolder: 'app',
     extend:  Ext.app.Application ,
-
     views: [
-        // TODO: add views here
+    
     ],
 
     controllers: [
-        // TODO: add controllers here
+                  'Main'
     ],
 
     stores: [
-        // TODO: add stores here
+
     ]
 });
 
-Ext.define('webUi.view.Main', {
-    extend:  Ext.container.Container ,
+/**
+ * This is the Header before user login
+ */
+Ext.define('webUi.view.common.GuestHeader', {
+    extend:  Ext.panel.Panel ,
               
-                        
                                      
       
-    
-    xtype: 'app-main',
+    xtype: 'd-guest-header',
+    html: '<img class="header-logo" src="/img/logo.png"/>'
+});
+/**
+ * This is the Copyright Widget placed in Footer
+ */
+Ext.define('webUi.view.common.Copyright', {
+    extend:  Ext.panel.Panel ,
+    xtype: 'd-copyright',
+    bodyPadding : '2 2 2 2',
+    margin: 2,
+    border: false,
+    layout: {
+        type: 'fit'
+    },
+    html: 'Copyright © 2013 <a href="http://www.v8-delta.com">v8-delta</a> Company. All Rights Reserved.'
+});
+/**
+ * This is the Contact Widget placed in Footer
+ */
+Ext.define('webUi.view.common.FooterContact', {
+    extend:  Ext.panel.Panel ,
+    xtype: 'd-footer-contact',
+//    bodyPadding : '10',
+    border: false,
+    layout: {
+        type: 'vbox',
+        align: 'center'
+    },
+    items: [
+        {
+        	html: '<b>Any Questions?</b>',
+        	border: false,
+        	padding: 5
+        }, {
+        	html:'mail to <a href="mailto:v8@v8-delta.com">v8@v8-delta.com</a> Or Call XXX-XXXX-XXXX',
+        	border: false
+        }
+    ]
+});
+/**
+ * This is the Logo Widget placed in Footer
+ */
+ Ext.define('webUi.view.common.FooterLogo', {
+	    extend:  Ext.panel.Panel ,
+	    xtype: 'd-footer-logo',
+	    bodyPadding : '2 2 2 2',
+//	    margin: 2,
+	    border: false,
+	    layout: {
+	        type: 'vbox',
+	        align: 'right'
+	    },
+	    items: [
+	        {
+	        	html: '<img src="img/footer-logo.png">',
+	        	border: false
+	        }
+	    ]
+	});
+/**
+ * This is the Header before user login
+ */
+Ext.define('webUi.view.common.Footer', {
+    extend:  Ext.panel.Panel ,
+              
+                                     
+      
+    xtype: 'd-footer',
+    margin: 2,
+    layout: {
+        type: 'hbox',
+        align: 'middle'
+    },
+    items: [
+        {
+        	xtype: 'd-copyright',
+        	flex: 1
+        },
+        {
+        	xtype: 'd-footer-contact',
+        	flex: 1
+        },
+        {
+        	xtype: 'd-footer-logo',
+        	flex: 1
+        }
+    ]
+});
+
+/**
+ * This is the rootpanel for the whole application
+ */
+Ext.define('webUi.view.Rootpanel', {
+    extend:  Ext.container.Container ,
+              
+                                     
+      
+    xtype: 'd-rootpanel',
 
     layout: {
-        type: 'border'
+        type: 'border',
+        padding: 2
     },
 
-    items: [{
-        region: 'west',
-        xtype: 'panel',
-        title: 'west',
-        width: 150
-    },{
-        region: 'center',
-        xtype: 'tabpanel',
-        items:[{
-            title: 'Center Tab 1'
-        }]
-    }]
+    items: [
+	    {
+	        region: 'north',
+	        xtype: 'd-guest-header',
+	        header : false,
+	        height: '10%',
+	        border: false
+	    },
+	    {
+	        region: 'center',
+	        xtype: 'panel',
+//	        title: 'Body',
+	        border: true,
+	        bodyPadding : 15,
+	        html: 'This is center panel'
+	    },
+	    {
+	        region: 'south',
+	        xtype: 'd-footer',
+	        header : false,
+	        height: '5%',
+	        border: false
+	    }
+    ]
 });
+
 Ext.define('webUi.view.Viewport', {
     extend:  Ext.container.Viewport ,
               
                                    
-                         
+                               
+                                        
+                                   
+                                      
+                                          
+                                      
       
 
     layout: {
@@ -108972,7 +107119,7 @@ Ext.define('webUi.view.Viewport', {
     },
 
     items: [{
-        xtype: 'app-main'
+        xtype: 'd-rootpanel'
     }]
 });
 

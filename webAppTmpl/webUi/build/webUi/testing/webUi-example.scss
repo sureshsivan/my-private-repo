@@ -538,8 +538,15 @@ $include-ext-window-window: true;
 $include-webui-application: true;
 $include-webui-app-application: true;
 $include-webui-controller-main: true;
+$include-webui-ui-label: true;
 $include-webui-view-main: true;
+$include-webui-view-rootpanel: true;
 $include-webui-view-viewport: true;
+$include-webui-view-common-copyright: true;
+$include-webui-view-common-footer: true;
+$include-webui-view-common-footercontact: true;
+$include-webui-view-common-footerlogo: true;
+$include-webui-view-common-guestheader: true;
 /* including package ext-theme-base */
 @import '../../../ext/packages/ext-theme-base/sass/etc/all';
 /* including package ext-theme-neutral */
