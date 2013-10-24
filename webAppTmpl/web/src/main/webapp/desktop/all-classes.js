@@ -107639,5 +107639,5 @@ Ext.application({
 });
 
 //@tag page-full-page
-//@require ../../webUi/app.js
+//@require ../../app.js
 

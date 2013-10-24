@@ -36,7 +36,11 @@
 								<delete dir="${sencha.desktop.client.dir}" />
 								<copy todir="${sencha.desktop.client.dir}">
 									<fileset
-										dir="${sencha.extjs.build.dir.name}/${artifactId}/${sencha.build.param.args.environment}" />
+										dir="${sencha.extjs.build.dir.name}/${artifactId}/${sencha.build.param.args.environment}" >
+										<exclude name="**/*.rb"/>
+										<exclude name="**/.*"/>
+										<exclude name="**/.*/**"/>
+									</fileset>
 								</copy>
 							</tasks>
 						</configuration>

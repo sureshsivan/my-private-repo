@@ -7,7 +7,11 @@
   <ant inheritRefs="true" target="build" inheritAll="true"/>
   <delete dir="../web/src/main/webapp/desktop"/>
   <copy todir="../web/src/main/webapp/desktop">
-    <fileset dir="build/webUi/testing"/>
+    <fileset dir="build/webUi/testing">
+      <exclude name="**/*.rb"/>
+      <exclude name="**/.*"/>
+      <exclude name="**/.*/**"/>
+    </fileset>
   </copy>
 </target>
 </project>
