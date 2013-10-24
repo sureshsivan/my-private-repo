@@ -3,7 +3,7 @@ Ext.define('webUi.Application', {
     appFolder: 'app',
     extend: 'Ext.app.Application',
     views: [
-    
+            
     ],
 
     controllers: [
@@ -11,6 +11,6 @@ Ext.define('webUi.Application', {
     ],
 
     stores: [
-
+         
     ]
 });
