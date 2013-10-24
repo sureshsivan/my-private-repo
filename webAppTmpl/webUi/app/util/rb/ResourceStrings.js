@@ -7,7 +7,6 @@ Ext.define('webUi.util.rb.ResourceStrings', {
 	constructor : function(){
 		var lang = webUi.util.AppSingleton.currentLocale;
 		// get prop values from lang var
-		
 	},
 	getStr : function(key, args){
 		var val = '';
