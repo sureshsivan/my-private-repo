@@ -26,6 +26,10 @@ public class MockController {
 	@ResponseBody
 	public MockObject secondMockController(){
 		System.out.println("222222");
+		System.out.println("243342354"); 
+		System.out.println("243342354))))");
+		System.out.println("------------");
+		System.out.println("%%%%%%%%%");
 		return new MockObject("One", "Two");
 	}	
 	
