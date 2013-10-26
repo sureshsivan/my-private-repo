@@ -60,9 +60,9 @@ Ext.define('webUi.util.rb.Bundle', {
                                 type: 'ajax',
                                 url: url,
                                 noCache: noCache,
-//                                reader: {
-//                                        type: 'property'
-//                                },
+                                reader: {
+                                        type: 'json'
+                                },
                                 //avoid sending limit, start & group params to server
                                 getParams: Ext.emptyFn
                         },

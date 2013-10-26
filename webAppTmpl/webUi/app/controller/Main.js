@@ -9,15 +9,13 @@ Ext.define('webUi.controller.Main', {
 	},
 	
 	onAppStart: function(){
-		var bundle = Ext.create('webUi.util.rb.Bundle',{
-								            bundle: 'Application',
-								            lang: 'es-ES',
-								            path: webUi.util.AppSingleton.uiRsrcUrl,   //'/web-1.0/mock/resources',
-								            noCache: false
-										}); 
+		
+		var bundle = Ext.create('webUi.util.rb.ResourceBundle');
 		bundle.onReady(function(){
-			console.log('Bundle is Loaded');
-			webUi.getApplication().fireEvent('resourceLoaded');
+			console.log('%%%%%%%%%%%%%');
+			console.log(bundle.getMsg('one'));
+			console.log(bundle.getById('one'));
+			console.log(bundle.getAt(0));
 		});
 	},
 	

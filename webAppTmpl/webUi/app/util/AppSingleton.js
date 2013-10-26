@@ -10,6 +10,6 @@ Ext.define('webUi.util.AppSingleton', {
         // window.navigator.userLanguage || window.navigator.language;
 	},
 	bundle: null,
-	uiRsrcUrl: '/web-1.0/mock/resources',
+	uiRsrcUrl: '/web-1.0/mock/resources/messages',
 	appParamUrl: '/web-1.0/mock/resources'
 });

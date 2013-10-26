@@ -3,7 +3,9 @@ package mock;
 import in.v8delta.template.myWebAppTmpl.core.utils.KeyValPair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.stereotype.Controller;
@@ -42,16 +44,16 @@ public class MockController {
 	
 	@RequestMapping("resources/{file}")
 	@ResponseBody
-	public List<KeyValPair> getResources(@PathVariable String file){
+//	public List<KeyValPair> getResources(@PathVariable String file){
+	public Map<String, List<KeyValPair>> getResources(@PathVariable String file){
 		System.out.println("Sent file is : " + file);
-		
+		Map<String, List<KeyValPair>> bundle = new HashMap<String, List<KeyValPair>>();
 		List<KeyValPair> out = new ArrayList<KeyValPair>();
-		out.add(new KeyValPair("1", "one"));
-		out.add(new KeyValPair("2", "two"));
-		out.add(new KeyValPair("3", "three"));
-		out.add(new KeyValPair("1.2.3", "one.two.three"));
-		
-		return out;
+		out.add(new KeyValPair("one", "Oneee"));
+		out.add(new KeyValPair("two", "Twooo"));
+		bundle.put("bundle", out);
+		return bundle;
+//		return out;
 	}
 	
 }
