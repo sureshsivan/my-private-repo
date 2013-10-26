@@ -9,8 +9,15 @@
 
 Ext.application({
     name: 'webUi',
-
     extend: 'webUi.Application',
-    
-    autoCreateViewport: true
+    autoCreateViewport: true,
+    launch: startAppLaunch
 });
+
+function startAppLaunch(){
+	console.log('#########');
+	var vp = new webUi.view.Viewport();
+	var rp = new webUi.view.Rootpanel();
+	vp.add(rp);
+	console.log('@@@@@@@@@');
+}

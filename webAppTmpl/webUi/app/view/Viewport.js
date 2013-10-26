@@ -14,7 +14,9 @@ Ext.define('webUi.view.Viewport', {
         type: 'fit'
     },
 
-    items: [{
-        xtype: 'd-rootpanel'
-    }]
+    items: [
+//            {
+//            	xtype: 'd-rootpanel'
+//            }
+    ]
 });
