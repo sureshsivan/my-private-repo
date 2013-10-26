@@ -1,6 +1,9 @@
 package mock;
 
+import java.util.Properties;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,7 +34,22 @@ public class MockController {
 		System.out.println("------------");
 		System.out.println("%%%%%%%%%");
 		return new MockObject("One", "Two");
-	}	
+	}
+	
+	@RequestMapping("resources/{file}")
+	@ResponseBody
+	public Properties getResources(@PathVariable String file){
+		System.out.println("Sent file is : " + file);
+		String s = "sa=suresh" + "sb=Kirthi";
+		
+		Properties p = new Properties();
+		p.put("one", "111111111");
+		p.put("two", "222222222");
+		p.put("one.two", "111.222222222");
+		p.put("one.two.three", "111.222222222.33");
+		
+		return p;
+	}
 	
 }
 

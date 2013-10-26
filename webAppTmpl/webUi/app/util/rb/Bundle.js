@@ -1,12 +1,11 @@
 /**
 *	courtesy : https://github.com/elmasse/Ext.i18n.Bundle-touch/blob/master/i18n/Bundle.js
 **/
-Ext.define('wwebUi.util.rb.Bundle', {
+Ext.define('webUi.util.rb.Bundle', {
         extend: 'Ext.data.Store',
         requires: [
-                'webui.model.KeyValPair'
+                   'webUi.util.rb.model.KeyValPair'
         ],
-        
         //@private
         defaultLanguage: 'en-US',
         //@private
@@ -56,14 +55,14 @@ Ext.define('wwebUi.util.rb.Bundle', {
                 
                 Ext.applyIf(config, {
                         autoLoad: true,
-                        model: 'Ext.i18n.model.Property',
+                        model: 'webUi.util.rb.model.KeyValPair',
                         proxy:{
                                 type: 'ajax',
                                 url: url,
                                 noCache: noCache,
-                                reader: {
-                                        type: 'property'
-                                },
+//                                reader: {
+//                                        type: 'property'
+//                                },
                                 //avoid sending limit, start & group params to server
                                 getParams: Ext.emptyFn
                         },
@@ -105,15 +104,30 @@ Ext.define('wwebUi.util.rb.Bundle', {
                 this.on('loaded', this.readyFn, this);
         },
         
+        onLoadError: function(fn){
+        	this.errFn = fn;
+            this.on('loadError', this.errFn, this);
+        },
+        
         /**
          * @private
          */
         onBundleLoad: function(store, record, success, op) {
+        		console.log(store);
+        		console.log(record);
+        		console.log(success);
+        		console.log(op);
                 if(success){
                         this.fireEvent('loaded');
+                } else{
+                	this.fireEvent('loadError');
                 }
-    },
+        },
 
+        dumpToStore: function(data){
+        	console.log(data);
+        },
+        
         /**
          * @private
          */

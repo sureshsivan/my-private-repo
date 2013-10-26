@@ -3,14 +3,22 @@ Ext.define('webUi.controller.Main', {
     init: function(){
     	this.application.addListener({
     		'appStart': this.onAppStart,
-    		'resourceLoaded': this.onResourceLoaded
+    		'appParamsLoaded': this.onResourceLoaded,
+    		'resourcesLoaded': this.onResourceLoaded
     	});
 	},
 	
 	onAppStart: function(){
-		console.log('App Start event handled');
-		console.log('Firing Resource Loaded event');
-		webUi.getApplication().fireEvent('resourceLoaded');
+		var bundle = Ext.create('webUi.util.rb.Bundle',{
+								            bundle: 'Application',
+								            lang: 'es-ES',
+								            path: webUi.util.AppSingleton.uiRsrcUrl,   //'/web-1.0/mock/resources',
+								            noCache: false
+										}); 
+		bundle.onReady(function(){
+			console.log('Bundle is Loaded');
+			webUi.getApplication().fireEvent('resourceLoaded');
+		});
 	},
 	
 	onResourceLoaded: function(){
@@ -19,23 +27,4 @@ Ext.define('webUi.controller.Main', {
 	    rp = new webUi.view.Rootpanel();
 		vp.add(rp);
 	},
-	
-	onMainWindowRendered: function(){
-		console.log('Main Window Rendered');
-	},
-	onMainWindowTabRendered: function(){
-		console.log('Main Window TAB Rendered');
-	},
-	onMainWindowClicked: function(){
-		console.log('Main Window Clicked');
-	},
-	onMainWindowTabClicked: function(){
-		console.log('Main Window Clicked');
-	},
-	onPanelCollapse: function(){
-		console.log('Panel Collapsed');
-	},
-	onPanelExpand: function(){
-		console.log('Panel Expanded');
-	}
 });

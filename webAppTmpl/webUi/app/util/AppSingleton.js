@@ -8,13 +8,8 @@ Ext.define('webUi.util.AppSingleton', {
 	constructor : function(){
 		this.lang = (navigator.language || navigator.browserLanguage || navigator.userLanguage || this.lang)
         // window.navigator.userLanguage || window.navigator.language;
-	}
-	startAppLaunch: function (){
-		console.log('#########');
-		var vp = new webUi.view.Viewport();
-		var rp = new webUi.view.Rootpanel();
-		vp.add(rp);
-		console.log('@@@@@@@@@');
-	}
-
+	},
+	bundle: null,
+	uiRsrcUrl: '/web-1.0/mock/resources',
+	appParamUrl: '/web-1.0/mock/resources'
 });

@@ -15,14 +15,5 @@ Ext.application({
 });
 
 function startAppLaunch(){
-	console.log('#########');
-//	var vp = new webUi.view.Viewport(),
-//	    rp = new webUi.view.Rootpanel();
-//	vp.add(rp);
-	console.log('@@@@@@@@@');
-	
-	console.log('Before Firing Event appStart');
 	webUi.getApplication().fireEvent('appStart');
-	console.log('After Firing Event appStart');
-	
 }
