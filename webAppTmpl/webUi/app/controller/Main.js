@@ -9,20 +9,26 @@ Ext.define('webUi.controller.Main', {
 	},
 	
 	onAppStart: function(){
-		
 		var bundle = Ext.create('webUi.util.rb.ResourceBundle');
-		bundle.onReady(function(){
-			console.log('%%%%%%%%%%%%%');
-			console.log(bundle.getMsg('one'));
-			console.log(bundle.getById('one'));
-			console.log(bundle.getAt(0));
-		});
 	},
-	
+		
+//		bundle.onReady(function(){
+//			console.log('%%%%%%%%%%%%%');
+//			console.log(bundle.getMsg('one'));
+//			console.log(bundle.getById('one'));
+//			console.log(bundle.getAt(0));
+//		});
+////		bundle.onError(function(){
+////			console.log('Error');
+////		});
+//	},
+//	
 	onResourceLoaded: function(){
 		console.log('Resource Loaded event handled');
 		var vp = new webUi.view.Viewport(),
 	    rp = new webUi.view.Rootpanel();
 		vp.add(rp);
-	},
+	}
+		
+		
 });

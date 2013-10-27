@@ -42,8 +42,6 @@ Ext.define('webUi.util.rb.reader.Property', {
         clearValueExtraChars: function(s){
                 return (s ? s.replace(/\\\s*\n/gi, "") : "");
         },
-        
-        //private
         readLines: function(data){
                 var file = data.responseText;
                 return (file ? file.match(/.*(.*\\\s*\n)+.*|^((?!^\s*[#!]).).*$/gim) : []);
