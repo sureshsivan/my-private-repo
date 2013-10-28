@@ -3,32 +3,49 @@ Ext.define('webUi.controller.Main', {
     init: function(){
     	this.application.addListener({
     		'appStart': this.onAppStart,
-    		'appParamsLoaded': this.onResourceLoaded,
-    		'resourcesLoaded': this.onResourceLoaded
+    		'loadResources' : this.onLoadResources,
+    		'resourcesLoaded': this.onResourceLoaded,
+    		'resourcesLoadError': this.onResourceLoadError,
+    		'loadAppParams': this.onLoadAppParams,
+    		'appParamsLoaded': this.onAppParamsLoaded,
     	});
 	},
 	
 	onAppStart: function(){
-		var bundle = Ext.create('webUi.util.rb.ResourceBundle');
+		var me = this;
+		me.fireEvent('loadResources');
+		me.fireEvent('loadAppParams');
 	},
-		
-//		bundle.onReady(function(){
-//			console.log('%%%%%%%%%%%%%');
-//			console.log(bundle.getMsg('one'));
-//			console.log(bundle.getById('one'));
-//			console.log(bundle.getAt(0));
-//		});
-////		bundle.onError(function(){
-////			console.log('Error');
-////		});
-//	},
-//	
+	
+	onLoadResources: function(){
+		console.log('Load Resources event handled');
+		var bundle = Ext.create('webUi.util.rb.ResourceBundle'),
+			me = this;
+		bundle.onLoadComplete(function(){
+			webUi.util.AppSingleton.bundle = bundle.rsrc;
+			me.fireEvent('resourcesLoaded');
+		});
+	},
+
 	onResourceLoaded: function(){
-		console.log('Resource Loaded event handled');
 		var vp = new webUi.view.Viewport(),
 	    rp = new webUi.view.Rootpanel();
 		vp.add(rp);
-	}
+		webUi.util.AppSingleton.handleError(webUi.util.AppSingleton.getMsg('two.three.custom', ['a', 'BB', 'XXX']));
+	},
+	
+	onResourceLoadError: function(){
 		
+	},
+	
+	onLoadAppParams: function(){
+		console.log('Load App Params event handled');
+	},	
+
+	onAppParamsLoaded: function(){
+		console.log('App Param Loaded event handled');
+	},
+
+
 		
 });

@@ -1,17 +1,13 @@
 package mock;
 
-import in.v8delta.template.myWebAppTmpl.core.utils.KeyValPair;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.HtmlUtils;
 
 /**
  * 
@@ -44,23 +40,29 @@ public class MockController {
 	
 	@RequestMapping("resources/{file}")
 	@ResponseBody
-	public String getResources(@PathVariable String file){
-//	public List<KeyValPair> getResources(@PathVariable String file){
-//	public Map<String, List<KeyValPair>> getResources(@PathVariable String file){
-		System.out.println("Sent file is : " + file);
-		Map<String, List<KeyValPair>> bundle = new HashMap<String, List<KeyValPair>>();
-		List<KeyValPair> out = new ArrayList<KeyValPair>();
-		out.add(new KeyValPair("one", "Oneee"));
-		out.add(new KeyValPair("two", "Twooo"));
-		bundle.put("bundle", out);
+	public List<String> getResources(@PathVariable String file){
+		List<String> out = new ArrayList<String>();
+		out.add("one=11111111111");
+		out.add("two=222222222");
+		out.add("two.three=222222222.3333333333");
+		out.add(HtmlUtils.htmlEscape("two.three.custom={0}222222 222.33333 333{1}33.44{2}44{3}"));
+		return out;
+
+//	public Map<String, List<KeyValPair>> getResources(@PathVariable String file){	
+//		Map<String, List<KeyValPair>> bundle = new HashMap<String, List<KeyValPair>>();
+//		List<KeyValPair> out = new ArrayList<KeyValPair>();
+//		out.add(new KeyValPair("one", "11111"));
+//		out.add(new KeyValPair("two", "22222"));
+//		bundle.put("bundle", out);
 //		return bundle;
-//		return out;
-		String s = "ss=suresh" + 
-					System.getProperty("line.separator") + 
-					"kk=Kirthika" +
-					System.getProperty("line.separator") +
-					"ss.kk=Our Kid";
-		return s;
+
+//		public String getResources(@PathVariable String file){	
+//		String s = "ss=suresh" + 
+//					System.getProperty("line.separator") + 
+//					"kk=Kirthika" +
+//					System.getProperty("line.separator") +
+//					"ss.kk=Our Kid";
+//		return s;
 		
 	}
 	

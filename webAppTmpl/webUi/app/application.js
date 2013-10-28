@@ -5,7 +5,8 @@ Ext.define('webUi.Application', {
     requires: [
                'webUi.util.AppSingleton',
                'webUi.util.rb.Bundle',
-               'webUi.util.rb.ResourceBundle'
+               'webUi.util.rb.ResourceBundle',
+               'Ext.window.MessageBox'
     ],
     views: [
             

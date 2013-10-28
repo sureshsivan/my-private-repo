@@ -65,7 +65,8 @@
                                     url: url,
                                     noCache: noCache,
                                     reader: {
-                                            type: 'property'
+                            			type: 'property',
+                            			rootProperty: 'bundle'
                                     },
                                     //avoid sending limit, start & group params to server
                                     getParams: Ext.emptyFn
