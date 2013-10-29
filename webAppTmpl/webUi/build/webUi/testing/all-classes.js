@@ -113525,8 +113525,8 @@ Ext.define('webUi.util.AppSingleton', {
 	currentBundle : '',
 	lang : 'en',
 	isBundleLoaded : false,
-	uiRsrcUrl: '/web-1.0/mock/resources/messages',
-	appParamUrl: '/web-1.0/mock/appParams',
+	uiRsrcUrl: '/web-1.0/appConfig/resources',
+	appParamUrl: '/web-1.0/appConfig/params',
 	bundle: null,
 	appParam: null,
 	
