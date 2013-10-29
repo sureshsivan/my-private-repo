@@ -2,7 +2,7 @@
 * Model Instance for Household member
 **/
 Ext.define('webUi.model.hh.HhMember', {
-	extend : 'Ext.data.model',
+	extend : 'Ext.data.Model',
 	config: {
 		fields: [
 		         'id',

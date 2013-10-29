@@ -36,7 +36,7 @@
 								<delete dir="${sencha.mobile.client.dir}" />
 								<copy todir="${sencha.mobile.client.dir}">
 									<fileset
-										dir="${sencha.extjs.build.dir.name}/${sencha.build.param.args.environment}/${artifactId}" />
+										dir="${sencha.extjs.build.dir.name}/${sencha.build.param.args.environment}/${project.artifactId}" />
 								</copy>
 							</tasks>
 						</configuration>

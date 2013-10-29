@@ -7,7 +7,7 @@ Ext.define('webUi.controller.Main', {
     		'resourcesLoaded': this.onResourceLoaded,
     		'resourcesLoadError': this.onResourceLoadError,
     		'loadAppParams': this.onLoadAppParams,
-    		'appParamsLoaded': this.onAppParamsLoaded,
+    		'appParamsLoaded': this.onAppParamsLoaded
     	});
 	},
 	
@@ -44,8 +44,6 @@ Ext.define('webUi.controller.Main', {
 
 	onAppParamsLoaded: function(){
 		console.log('App Param Loaded event handled');
-	},
-
-
+	}
 		
 });

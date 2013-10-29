@@ -2,7 +2,7 @@
  * Model Instance for Household member
  */
 Ext.define('webUi.model.hh.Tv', {
-	extend : 'Ext.data.model',
+	extend : 'Ext.data.Model',
 	config: {
 		fields: [
 				 'id',
@@ -14,7 +14,7 @@ Ext.define('webUi.model.hh.Tv', {
 				 {name: 'isFourFeetOrLong', type: 'boolean'},
 				 {name: 'hasLocalBroadcastStns', type: 'boolean'},
 				 {name: 'isHd', type: 'boolean'},
-				 {name: 'isPrimary', type: 'boolean'},
+				 {name: 'isPrimary', type: 'boolean'}
 		],
 		hasMany: [
 		         {name: 'extraFeeChannels', model: 'webUi.model.hh.Channel'},

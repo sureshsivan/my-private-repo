@@ -3,7 +3,7 @@
  * 
  */
 Ext.define('webUi.model.program.Guest', {
-	extend : 'Ext.data.model',
+	extend : 'Ext.data.Model',
 	config: {
 		fields: [
 		         'guestName',
