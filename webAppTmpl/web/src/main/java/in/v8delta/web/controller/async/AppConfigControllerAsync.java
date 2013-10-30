@@ -1,14 +1,11 @@
 package in.v8delta.web.controller.async;
 
 import in.v8delta.template.myWebAppTmpl.core.log.LoggerAgent;
-import in.v8delta.template.myWebAppTmpl.core.utils.KeyValPair;
 import in.v8delta.template.myWebAppTmpl.core.utils.LogUtil;
+import in.v8delta.template.myWebAppTmpl.core.utils.PropertyUtil;
+import in.v8delta.web.util.WebConstants;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,33 +32,20 @@ public class AppConfigControllerAsync {
 	
 	@RequestMapping("resources")
 	@ResponseBody
-	public List<KeyValPair> getAllResources(HttpServletRequest request){
+	public List<String> getAllResources(HttpServletRequest request){
 		LOGGER.debug("Start of getAllResources");
-		
-		Locale locale = RequestContextUtils.getLocale(request);
-		List<KeyValPair> out = new ArrayList<KeyValPair>();
-
-		ResourceBundle rb = ResourceBundle.getBundle(System.getProperty("app.rbFilePath"), locale);
-		Enumeration<String> e = rb.getKeys();
-		String key = null;
-		while(e.hasMoreElements()){
-			key = e.nextElement();
-			out.add(new KeyValPair(key, rb.getString(key)));
-		}
+		List<String> out = PropertyUtil.getPropertiesStrAsList(System.getProperty(WebConstants.PROP_KEY_RB_FILE), 
+							RequestContextUtils.getLocale(request));
 		LOGGER.debug("End of getAllResources : " + out.toString());
 		return out;
 	}
 	
 	@RequestMapping("params")
-	public List<String> getApplicationParameters(){
-		LOGGER.debug("Start of getAllResources");
-		
-		List<String> out = new ArrayList<String>();
-		out.add("one=11111111111");
-		out.add("two=222222222");
-		out.add("two.three=222222222.3333333333");
-		
-		LOGGER.debug("End of getAllResources" + out.toString());
+	@ResponseBody
+	public List<String> getApplicationParameters(HttpServletRequest request){
+		LOGGER.debug("Start of getApplicationParameters");
+		List<String> out = PropertyUtil.getPropertiesStrAsList(System.getProperty(WebConstants.PROP_KEY_APP_PARAM_FILE));
+		LOGGER.debug("End of getApplicationParameters : " + out.toString());
 		return out;
 	}
 	

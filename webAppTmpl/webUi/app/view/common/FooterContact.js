@@ -12,11 +12,13 @@ Ext.define('webUi.view.common.FooterContact', {
     },
     items: [
         {
-        	html: '<b>Any Questions?</b>',
+        	//html: '<b>Any Questions?</b>',
+        	html: webUi.util.AppSingleton.getMsg('app.footer.anyQuestions'),
         	border: false,
         	padding: 5
         }, {
-        	html:'mail to <a href="mailto:v8@v8-delta.com">v8@v8-delta.com</a> Or Call XXX-XXXX-XXXX',
+        	//html:'mail to <a href="mailto:v8@v8-delta.com">v8@v8-delta.com</a> Or Call XXX-XXXX-XXXX',
+        	html: webUi.util.AppSingleton.getMsg('app.footer.contact'),
         	border: false
         }
     ]

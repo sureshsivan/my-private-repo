@@ -12,7 +12,8 @@ Ext.define('webUi.util.AppSingleton', {
 	appParam: null,
 	
     msgKeyNotFound: 'Message not found for key:',
-    msgBundleNotLoaded: 'Bundle Not loaded, PLs reload the application or Contact System ADMIN',
+    msgBundleNotLoaded: 'Bundle Not loaded, Pls reload the application or Contact System ADMIN',
+    msgAppParamNotLoaded: 'Application Parameters Not loaded, Pls reload the application or Contact System ADMIN',
     msgError: 'Error',
 
 	constructor : function(){
@@ -31,6 +32,13 @@ Ext.define('webUi.util.AppSingleton', {
     			msg = msg.replace(new RegExp("\\{" + ph + "\\}", "gi" ), arguments[1][ph]);
     		}
     	}
+    	return (((msg != null) && (msg != 'undefined')) ? msg : this.msgKeyNotFound + key);
+    },
+    getAppParam: function(key){
+		if(this.appParam == null){
+			return this.msgAppParamNotLoaded;
+		}
+    	var msg = this.appParam.get(key);
     	return (((msg != null) && (msg != 'undefined')) ? msg : this.msgKeyNotFound + key);
     },
     handleError: function(msg, logMsg){

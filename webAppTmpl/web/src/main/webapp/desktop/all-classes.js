@@ -113531,7 +113531,8 @@ Ext.define('webUi.util.AppSingleton', {
 	appParam: null,
 	
     msgKeyNotFound: 'Message not found for key:',
-    msgBundleNotLoaded: 'Bundle Not loaded, PLs reload the application or Contact System ADMIN',
+    msgBundleNotLoaded: 'Bundle Not loaded, Pls reload the application or Contact System ADMIN',
+    msgAppParamNotLoaded: 'Application Parameters Not loaded, Pls reload the application or Contact System ADMIN',
     msgError: 'Error',
 
 	constructor : function(){
@@ -113550,6 +113551,13 @@ Ext.define('webUi.util.AppSingleton', {
     			msg = msg.replace(new RegExp("\\{" + ph + "\\}", "gi" ), arguments[1][ph]);
     		}
     	}
+    	return (((msg != null) && (msg != 'undefined')) ? msg : this.msgKeyNotFound + key);
+    },
+    getAppParam: function(key){
+		if(this.appParam == null){
+			return this.msgAppParamNotLoaded;
+		}
+    	var msg = this.appParam.get(key);
     	return (((msg != null) && (msg != 'undefined')) ? msg : this.msgKeyNotFound + key);
     },
     handleError: function(msg, logMsg){
@@ -113922,7 +113930,8 @@ Ext.define('webUi.view.common.GuestHeader', {
                                      
       
     xtype: 'd-guest-header',
-    html: '<img class="header-logo" src="/img/logo.png"/>'
+    //html: '<img class="header-logo" src="/img/logo.png"/>'
+    html: '<img class="header-logo" src="' + webUi.util.AppSingleton.getAppParam('app.header.logoPath') + '">',
 });
 /**
  * This is the Copyright Widget placed in Footer
@@ -113936,7 +113945,8 @@ Ext.define('webUi.view.common.Copyright', {
     layout: {
         type: 'fit'
     },
-    html: 'Copyright © 2013 <a href="http://www.v8-delta.com">v8-delta</a> Company. All Rights Reserved.'
+    //html: 'Copyright © 2013 <a href="http://www.v8-delta.com">v8-delta</a> Company. All Rights Reserved.'
+    html: webUi.util.AppSingleton.getMsg('app.copyright')
 });
 /**
  * This is the Contact Widget placed in Footer
@@ -113952,11 +113962,13 @@ Ext.define('webUi.view.common.FooterContact', {
     },
     items: [
         {
-        	html: '<b>Any Questions?</b>',
+        	//html: '<b>Any Questions?</b>',
+        	html: webUi.util.AppSingleton.getMsg('app.footer.anyQuestions'),
         	border: false,
         	padding: 5
         }, {
-        	html:'mail to <a href="mailto:v8@v8-delta.com">v8@v8-delta.com</a> Or Call XXX-XXXX-XXXX',
+        	//html:'mail to <a href="mailto:v8@v8-delta.com">v8@v8-delta.com</a> Or Call XXX-XXXX-XXXX',
+        	html: webUi.util.AppSingleton.getMsg('app.footer.contact'),
         	border: false
         }
     ]
@@ -113976,7 +113988,8 @@ Ext.define('webUi.view.common.FooterContact', {
 	    },
 	    items: [
 	        {
-	        	html: '<img src="img/footer-logo.png">',
+	        	//html: '<img src="img/footer-logo.png">',
+	        	html: '<img src="' + webUi.util.AppSingleton.getAppParam('app.footer.logoPath') + '">',
 	        	border: false
 	        }
 	    ]

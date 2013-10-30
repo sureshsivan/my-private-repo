@@ -13,7 +13,8 @@
 	    },
 	    items: [
 	        {
-	        	html: '<img src="img/footer-logo.png">',
+	        	//html: '<img src="img/footer-logo.png">',
+	        	html: '<img src="' + webUi.util.AppSingleton.getAppParam('app.footer.logoPath') + '">',
 	        	border: false
 	        }
 	    ]

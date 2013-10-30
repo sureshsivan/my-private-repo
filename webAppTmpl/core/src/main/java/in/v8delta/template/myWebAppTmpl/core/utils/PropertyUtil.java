@@ -1,7 +1,11 @@
 package in.v8delta.template.myWebAppTmpl.core.utils;
 
+import in.v8delta.template.myWebAppTmpl.core.log.LoggerAgent;
+
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -14,6 +18,9 @@ import java.util.ResourceBundle;
  *
  */
 public final class PropertyUtil {
+	
+	private final static LoggerAgent LOGGER   = LogUtil.getAppLogger(PropertyUtil.class);
+	
 	private static final boolean THROW_ON_LOAD_FAILURE = true;
 
 	private static final boolean LOAD_AS_RESOURCE_BUNDLE = false;
@@ -127,4 +134,46 @@ public final class PropertyUtil {
 		return loadProperties(name, Thread.currentThread()
 				.getContextClassLoader());
 	}
+	
+	
+	/**
+	 * Utility method which reads the property file and returs each line as List of String
+	 *
+	 * @param bundle - bundle name to be used
+	 * @param locale - locale to used for bundle search
+	 * @return
+	 */
+	public static List<String> getPropertiesStrAsList(String bundle, Locale locale){
+		LOGGER.debug("Start of getPropertiesStrAsList : [bundle:" + bundle + AppConstants.STR_SQUARE_BRACE_RIGHT + 
+														AppConstants.STR_COMMA + 
+														"[locale:" + (locale == null ? AppConstants.STR_NULL : locale.toString()) + AppConstants.STR_SQUARE_BRACE_RIGHT);
+
+		ResourceBundle rb = null;
+		if(locale == null){
+			ResourceBundle.getBundle(bundle);
+		} else {
+			ResourceBundle.getBundle(bundle, locale);
+		}
+		List<String> out = new ArrayList<String>();
+		Enumeration<String> e = rb.getKeys();
+		String key = null;
+		while(e.hasMoreElements()){
+			key = e.nextElement();
+			out.add(key + AppConstants.STR_EQUAL + rb.getString(key));
+		}
+		LOGGER.debug("End of getPropertiesStrAsList : " + out.toString());
+		return out;
+	}
+	
+	/**
+	 * Utility method which reads the property file and returs each line as List of String
+	 * 
+	 * @param bundle - bundle name to be used
+	 * @return
+	 */
+	public static List<String> getPropertiesStrAsList(String bundle){
+		LOGGER.debug("Start of getPropertiesStrAsList Without Locale Param :");
+		return getPropertiesStrAsList(bundle, null);
+	}
+	
 }

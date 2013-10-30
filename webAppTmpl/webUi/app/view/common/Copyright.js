@@ -10,5 +10,6 @@ Ext.define('webUi.view.common.Copyright', {
     layout: {
         type: 'fit'
     },
-    html: 'Copyright © 2013 <a href="http://www.v8-delta.com">v8-delta</a> Company. All Rights Reserved.'
+    //html: 'Copyright © 2013 <a href="http://www.v8-delta.com">v8-delta</a> Company. All Rights Reserved.'
+    html: webUi.util.AppSingleton.getMsg('app.copyright')
 });
