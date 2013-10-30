@@ -9,5 +9,5 @@ package in.v8delta.web.util;
 public interface WebConstants {
 
 	public static final String PROP_KEY_RB_FILE = "app.rbFilePath";
-	public static final String PROP_KEY_APP_PARAM_FILE = "config.appParams";
+	public static final String PROP_KEY_APP_PARAM_FILE = "app.appParamsFilePath";
 }

@@ -117,7 +117,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "webUi.view.common.Footer": [],
   "webUi.view.common.FooterContact": [],
   "webUi.view.common.FooterLogo": [],
-  "webUi.view.common.GuestHeader": []
+  "webUi.view.common.GuestHeader": [],
+  "webUi.view.common.InfoBar": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.BoxReorderer": [],
@@ -288,6 +289,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "webUi.view.common.GuestHeader": [
     "widget.d-guest-header"
+  ],
+  "webUi.view.common.InfoBar": [
+    "widget.d-info-bar"
   ]
 });
 Ext.Loader.loadScript("../../ext/packages/ext-theme-neptune/overrides/Component.js");

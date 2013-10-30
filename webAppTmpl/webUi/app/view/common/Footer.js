@@ -3,9 +3,6 @@
  */
 Ext.define('webUi.view.common.Footer', {
     extend: 'Ext.panel.Panel',
-    requires:[
-        'Ext.layout.container.Border'
-    ],
     xtype: 'd-footer',
     margin: 2,
     layout: {

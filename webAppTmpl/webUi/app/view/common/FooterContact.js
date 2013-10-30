@@ -18,7 +18,7 @@ Ext.define('webUi.view.common.FooterContact', {
         	padding: 5
         }, {
         	//html:'mail to <a href="mailto:v8@v8-delta.com">v8@v8-delta.com</a> Or Call XXX-XXXX-XXXX',
-        	html: webUi.util.AppSingleton.getMsg('app.footer.contact'),
+        	html:'mail to <a href="' + webUi.util.AppSingleton.getMsg('app.footer.contact.mail') + '">v8@v8-delta.com</a> Or Call '+ webUi.util.AppSingleton.getMsg('app.footer.contact.phone'),
         	border: false
         }
     ]

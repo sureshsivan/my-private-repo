@@ -6,7 +6,8 @@ Ext.define('webUi.Application', {
                'webUi.util.AppSingleton',
                'webUi.util.rb.Bundle',
                'webUi.util.rb.ResourceBundle',
-               'Ext.window.MessageBox'
+               'Ext.window.MessageBox',
+               'webUi.view.common.InfoBar'
     ],
     views: [
             

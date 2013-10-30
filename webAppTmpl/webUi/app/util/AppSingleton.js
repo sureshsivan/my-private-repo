@@ -9,7 +9,9 @@ Ext.define('webUi.util.AppSingleton', {
 	uiRsrcUrl: '/web-1.0/appConfig/resources',
 	appParamUrl: '/web-1.0/appConfig/params',
 	bundle: null,
+	isBundleLoaded: false,
 	appParam: null,
+	isAppParamLoaded: false,
 	
     msgKeyNotFound: 'Message not found for key:',
     msgBundleNotLoaded: 'Bundle Not loaded, Pls reload the application or Contact System ADMIN',
@@ -46,6 +48,10 @@ Ext.define('webUi.util.AppSingleton', {
     	if(logMsg){
     		console.log(logMsg);
     	}
+    },
+    checkAppConfigLoaded: function(){
+    	console.log('******* Check UI Kick Off *******');
+    	return (isBundleLoaded && isAppParamLoaded);
     }
     
 

@@ -113528,7 +113528,9 @@ Ext.define('webUi.util.AppSingleton', {
 	uiRsrcUrl: '/web-1.0/appConfig/resources',
 	appParamUrl: '/web-1.0/appConfig/params',
 	bundle: null,
+	isBundleLoaded: false,
 	appParam: null,
+	isAppParamLoaded: false,
 	
     msgKeyNotFound: 'Message not found for key:',
     msgBundleNotLoaded: 'Bundle Not loaded, Pls reload the application or Contact System ADMIN',
@@ -113565,6 +113567,10 @@ Ext.define('webUi.util.AppSingleton', {
     	if(logMsg){
     		console.log(logMsg);
     	}
+    },
+    checkAppConfigLoaded: function(){
+    	console.log('******* Check UI Kick Off *******');
+    	return (isBundleLoaded && isAppParamLoaded);
     }
     
 
@@ -113809,10 +113815,14 @@ Ext.define('webUi.util.rb.ResourceBundle', {
 		mixins: {
 		    observable:  Ext.util.Observable 
 		},
-        constructor: function(){
+		config: {
+			url: ''
+		},
+        constructor: function(config){
+        	this.initConfig(config);
         	var me = this;
         	Ext.Ajax.request({
-        	    url: webUi.util.AppSingleton.uiRsrcUrl,
+        		url: me.getUrl(),
         	    success: function(response){
         	    	me.processResources(response.responseText);
         	    },
@@ -113848,6 +113858,20 @@ Ext.define('webUi.util.rb.ResourceBundle', {
 	    }
         
 });
+/**
+ * This is the Header before user login
+ */
+Ext.define('webUi.view.common.InfoBar', {
+    extend:  Ext.Component ,
+    xtype: 'd-info-bar',
+    itemId: 'infoBar',
+    width: '100%',
+    height: '5%',
+	style: {
+	    backgroundColor:'#7c7676'
+	}
+});
+
 Ext.define('webUi.controller.Main', {
     extend:  Ext.app.Controller ,
     init: function(){
@@ -113857,7 +113881,9 @@ Ext.define('webUi.controller.Main', {
     		'resourcesLoaded': this.onResourceLoaded,
     		'resourcesLoadError': this.onResourceLoadError,
     		'loadAppParams': this.onLoadAppParams,
-    		'appParamsLoaded': this.onAppParamsLoaded
+    		'appParamsLoaded': this.onAppParamsLoaded,
+    		'appParamsLoadError': this.onAppParamsLoadError,
+    		'kickOffui': this.onKickOffUi
     	});
 	},
 	
@@ -113868,32 +113894,58 @@ Ext.define('webUi.controller.Main', {
 	},
 	
 	onLoadResources: function(){
-		console.log('Load Resources event handled');
-		var bundle = Ext.create('webUi.util.rb.ResourceBundle'),
+		webUi.util.AppSingleton.isBundleLoaded = false;
+		var bundle = Ext.create('webUi.util.rb.ResourceBundle', {
+			url: webUi.util.AppSingleton.uiRsrcUrl
+		}),
 			me = this;
 		bundle.onLoadComplete(function(){
 			webUi.util.AppSingleton.bundle = bundle.rsrc;
+			webUi.util.AppSingleton.isBundleLoaded = true;
 			me.fireEvent('resourcesLoaded');
 		});
 	},
 
 	onResourceLoaded: function(){
-		var vp = new webUi.view.Viewport(),
-	    rp = new webUi.view.Rootpanel();
-		vp.add(rp);
-		webUi.util.AppSingleton.handleError(webUi.util.AppSingleton.getMsg('two.three.custom', ['a', 'BB', 'XXX']));
+		console.log('^^^^^^^^^^^^onResourceLoaded^^^^^^^^^^');
+		if(webUi.util.AppSingleton.checkAppConfigLoaded){
+			this.fireEvent('kickOffui');
+		}
 	},
 	
 	onResourceLoadError: function(){
-		
+		webUi.util.AppSingleton.handleError('Error In Resource Load');
 	},
 	
 	onLoadAppParams: function(){
-		console.log('Load App Params event handled');
+		webUi.util.AppSingleton.isAppParamLoaded = false;
+		var appParams = Ext.create('webUi.util.rb.ResourceBundle', {
+			url: webUi.util.AppSingleton.appParamUrl
+		}),
+			me = this;
+		appParams.onLoadComplete(function(){
+			webUi.util.AppSingleton.appParam = appParams.rsrc;
+			webUi.util.AppSingleton.isAppParamLoaded = true;
+			me.fireEvent('appParamsLoaded');
+		});
 	},	
 
 	onAppParamsLoaded: function(){
-		console.log('App Param Loaded event handled');
+		console.log('^^^^^^^^^^^^onAppParamsLoaded^^^^^^^^^^');
+		if(webUi.util.AppSingleton.checkAppConfigLoaded){
+			this.fireEvent('kickOffui');
+		}
+	},
+	
+	onAppParamsLoadError: function(){
+		webUi.util.AppSingleton.handleError('Error In Application Parameters Load');
+	},
+	
+	onKickOffUi: function(){
+		console.log('UI Kick Off>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+//		var vp = new webUi.view.Viewport(),
+//	    rp = new webUi.view.Rootpanel();
+//		vp.add(rp);
 	}
 		
 });
@@ -113906,7 +113958,8 @@ Ext.define('webUi.Application', {
                                          
                                       
                                               
-                                      
+                                       
+                                          
       
     views: [
             
@@ -113926,12 +113979,18 @@ Ext.define('webUi.Application', {
  */
 Ext.define('webUi.view.common.GuestHeader', {
     extend:  Ext.panel.Panel ,
-              
-                                     
-      
     xtype: 'd-guest-header',
-    //html: '<img class="header-logo" src="/img/logo.png"/>'
-    html: '<img class="header-logo" src="' + webUi.util.AppSingleton.getAppParam('app.header.logoPath') + '">',
+	layout: {
+	    type: 'vbox'
+	},
+	items: [
+	    {
+	    	html: '1'
+	    }, 
+	    {
+	    	xtype: 'd-info-bar'
+	    }
+	]
 });
 /**
  * This is the Copyright Widget placed in Footer
@@ -113968,7 +114027,7 @@ Ext.define('webUi.view.common.FooterContact', {
         	padding: 5
         }, {
         	//html:'mail to <a href="mailto:v8@v8-delta.com">v8@v8-delta.com</a> Or Call XXX-XXXX-XXXX',
-        	html: webUi.util.AppSingleton.getMsg('app.footer.contact'),
+        	html:'mail to <a href="' + webUi.util.AppSingleton.getMsg('app.footer.contact.mail') + '">v8@v8-delta.com</a> Or Call '+ webUi.util.AppSingleton.getMsg('app.footer.contact.phone'),
         	border: false
         }
     ]
@@ -113999,9 +114058,6 @@ Ext.define('webUi.view.common.FooterContact', {
  */
 Ext.define('webUi.view.common.Footer', {
     extend:  Ext.panel.Panel ,
-              
-                                     
-      
     xtype: 'd-footer',
     margin: 2,
     layout: {

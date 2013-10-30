@@ -7,7 +7,9 @@ Ext.define('webUi.controller.Main', {
     		'resourcesLoaded': this.onResourceLoaded,
     		'resourcesLoadError': this.onResourceLoadError,
     		'loadAppParams': this.onLoadAppParams,
-    		'appParamsLoaded': this.onAppParamsLoaded
+    		'appParamsLoaded': this.onAppParamsLoaded,
+    		'appParamsLoadError': this.onAppParamsLoadError,
+    		'kickOffui': this.onKickOffUi
     	});
 	},
 	
@@ -18,32 +20,58 @@ Ext.define('webUi.controller.Main', {
 	},
 	
 	onLoadResources: function(){
-		console.log('Load Resources event handled');
-		var bundle = Ext.create('webUi.util.rb.ResourceBundle'),
+		webUi.util.AppSingleton.isBundleLoaded = false;
+		var bundle = Ext.create('webUi.util.rb.ResourceBundle', {
+			url: webUi.util.AppSingleton.uiRsrcUrl
+		}),
 			me = this;
 		bundle.onLoadComplete(function(){
 			webUi.util.AppSingleton.bundle = bundle.rsrc;
+			webUi.util.AppSingleton.isBundleLoaded = true;
 			me.fireEvent('resourcesLoaded');
 		});
 	},
 
 	onResourceLoaded: function(){
-		var vp = new webUi.view.Viewport(),
-	    rp = new webUi.view.Rootpanel();
-		vp.add(rp);
-		webUi.util.AppSingleton.handleError(webUi.util.AppSingleton.getMsg('two.three.custom', ['a', 'BB', 'XXX']));
+		console.log('^^^^^^^^^^^^onResourceLoaded^^^^^^^^^^');
+		if(webUi.util.AppSingleton.checkAppConfigLoaded === true){
+			this.fireEvent('kickOffui');
+		}
 	},
 	
 	onResourceLoadError: function(){
-		
+		webUi.util.AppSingleton.handleError('Error In Resource Load');
 	},
 	
 	onLoadAppParams: function(){
-		console.log('Load App Params event handled');
+		webUi.util.AppSingleton.isAppParamLoaded = false;
+		var appParams = Ext.create('webUi.util.rb.ResourceBundle', {
+			url: webUi.util.AppSingleton.appParamUrl
+		}),
+			me = this;
+		appParams.onLoadComplete(function(){
+			webUi.util.AppSingleton.appParam = appParams.rsrc;
+			webUi.util.AppSingleton.isAppParamLoaded = true;
+			me.fireEvent('appParamsLoaded');
+		});
 	},	
 
 	onAppParamsLoaded: function(){
-		console.log('App Param Loaded event handled');
+		console.log('^^^^^^^^^^^^onAppParamsLoaded^^^^^^^^^^');
+		if(webUi.util.AppSingleton.checkAppConfigLoaded === true){
+			this.fireEvent('kickOffui');
+		}
+	},
+	
+	onAppParamsLoadError: function(){
+		webUi.util.AppSingleton.handleError('Error In Application Parameters Load');
+	},
+	
+	onKickOffUi: function(){
+		console.log('UI Kick Off>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+//		var vp = new webUi.view.Viewport(),
+//	    rp = new webUi.view.Rootpanel();
+//		vp.add(rp);
 	}
 		
 });

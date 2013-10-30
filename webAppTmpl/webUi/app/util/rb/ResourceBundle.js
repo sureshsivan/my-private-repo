@@ -9,10 +9,14 @@ Ext.define('webUi.util.rb.ResourceBundle', {
 		mixins: {
 		    observable: 'Ext.util.Observable'
 		},
-        constructor: function(){
+		config: {
+			url: ''
+		},
+        constructor: function(config){
+        	this.initConfig(config);
         	var me = this;
         	Ext.Ajax.request({
-        	    url: webUi.util.AppSingleton.uiRsrcUrl,
+        		url: me.getUrl(),
         	    success: function(response){
         	    	me.processResources(response.responseText);
         	    },

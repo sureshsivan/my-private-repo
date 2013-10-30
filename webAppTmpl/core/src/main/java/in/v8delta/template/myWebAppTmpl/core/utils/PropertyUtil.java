@@ -150,9 +150,9 @@ public final class PropertyUtil {
 
 		ResourceBundle rb = null;
 		if(locale == null){
-			ResourceBundle.getBundle(bundle);
+			rb = ResourceBundle.getBundle(bundle);
 		} else {
-			ResourceBundle.getBundle(bundle, locale);
+			rb = ResourceBundle.getBundle(bundle, locale);
 		}
 		List<String> out = new ArrayList<String>();
 		Enumeration<String> e = rb.getKeys();
