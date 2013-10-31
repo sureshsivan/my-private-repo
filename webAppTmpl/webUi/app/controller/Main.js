@@ -16,7 +16,9 @@ Ext.define('webUi.controller.Main', {
 	onAppStart: function(){
 		var me = this;
 		me.fireEvent('loadResources');
+		webUi.util.AppSingleton.showMask('loadResources', 'loadResources  hard coded');
 		me.fireEvent('loadAppParams');
+		webUi.util.AppSingleton.showMask('loadAppParams', 'loadAppParams  hard coded');
 	},
 	
 	onLoadResources: function(){
@@ -33,6 +35,7 @@ Ext.define('webUi.controller.Main', {
 	},
 
 	onResourceLoaded: function(){
+		webUi.util.AppSingleton.removeMask('loadResources');
 		if(webUi.util.AppSingleton.checkAppConfigLoaded() === true){
 			this.fireEvent('kickOffui');
 		}
@@ -56,6 +59,7 @@ Ext.define('webUi.controller.Main', {
 	},	
 
 	onAppParamsLoaded: function(){
+		webUi.util.AppSingleton.removeMask('loadAppParams');
 		if(webUi.util.AppSingleton.checkAppConfigLoaded() === true){
 			this.fireEvent('kickOffui');
 		}
