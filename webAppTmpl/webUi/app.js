@@ -10,7 +10,7 @@
 Ext.application({
     name: 'webUi',
     extend: 'webUi.Application',
-    autoCreateViewport: true,
+    autoCreateViewport: false,
     launch: startAppLaunch
 });
 

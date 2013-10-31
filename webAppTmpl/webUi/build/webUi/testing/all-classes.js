@@ -113522,6 +113522,25 @@ Ext.define('Ext.util.Grouper', {
  */
 Ext.define('webUi.util.AppSingleton', {
 	singleton : true,
+	
+    config : {
+        defaultLanguage : 'en',
+        messages : {
+            'en' : {
+			    'msgKeyNotFound': 'Message not found for key:',
+			    'msgBundleNotLoaded': 'Bundle Not loaded, Pls reload the application or Contact System ADMIN',
+			    'msgAppParamNotLoaded': 'Application Parameters Not loaded, Pls reload the application or Contact System ADMIN',
+			    'msgError': 'Error',
+			},
+            'es' : {
+			    'msgKeyNotFound': 'Message not found for key:_ES',
+			    'msgBundleNotLoaded': 'Bundle Not loaded, Pls reload the application or Contact System ADMIN_ES',
+			    'msgAppParamNotLoaded': 'Application Parameters Not loaded, Pls reload the application or Contact System ADMIN_ES',
+			    'msgError': 'Error_ES',
+            }
+        }
+    },
+
 	currentBundle : '',
 	lang : 'en',
 	isBundleLoaded : false,
@@ -113531,19 +113550,15 @@ Ext.define('webUi.util.AppSingleton', {
 	isBundleLoaded: false,
 	appParam: null,
 	isAppParamLoaded: false,
-	
-    msgKeyNotFound: 'Message not found for key:',
-    msgBundleNotLoaded: 'Bundle Not loaded, Pls reload the application or Contact System ADMIN',
-    msgAppParamNotLoaded: 'Application Parameters Not loaded, Pls reload the application or Contact System ADMIN',
-    msgError: 'Error',
 
-	constructor : function(){
-		this.lang = (navigator.language || navigator.browserLanguage || navigator.userLanguage || this.lang)
-        // window.navigator.userLanguage || window.navigator.language;
+	constructor : function(config){
+		this.initConfig(config);
+        this.callParent([config]);
+        this.setDefaultLanguage((navigator.language || navigator.browserLanguage || navigator.userLanguage || this.getDefaultLanguage()));
 	},
     getMsg: function(key){
 		if(this.bundle == null){
-			return this.msgBundleNotLoaded;
+			return this.getAppConfigErrMsg('msgBundleNotLoaded');
 		}
     	var msg = this.bundle.get(key);
     	if((msg != null) && (msg !== 'undefined') && 
@@ -113553,24 +113568,26 @@ Ext.define('webUi.util.AppSingleton', {
     			msg = msg.replace(new RegExp("\\{" + ph + "\\}", "gi" ), arguments[1][ph]);
     		}
     	}
-    	return (((msg != null) && (msg != 'undefined')) ? msg : this.msgKeyNotFound + key);
+    	return (((msg != null) && (msg != 'undefined')) ? msg : this.getAppConfigErrMsg('msgKeyNotFound') + key);
     },
     getAppParam: function(key){
 		if(this.appParam == null){
-			return this.msgAppParamNotLoaded;
+			return this..getAppConfigErrMsg('msgAppParamNotLoaded');
 		}
     	var msg = this.appParam.get(key);
-    	return (((msg != null) && (msg != 'undefined')) ? msg : this.msgKeyNotFound + key);
+    	return (((msg != null) && (msg != 'undefined')) ? msg : this.getAppConfigErrMsg('msgKeyNotFound') + key);
     },
     handleError: function(msg, logMsg){
-    	Ext.Msg.alert(this.msgError, msg);
+    	Ext.Msg.alert(this..getAppConfigErrMsg('msgError'), msg);
     	if(logMsg){
     		console.log(logMsg);
     	}
     },
     checkAppConfigLoaded: function(){
-    	console.log('******* Check UI Kick Off *******');
-    	return (isBundleLoaded && isAppParamLoaded);
+    	return (this.isBundleLoaded && this.isAppParamLoaded);
+    },
+    getAppConfigErrMsg: function(key){
+    	return this.getMessages[this.getDefaultLanguage()][key];
     }
     
 
@@ -113907,8 +113924,7 @@ Ext.define('webUi.controller.Main', {
 	},
 
 	onResourceLoaded: function(){
-		console.log('^^^^^^^^^^^^onResourceLoaded^^^^^^^^^^');
-		if(webUi.util.AppSingleton.checkAppConfigLoaded){
+		if(webUi.util.AppSingleton.checkAppConfigLoaded() === true){
 			this.fireEvent('kickOffui');
 		}
 	},
@@ -113931,8 +113947,7 @@ Ext.define('webUi.controller.Main', {
 	},	
 
 	onAppParamsLoaded: function(){
-		console.log('^^^^^^^^^^^^onAppParamsLoaded^^^^^^^^^^');
-		if(webUi.util.AppSingleton.checkAppConfigLoaded){
+		if(webUi.util.AppSingleton.checkAppConfigLoaded() === true){
 			this.fireEvent('kickOffui');
 		}
 	},
@@ -113942,7 +113957,6 @@ Ext.define('webUi.controller.Main', {
 	},
 	
 	onKickOffUi: function(){
-		console.log('UI Kick Off>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 //		var vp = new webUi.view.Viewport(),
 //	    rp = new webUi.view.Rootpanel();
 //		vp.add(rp);

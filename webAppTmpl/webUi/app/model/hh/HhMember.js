@@ -15,7 +15,8 @@ Ext.define('webUi.model.hh.HhMember', {
 		         {name: 'hrsWrkPerWeek', type: 'int'},
 		         {name: 'isOwnHouse', type: 'boolean'},
 		         'mobNo',
-		         {name: 'isHead', type: 'boolean'}
+		         {name: 'isHead', type: 'boolean'},
+		         {name: 'isCurrentUser', type: 'boolean'}
 		]
 	}
 });

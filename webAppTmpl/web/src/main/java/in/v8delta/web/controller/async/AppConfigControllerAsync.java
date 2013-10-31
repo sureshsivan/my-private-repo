@@ -37,6 +37,13 @@ public class AppConfigControllerAsync {
 		List<String> out = PropertyUtil.getPropertiesStrAsList(System.getProperty(WebConstants.PROP_KEY_RB_FILE), 
 							RequestContextUtils.getLocale(request));
 		LOGGER.debug("End of getAllResources : " + out.toString());
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		return out;
 	}
 	
@@ -46,6 +53,13 @@ public class AppConfigControllerAsync {
 		LOGGER.debug("Start of getApplicationParameters");
 		List<String> out = PropertyUtil.getPropertiesStrAsList(System.getProperty(WebConstants.PROP_KEY_APP_PARAM_FILE));
 		LOGGER.debug("End of getApplicationParameters : " + out.toString());
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		return out;
 	}
 	

@@ -15,8 +15,9 @@ Ext.define('webUi.view.Viewport', {
     },
 
     items: [
-//            {
-//            	xtype: 'd-rootpanel'
-//            }
-    ]
+            //	kept it as blank as adding components only after resource files are loaded 
+    ],
+    initComponent: function(){
+    	this.callParent(arguments);
+    }
 });

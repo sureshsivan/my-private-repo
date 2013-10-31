@@ -33,8 +33,7 @@ Ext.define('webUi.controller.Main', {
 	},
 
 	onResourceLoaded: function(){
-		console.log('^^^^^^^^^^^^onResourceLoaded^^^^^^^^^^');
-		if(webUi.util.AppSingleton.checkAppConfigLoaded === true){
+		if(webUi.util.AppSingleton.checkAppConfigLoaded() === true){
 			this.fireEvent('kickOffui');
 		}
 	},
@@ -57,8 +56,7 @@ Ext.define('webUi.controller.Main', {
 	},	
 
 	onAppParamsLoaded: function(){
-		console.log('^^^^^^^^^^^^onAppParamsLoaded^^^^^^^^^^');
-		if(webUi.util.AppSingleton.checkAppConfigLoaded === true){
+		if(webUi.util.AppSingleton.checkAppConfigLoaded() === true){
 			this.fireEvent('kickOffui');
 		}
 	},
@@ -68,10 +66,10 @@ Ext.define('webUi.controller.Main', {
 	},
 	
 	onKickOffUi: function(){
-		console.log('UI Kick Off>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-//		var vp = new webUi.view.Viewport(),
-//	    rp = new webUi.view.Rootpanel();
-//		vp.add(rp);
+		console.log('UI kick Off Start');
+		var vp = Ext.create('webUi.view.Viewport'),
+			rp = Ext.create('webUi.view.Rootpanel');
+		vp.add(rp);
 	}
 		
 });
