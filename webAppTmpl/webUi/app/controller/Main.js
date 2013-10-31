@@ -16,9 +16,9 @@ Ext.define('webUi.controller.Main', {
 	onAppStart: function(){
 		var me = this;
 		me.fireEvent('loadResources');
-		webUi.util.AppSingleton.showMask('loadResources', 'loadResources  hard coded');
+		webUi.util.AppSingleton.showMask('loadResources', webUi.util.AppSingleton.getAppConfigMsg('rsrcBndlLoadMsg'));
 		me.fireEvent('loadAppParams');
-		webUi.util.AppSingleton.showMask('loadAppParams', 'loadAppParams  hard coded');
+		webUi.util.AppSingleton.showMask('loadAppParams', webUi.util.AppSingleton.getAppConfigMsg('appConfigLoadMsg'));
 	},
 	
 	onLoadResources: function(){

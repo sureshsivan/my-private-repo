@@ -4,7 +4,8 @@
 Ext.define('webUi.view.common.Footer', {
     extend: 'Ext.panel.Panel',
     xtype: 'd-footer',
-    margin: 2,
+    margin: 0,
+    minHeight: 50,
     layout: {
         type: 'hbox',
         align: 'middle'

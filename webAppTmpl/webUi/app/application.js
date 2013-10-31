@@ -3,11 +3,10 @@ Ext.define('webUi.Application', {
     appFolder: 'app',
     extend: 'Ext.app.Application',
     requires: [
-               'webUi.util.AppSingleton',
-               'webUi.util.rb.Bundle',
-               'webUi.util.rb.ResourceBundle',
-               'Ext.window.MessageBox',
-               'webUi.view.common.InfoBar'
+            'webUi.util.AppSingleton',
+       		'Ext.window.MessageBox',
+    		'Ext.util.HashMap',
+    		'webUi.util.rb.ResourceBundle',
     ],
     views: [
             

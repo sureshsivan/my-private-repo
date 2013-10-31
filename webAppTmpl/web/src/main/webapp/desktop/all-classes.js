@@ -113523,23 +113523,6 @@ Ext.define('Ext.util.Grouper', {
 Ext.define('webUi.util.AppSingleton', {
 	singleton : true,
 	
-    config : {
-        defaultLanguage : 'en',
-        messages : {
-            'en' : {
-			    'msgKeyNotFound': 'Message not found for key:',
-			    'msgBundleNotLoaded': 'Bundle Not loaded, Pls reload the application or Contact System ADMIN',
-			    'msgAppParamNotLoaded': 'Application Parameters Not loaded, Pls reload the application or Contact System ADMIN',
-			    'msgError': 'Error',
-			},
-            'es' : {
-			    'msgKeyNotFound': 'Message not found for key:_ES',
-			    'msgBundleNotLoaded': 'Bundle Not loaded, Pls reload the application or Contact System ADMIN_ES',
-			    'msgAppParamNotLoaded': 'Application Parameters Not loaded, Pls reload the application or Contact System ADMIN_ES',
-			    'msgError': 'Error_ES',
-            }
-        }
-    },
 
 	currentBundle : '',
 	lang : 'en',
@@ -113550,15 +113533,36 @@ Ext.define('webUi.util.AppSingleton', {
 	isBundleLoaded: false,
 	appParam: null,
 	isAppParamLoaded: false,
-
+    defaultLanguage : 'en',
+    messages : {
+        'en' : {
+		    'msgKeyNotFound': 'Message not found for key:',
+		    'msgBundleNotLoaded': 'Bundle Not loaded, Pls reload the application or Contact System ADMIN',
+		    'msgAppParamNotLoaded': 'Application Parameters Not loaded, Pls reload the application or Contact System ADMIN',
+		    'msgError': 'Error',
+		    'loading': '<b>Loading Items....</b>',
+		    'rsrcBndlLoadMsg': 'Loading Resource Bundle Items .......................',
+		    'appConfigLoadMsg': 'Loading App Configuration Items .....................'
+		},
+        'es' : {
+		    'msgKeyNotFound': 'Message not found for key:_ES',
+		    'msgBundleNotLoaded': 'Bundle Not loaded, Pls reload the application or Contact System ADMIN_ES',
+		    'msgAppParamNotLoaded': 'Application Parameters Not loaded, Pls reload the application or Contact System ADMIN_ES',
+		    'msgError': 'Error_ES',
+		    'loading': 'Loading Items _Es',
+		    'rsrcBndlLoadMsg': 'Loading Resource Bundle Items ......................._ES',
+		    'appConfigLoadMsg': 'Loading App Configuration Items ....................._ES'
+        }
+    },
+    activeMasks: null,
 	constructor : function(config){
-		this.initConfig(config);
-        this.callParent([config]);
-        this.setDefaultLanguage((navigator.language || navigator.browserLanguage || navigator.userLanguage || this.getDefaultLanguage()));
+        this.defaultLanguage = (navigator.language || navigator.browserLanguage || navigator.userLanguage || this.defaultLanguage).substring(0, 2);
+        this.activeMasks = Ext.create('Ext.util.HashMap');
 	},
     getMsg: function(key){
 		if(this.bundle == null){
-			return this.getAppConfigErrMsg('msgBundleNotLoaded');
+			this.handleError(this.getAppConfigMsg('msgBundleNotLoaded'));
+			return '';
 		}
     	var msg = this.bundle.get(key);
     	if((msg != null) && (msg !== 'undefined') && 
@@ -113568,28 +113572,80 @@ Ext.define('webUi.util.AppSingleton', {
     			msg = msg.replace(new RegExp("\\{" + ph + "\\}", "gi" ), arguments[1][ph]);
     		}
     	}
-    	return (((msg != null) && (msg != 'undefined')) ? msg : this.getAppConfigErrMsg('msgKeyNotFound') + key);
+    	msg = (((msg != null) && (msg != 'undefined')) ? msg : this.getAppConfigMsg('msgKeyNotFound') + key);
+    	return msg;
     },
     getAppParam: function(key){
 		if(this.appParam == null){
-			return this..getAppConfigErrMsg('msgAppParamNotLoaded');
+			this.handleError(this.getAppConfigMsg('msgAppParamNotLoaded'));
+			return '';
 		}
     	var msg = this.appParam.get(key);
-    	return (((msg != null) && (msg != 'undefined')) ? msg : this.getAppConfigErrMsg('msgKeyNotFound') + key);
+    	msg = (((msg != null) && (msg != 'undefined')) ? msg : this.getAppConfigMsg('msgKeyNotFound') + key);
+    	return msg;
     },
     handleError: function(msg, logMsg){
-    	Ext.Msg.alert(this..getAppConfigErrMsg('msgError'), msg);
-    	if(logMsg){
-    		console.log(logMsg);
-    	}
+    	console.log(msg);
+    	console.log(logMsg);
+//    	Ext.Msg.alert(this.getAppConfigMsg('msgError'), msg);
+//    	if(logMsg){
+//    		console.log(logMsg);
+//    	}
     },
     checkAppConfigLoaded: function(){
     	return (this.isBundleLoaded && this.isAppParamLoaded);
     },
-    getAppConfigErrMsg: function(key){
-    	return this.getMessages[this.getDefaultLanguage()][key];
-    }
+    getAppConfigMsg: function(key){
+    	return this.messages[this.defaultLanguage][key];
+    },
     
+	showMask: function(maskKey, maskMsg){
+		if(this.hasActiveMask()){
+			this.activeMasks.add(maskKey, maskMsg);
+			this.addMessageToMask(maskMsg);
+		} else {
+			this.activeMasks.add(maskKey, maskMsg);
+			Ext.getBody().mask(maskMsg);
+		}
+	},
+	removeMask: function(maskKey){
+		if(this.activeMasks.containsKey(maskKey)){
+			if(this.activeMasks.getCount() == 1){
+				Ext.getBody().unmask();
+			} else {
+				var msg = this.activeMasks.get(maskKey);
+				if(this.activeMasks.removeAtKey(maskKey)){
+					this.removeMsgFromMask(msg);
+				}
+			}
+		}
+	},
+	hasActiveMask: function(){
+		return Ext.getBody().isMasked();
+	},
+	addMessageToMask: function(msg){
+		this.refreshMaskMsg(msg);
+	}, 
+	removeMsgFromMask: function(msg){
+		this.refreshMaskMsg(msg);
+	},
+	refreshMaskMsg: function(msg){
+		var msg = this.getAppConfigMsg('loading');
+		this.activeMasks.each(function(key, value, length){
+			msg = msg.concat('<br>');
+			msg = msg.concat(value);
+		});
+		Ext.getBody().mask(msg);
+	}
+    
+
+});
+Ext.define('webUi.util.rb.model.KeyValPair', {
+        extend:  Ext.data.Model ,
+        config: {
+                idProperty: 'key',
+                fields: ['key', 'val']
+        }
 
 });
 Ext.define('webUi.util.rb.reader.Property', {
@@ -113641,184 +113697,6 @@ Ext.define('webUi.util.rb.reader.Property', {
                 return (file ? file.match(/.*(.*\\\s*\n)+.*|^((?!^\s*[#!]).).*$/gim) : []);
         }
         
-
-});
-Ext.define('webUi.util.rb.model.Property', {
-    extend:  Ext.data.Model ,
-    config: {
-            idProperty: 'key',
-            fields: ['key', 'val']
-    },
-    constructor: function(key, val){
-    	this.key = key;
-    	this.val = val;
-    }
-});
-/**
-*	courtesy : https://github.com/elmasse/Ext.i18n.Bundle-touch/blob/master/i18n/Bundle.js
-**/
-        
-
-        Ext.define('webUi.util.rb.Bundle', {
-            extend:  Ext.data.Store ,
-                       
-                                                    
-                                                  
-              
-            
-            //@private
-            defaultLanguage: 'en-US',
-            //@private
-            resourceExt: '.properties',
-            
-            config:{
-                    /**
-                     * @cfg bundle {String} bundle name for properties file. Default to message  
-                     */
-                    bundle: 'message',
-
-                    /**
-                     * @cfg path {String} URI to properties files. Default to resources
-                     */
-                    path: 'resources'
-
-                    /**
-                     * @cfg lang {String} Language in the form xx-YY where:
-                     *                 xx: Language code (2 characters lowercase) 
-                 *      YY: Country code (2 characters upercase). 
-                     * Optional. Default to browser's language. If it cannot be determined default to en-US.
-                     */
-                    
-                    /**
-                     * @cfg noCache {boolean} whether or not to disable Proxy's cache. Optional. Defaults to true. 
-                     */
-                    
-            },
-            
-            
-            constructor: function(config){
-                    config = config || {};
-
-                    var me = this,
-                            language = me.formatLanguageCode(config.lang || me.guessLanguage()),
-                            noCache = (config.noCache !== false),
-                            url;
-
-                    me.language = language;
-                    me.bundle = config.bundle || me.bundle;
-                    me.path = config.path || me.path;
-                            
-                    url = this.buildURL(language);
-
-                    delete config.lang;
-                    delete config.noCache;
-                    
-                    Ext.applyIf(config, {
-                            autoLoad: true,
-                            model: 'webUi.util.rb.model.Property',
-                            proxy:{
-                                    type: 'ajax',
-                                    url: url,
-                                    noCache: noCache,
-                                    reader: {
-                            			type: 'property',
-                            			rootProperty: 'bundle'
-                                    },
-                                    //avoid sending limit, start & group params to server
-                                    getParams: Ext.emptyFn
-                            },
-                            listeners:{
-                                    'load': this.onBundleLoad,
-                                    scope: this
-                            }
-                    });
-
-                    me.callParent([config]);
-                    me.getProxy().on('exception', this.loadParent, this, {single: true});
-            },
-            
-            /**
-             * @private
-             */
-            guessLanguage: function(){
-                    return (navigator.language || navigator.browserLanguage
-                                    || navigator.userLanguage || this.defaultLanguage);
-            },
-            
-            /**
-             * @method: getMsg
-             * Returns the content associated with the bundle key or {bundle key}.undefined if it is not specified.
-             * @param: key {String} Bundle key.
-             * @return: {String} The bundle key content. 
-             */
-            getMsg: function(key){
-                    return this.getById(key)? Ext.util.Format.htmlDecode(this.getById(key).get('value')) : key + '.undefined';
-            },
-            
-            /**
-             * @method: onReady
-             * The fn will be called when the Bundle file is loaded.
-             * @param: fn {Function}
-             */
-            onReady: function(fn){
-                    this.readyFn = fn;
-                    this.on('loaded', this.readyFn, this);
-            },
-            
-            /**
-             * @private
-             */
-            onBundleLoad: function(store, record, success, op) {
-            	console.log(111);
-                    if(success){
-                            this.fireEvent('loaded');
-                    }
-        },
-
-            /**
-             * @private
-             */
-            onProxyLoad: function(op){
-                    if(op.getRecords()){
-                            this.callParent(arguments);
-                    }
-            },
-            
-            /**
-             * @private
-             */
-            buildURL: function(language){
-                    return webUi.util.AppSingleton.uiRsrcUrl;
-            },
-            
-            /**
-             * @private
-             */
-            loadParent: function(){
-                    this.getProxy().setUrl(this.buildURL());
-                    this.load();                        
-            },
-            
-            /**
-             * @private
-             */
-            formatLanguageCode: function(lang){
-                    var langCodes = lang.split('-');
-                    langCodes[0] = (langCodes[0]) ? langCodes[0].toLowerCase() : '';
-                    langCodes[1] = (langCodes[1]) ? langCodes[1].toUpperCase() : '';
-                    return langCodes.join('-');
-            }
-            
-            
-            
-    });
-        
-Ext.define('webUi.util.rb.model.KeyValPair', {
-        extend:  Ext.data.Model ,
-        config: {
-                idProperty: 'key',
-                fields: ['key', 'val']
-        }
 
 });
 /**
@@ -113875,20 +113753,6 @@ Ext.define('webUi.util.rb.ResourceBundle', {
 	    }
         
 });
-/**
- * This is the Header before user login
- */
-Ext.define('webUi.view.common.InfoBar', {
-    extend:  Ext.Component ,
-    xtype: 'd-info-bar',
-    itemId: 'infoBar',
-    width: '100%',
-    height: '5%',
-	style: {
-	    backgroundColor:'#7c7676'
-	}
-});
-
 Ext.define('webUi.controller.Main', {
     extend:  Ext.app.Controller ,
     init: function(){
@@ -113907,7 +113771,9 @@ Ext.define('webUi.controller.Main', {
 	onAppStart: function(){
 		var me = this;
 		me.fireEvent('loadResources');
+		webUi.util.AppSingleton.showMask('loadResources', webUi.util.AppSingleton.getAppConfigMsg('rsrcBndlLoadMsg'));
 		me.fireEvent('loadAppParams');
+		webUi.util.AppSingleton.showMask('loadAppParams', webUi.util.AppSingleton.getAppConfigMsg('appConfigLoadMsg'));
 	},
 	
 	onLoadResources: function(){
@@ -113924,6 +113790,7 @@ Ext.define('webUi.controller.Main', {
 	},
 
 	onResourceLoaded: function(){
+		webUi.util.AppSingleton.removeMask('loadResources');
 		if(webUi.util.AppSingleton.checkAppConfigLoaded() === true){
 			this.fireEvent('kickOffui');
 		}
@@ -113947,6 +113814,7 @@ Ext.define('webUi.controller.Main', {
 	},	
 
 	onAppParamsLoaded: function(){
+		webUi.util.AppSingleton.removeMask('loadAppParams');
 		if(webUi.util.AppSingleton.checkAppConfigLoaded() === true){
 			this.fireEvent('kickOffui');
 		}
@@ -113957,9 +113825,10 @@ Ext.define('webUi.controller.Main', {
 	},
 	
 	onKickOffUi: function(){
-//		var vp = new webUi.view.Viewport(),
-//	    rp = new webUi.view.Rootpanel();
-//		vp.add(rp);
+		console.log('UI kick Off Start');
+		var vp = Ext.create('webUi.view.Viewport'),
+			rp = Ext.create('webUi.view.Rootpanel');
+		vp.add(rp);
 	}
 		
 });
@@ -113969,11 +113838,10 @@ Ext.define('webUi.Application', {
     appFolder: 'app',
     extend:  Ext.app.Application ,
                
-                                         
                                       
-                                              
-                                       
-                                          
+       		                        
+    		                   
+    		                               
       
     views: [
             
@@ -113988,24 +113856,6 @@ Ext.define('webUi.Application', {
     ]
 });
 
-/**
- * This is the Header before user login
- */
-Ext.define('webUi.view.common.GuestHeader', {
-    extend:  Ext.panel.Panel ,
-    xtype: 'd-guest-header',
-	layout: {
-	    type: 'vbox'
-	},
-	items: [
-	    {
-	    	html: '1'
-	    }, 
-	    {
-	    	xtype: 'd-info-bar'
-	    }
-	]
-});
 /**
  * This is the Copyright Widget placed in Footer
  */
@@ -114044,13 +113894,17 @@ Ext.define('webUi.view.common.FooterContact', {
         	html:'mail to <a href="' + webUi.util.AppSingleton.getMsg('app.footer.contact.mail') + '">v8@v8-delta.com</a> Or Call '+ webUi.util.AppSingleton.getMsg('app.footer.contact.phone'),
         	border: false
         }
-    ]
+    ],
+    initComponent: function(){
+    	console.log('InitComponent');
+    	this.callParent(arguments);
+    }
 });
 /**
  * This is the Logo Widget placed in Footer
  */
  Ext.define('webUi.view.common.FooterLogo', {
-	    extend:  Ext.panel.Panel ,
+	    extend:  Ext.Component ,
 	    xtype: 'd-footer-logo',
 	    bodyPadding : '2 2 2 2',
 //	    margin: 2,
@@ -114064,6 +113918,11 @@ Ext.define('webUi.view.common.FooterContact', {
 	        	//html: '<img src="img/footer-logo.png">',
 	        	html: '<img src="' + webUi.util.AppSingleton.getAppParam('app.footer.logoPath') + '">',
 	        	border: false
+//				xtype: 'component',
+//				autoEl: {
+//					tag: 'img',
+//					src: webUi.util.AppSingleton.getAppParam('app.footer.logoPath')
+//				}
 	        }
 	    ]
 	});
@@ -114073,7 +113932,8 @@ Ext.define('webUi.view.common.FooterContact', {
 Ext.define('webUi.view.common.Footer', {
     extend:  Ext.panel.Panel ,
     xtype: 'd-footer',
-    margin: 2,
+    margin: 0,
+    minHeight: 50,
     layout: {
         type: 'hbox',
         align: 'middle'
@@ -114094,6 +113954,41 @@ Ext.define('webUi.view.common.Footer', {
     ]
 });
 
+/**
+ * This is the Header before user login
+ */
+Ext.define('webUi.view.common.InfoBar', {
+    extend:  Ext.panel.Panel ,
+    xtype: 'd-info-bar',
+    itemId: 'infoBar',
+    minHeight: 40,
+    width: '100%',
+	border: true,
+	html: 'Info Bar',
+	bodyPadding: '0 5 0 5'
+});
+
+/**
+ * This is the Header before user login
+ */
+Ext.define('webUi.view.common.GuestHeader', {
+    extend:  Ext.panel.Panel ,
+    xtype: 'd-guest-header',
+    minHeight: 120,
+	layout: {
+	    type: 'vbox'
+	},
+	items: [
+	    {
+	    	xtype: 'd-footer',
+	    	flex: 3
+	    },
+	    {
+	    	xtype: 'd-info-bar',
+	    	flex: 1
+	    }
+	]
+});
 /**
  * This is the rootpanel for the whole application
  */
@@ -114137,25 +114032,26 @@ Ext.define('webUi.view.Rootpanel', {
 
 Ext.define('webUi.view.Viewport', {
     extend:  Ext.container.Viewport ,
-              
-                                   
-                               
-                                        
-                                   
-                                      
-                                          
-                                      
-      
-
+	           
+		                           
+		                            
+		                       
+		                                
+		                           
+		                              
+		                                  
+		                              
+	  
     layout: {
         type: 'fit'
     },
 
     items: [
-//            {
-//            	xtype: 'd-rootpanel'
-//            }
-    ]
+            //	kept it as blank as adding components only after resource files are loaded 
+    ],
+    initComponent: function(){
+    	this.callParent(arguments);
+    }
 });
 
 /*
@@ -114170,7 +114066,7 @@ Ext.define('webUi.view.Viewport', {
 Ext.application({
     name: 'webUi',
     extend:  webUi.Application ,
-    autoCreateViewport: true,
+    autoCreateViewport: false,
     launch: startAppLaunch
 });
 

@@ -4,15 +4,18 @@
 Ext.define('webUi.view.common.GuestHeader', {
     extend: 'Ext.panel.Panel',
     xtype: 'd-guest-header',
+    minHeight: 120,
 	layout: {
 	    type: 'vbox'
 	},
 	items: [
 	    {
-	    	html: '1'
-	    }, 
+	    	xtype: 'd-footer',
+	    	flex: 3
+	    },
 	    {
-	    	xtype: 'd-info-bar'
+	    	xtype: 'd-info-bar',
+	    	flex: 1
 	    }
 	]
 });

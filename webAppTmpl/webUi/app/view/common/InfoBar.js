@@ -2,12 +2,12 @@
  * This is the Header before user login
  */
 Ext.define('webUi.view.common.InfoBar', {
-    extend: 'Ext.Component',
+    extend: 'Ext.panel.Panel',
     xtype: 'd-info-bar',
     itemId: 'infoBar',
+    minHeight: 40,
     width: '100%',
-    height: '5%',
-	style: {
-	    backgroundColor:'#7c7676'
-	}
+	border: true,
+	html: 'Info Bar',
+	bodyPadding: '0 5 0 5'
 });

@@ -21,14 +21,18 @@ Ext.define('webUi.util.AppSingleton', {
 		    'msgBundleNotLoaded': 'Bundle Not loaded, Pls reload the application or Contact System ADMIN',
 		    'msgAppParamNotLoaded': 'Application Parameters Not loaded, Pls reload the application or Contact System ADMIN',
 		    'msgError': 'Error',
-		    'loading': '<b>Loading Items</b>'
+		    'loading': '<b>Loading Items....</b>',
+		    'rsrcBndlLoadMsg': 'Loading Resource Bundle Items .......................',
+		    'appConfigLoadMsg': 'Loading App Configuration Items .....................'
 		},
         'es' : {
 		    'msgKeyNotFound': 'Message not found for key:_ES',
 		    'msgBundleNotLoaded': 'Bundle Not loaded, Pls reload the application or Contact System ADMIN_ES',
 		    'msgAppParamNotLoaded': 'Application Parameters Not loaded, Pls reload the application or Contact System ADMIN_ES',
 		    'msgError': 'Error_ES',
-		    'loading': 'Loading Items _Es'
+		    'loading': 'Loading Items _Es',
+		    'rsrcBndlLoadMsg': 'Loading Resource Bundle Items ......................._ES',
+		    'appConfigLoadMsg': 'Loading App Configuration Items ....................._ES'
         }
     },
     activeMasks: null,
@@ -38,7 +42,7 @@ Ext.define('webUi.util.AppSingleton', {
 	},
     getMsg: function(key){
 		if(this.bundle == null){
-			this.handleError(this.getAppConfigErrMsg('msgBundleNotLoaded'));
+			this.handleError(this.getAppConfigMsg('msgBundleNotLoaded'));
 			return '';
 		}
     	var msg = this.bundle.get(key);
@@ -49,22 +53,22 @@ Ext.define('webUi.util.AppSingleton', {
     			msg = msg.replace(new RegExp("\\{" + ph + "\\}", "gi" ), arguments[1][ph]);
     		}
     	}
-    	msg = (((msg != null) && (msg != 'undefined')) ? msg : this.getAppConfigErrMsg('msgKeyNotFound') + key);
+    	msg = (((msg != null) && (msg != 'undefined')) ? msg : this.getAppConfigMsg('msgKeyNotFound') + key);
     	return msg;
     },
     getAppParam: function(key){
 		if(this.appParam == null){
-			this.handleError(this.getAppConfigErrMsg('msgAppParamNotLoaded'));
+			this.handleError(this.getAppConfigMsg('msgAppParamNotLoaded'));
 			return '';
 		}
     	var msg = this.appParam.get(key);
-    	msg = (((msg != null) && (msg != 'undefined')) ? msg : this.getAppConfigErrMsg('msgKeyNotFound') + key);
+    	msg = (((msg != null) && (msg != 'undefined')) ? msg : this.getAppConfigMsg('msgKeyNotFound') + key);
     	return msg;
     },
     handleError: function(msg, logMsg){
     	console.log(msg);
     	console.log(logMsg);
-//    	Ext.Msg.alert(this.getAppConfigErrMsg('msgError'), msg);
+//    	Ext.Msg.alert(this.getAppConfigMsg('msgError'), msg);
 //    	if(logMsg){
 //    		console.log(logMsg);
 //    	}
@@ -72,7 +76,7 @@ Ext.define('webUi.util.AppSingleton', {
     checkAppConfigLoaded: function(){
     	return (this.isBundleLoaded && this.isAppParamLoaded);
     },
-    getAppConfigErrMsg: function(key){
+    getAppConfigMsg: function(key){
     	return this.messages[this.defaultLanguage][key];
     },
     
@@ -101,21 +105,18 @@ Ext.define('webUi.util.AppSingleton', {
 		return Ext.getBody().isMasked();
 	},
 	addMessageToMask: function(msg){
-		console.log("MESSAGE ADDED");
 		this.refreshMaskMsg(msg);
 	}, 
 	removeMsgFromMask: function(msg){
-		console.log("MESSAGE REMOVED");
 		this.refreshMaskMsg(msg);
 	},
 	refreshMaskMsg: function(msg){
-		var msg = [this.getAppConfigErrMsg('loading')];
+		var msg = this.getAppConfigMsg('loading');
 		this.activeMasks.each(function(key, value, length){
-			msg.push('<br>');
-			msg.push(value)
+			msg = msg.concat('<br>');
+			msg = msg.concat(value);
 		});
-		console.log(msg);
-		Ext.getBody().mask(msg.join());
+		Ext.getBody().mask(msg);
 	}
     
 
