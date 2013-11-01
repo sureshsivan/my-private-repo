@@ -108,14 +108,16 @@ Ext.ClassManager.addNameAlternateMappings({
   "webUi.util.rb.model.KeyValPair": [],
   "webUi.util.rb.model.Property": [],
   "webUi.util.rb.reader.Property": [],
-  "webUi.view.Main": [],
+  "webUi.view.HhidStart": [],
   "webUi.view.Rootpanel": [],
   "webUi.view.Viewport": [],
+  "webUi.view.common.CenterPanel": [],
   "webUi.view.common.Copyright": [],
   "webUi.view.common.Footer": [],
   "webUi.view.common.FooterContact": [],
   "webUi.view.common.FooterLogo": [],
-  "webUi.view.common.GuestHeader": [],
+  "webUi.view.common.GuestBar": [],
+  "webUi.view.common.Header": [],
   "webUi.view.common.InfoBar": []
 });
 Ext.ClassManager.addNameAliasMappings({
@@ -264,13 +266,14 @@ Ext.ClassManager.addNameAliasMappings({
   "webUi.util.rb.reader.Property": [
     "reader.property"
   ],
-  "webUi.view.Main": [
-    "widget.app-main"
-  ],
+  "webUi.view.HhidStart": [],
   "webUi.view.Rootpanel": [
     "widget.d-rootpanel"
   ],
   "webUi.view.Viewport": [],
+  "webUi.view.common.CenterPanel": [
+    "widget.d-center-panel"
+  ],
   "webUi.view.common.Copyright": [
     "widget.d-copyright"
   ],
@@ -283,11 +286,14 @@ Ext.ClassManager.addNameAliasMappings({
   "webUi.view.common.FooterLogo": [
     "widget.d-footer-logo"
   ],
-  "webUi.view.common.GuestHeader": [
-    "widget.d-guest-header"
+  "webUi.view.common.GuestBar": [
+    "widget.d-guest-bar"
+  ],
+  "webUi.view.common.Header": [
+    "widget.d-header"
   ],
   "webUi.view.common.InfoBar": [
-    "widget.d-info-bar"
+    "widget.d-infobar"
   ]
 });
 Ext.Loader.loadScript("../../ext/packages/ext-theme-neptune/overrides/Component.js");

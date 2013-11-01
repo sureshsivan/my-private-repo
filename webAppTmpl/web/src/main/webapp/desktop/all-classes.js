@@ -113753,8 +113753,38 @@ Ext.define('webUi.util.rb.ResourceBundle', {
 	    }
         
 });
+/**
+ * Start Page Widget for Application
+ */
+Ext.define('webUi.view.HhidStart',{
+	extend:  Ext.container.Container ,
+	header: true,
+	border: 2,
+	style: {
+	    borderColor: 'red',
+	    borderStyle: 'solid'
+	},
+	layout: {
+		type: 'hbox',
+		align: 'middle',
+		pach: 'center'
+	},
+	items:[
+	    {
+	    	xtype: 'textfield',
+	    	name: 'summa'
+	    }, 
+	    {
+	    	xtype: 'textfield',
+	    	name: 'summas'
+	    }
+	]
+});
 Ext.define('webUi.controller.Main', {
     extend:  Ext.app.Controller ,
+	          
+	                          
+	  
     init: function(){
     	this.application.addListener({
     		'appStart': this.onAppStart,
@@ -113764,7 +113794,8 @@ Ext.define('webUi.controller.Main', {
     		'loadAppParams': this.onLoadAppParams,
     		'appParamsLoaded': this.onAppParamsLoaded,
     		'appParamsLoadError': this.onAppParamsLoadError,
-    		'kickOffui': this.onKickOffUi
+    		'kickOffui': this.onKickOffUi,
+    		'showStartPage': this.onShowStartPage
     	});
 	},
 	
@@ -113829,6 +113860,14 @@ Ext.define('webUi.controller.Main', {
 		var vp = Ext.create('webUi.view.Viewport'),
 			rp = Ext.create('webUi.view.Rootpanel');
 		vp.add(rp);
+		this.fireEvent('showStartPage');
+	},
+	onShowStartPage: function(){
+		Ext.getCmp('centerPanel').clearItems();
+		Ext.getCmp('infoBar').clearItems();
+		var cc = Ext.create('webUi.view.HhidStart');
+		console.log('created');
+		Ext.getCmp('centerPanel').add(cc);
 	}
 		
 });
@@ -113857,27 +113896,99 @@ Ext.define('webUi.Application', {
 });
 
 /**
+ * This is the Header before user login
+ */
+Ext.define('webUi.view.common.GuestBar', {
+    extend:  Ext.container.Container ,
+    xtype: 'd-guest-bar',
+	layout: {
+	    type: 'vbox'
+	},
+	width: '100%',
+	border: false,
+	style: {
+	    backgroundColor: '#189ee7'
+	},
+	items: []
+});
+/**
+ * This is the Header before user login
+ */
+Ext.define('webUi.view.common.InfoBar', {
+    extend:  Ext.container.Container ,
+    xtype: 'd-infobar',
+    id: 'infoBar',
+    minHeight: 40,
+    width: '100%',
+	border: 0,
+	style: {
+	    backgroundColor: '#45494a'
+	},
+	
+	clearItems: function(){
+		console.log('[InfoBar] clearing Items...........');
+	}
+});
+
+/**
+ * This is the Header before user login
+ */
+Ext.define('webUi.view.common.Header', {
+    extend:  Ext.container.Container ,
+	           
+		                             
+		                           
+	  
+    xtype: 'd-header',
+	layout: {
+	    type: 'vbox'
+	},
+	items: [
+	    {
+	    	xtype: 'd-guest-bar',
+	    	flex: 2.7
+	    },
+	    {
+	    	xtype: 'd-infobar',
+	    	flex: 1.3
+	    }
+	]
+});
+/**
+ *	Widget for the center Panel in border layout 
+ */
+Ext.define('webUi.view.common.CenterPanel',{
+	extend:  Ext.panel.Panel ,
+	id: 'centerPanel',
+	xtype: 'd-center-panel',
+	layout: 'fit',
+	style: {
+	    backgroundColor: '#e6e6e6'
+	},
+	clearItems: function(){
+		console.log('[CenterPanel] Clearing Items');
+	}
+});
+/**
  * This is the Copyright Widget placed in Footer
  */
 Ext.define('webUi.view.common.Copyright', {
-    extend:  Ext.panel.Panel ,
+    extend:  Ext.container.Container ,
     xtype: 'd-copyright',
-    bodyPadding : '2 2 2 2',
     margin: 2,
     border: false,
     layout: {
         type: 'fit'
     },
-    //html: 'Copyright © 2013 <a href="http://www.v8-delta.com">v8-delta</a> Company. All Rights Reserved.'
-    html: webUi.util.AppSingleton.getMsg('app.copyright')
+    html: webUi.util.AppSingleton.getMsg('app.copyright'),
+    padding: '0 0 0 20'
 });
 /**
  * This is the Contact Widget placed in Footer
  */
 Ext.define('webUi.view.common.FooterContact', {
-    extend:  Ext.panel.Panel ,
+    extend:  Ext.container.Container ,
     xtype: 'd-footer-contact',
-//    bodyPadding : '10',
     border: false,
     layout: {
         type: 'vbox',
@@ -113885,29 +113996,23 @@ Ext.define('webUi.view.common.FooterContact', {
     },
     items: [
         {
-        	//html: '<b>Any Questions?</b>',
+        	xtype: 'container',
         	html: webUi.util.AppSingleton.getMsg('app.footer.anyQuestions'),
         	border: false,
         	padding: 5
         }, {
-        	//html:'mail to <a href="mailto:v8@v8-delta.com">v8@v8-delta.com</a> Or Call XXX-XXXX-XXXX',
+        	xtype: 'container',
         	html:'mail to <a href="' + webUi.util.AppSingleton.getMsg('app.footer.contact.mail') + '">v8@v8-delta.com</a> Or Call '+ webUi.util.AppSingleton.getMsg('app.footer.contact.phone'),
         	border: false
         }
-    ],
-    initComponent: function(){
-    	console.log('InitComponent');
-    	this.callParent(arguments);
-    }
+    ]
 });
 /**
  * This is the Logo Widget placed in Footer
  */
  Ext.define('webUi.view.common.FooterLogo', {
-	    extend:  Ext.Component ,
+	    extend:  Ext.container.Container ,
 	    xtype: 'd-footer-logo',
-	    bodyPadding : '2 2 2 2',
-//	    margin: 2,
 	    border: false,
 	    layout: {
 	        type: 'vbox',
@@ -113915,14 +114020,10 @@ Ext.define('webUi.view.common.FooterContact', {
 	    },
 	    items: [
 	        {
-	        	//html: '<img src="img/footer-logo.png">',
-	        	html: '<img src="' + webUi.util.AppSingleton.getAppParam('app.footer.logoPath') + '">',
-	        	border: false
-//				xtype: 'component',
-//				autoEl: {
-//					tag: 'img',
-//					src: webUi.util.AppSingleton.getAppParam('app.footer.logoPath')
-//				}
+        		xtype: 'container',
+//        		html: '<img src="' + webUi.util.AppSingleton.getAppParam('app.footer.logoPath') + '">'
+        		html: 'Fix Issue with imag Path......',
+        		padding: '0 20 0 0'
 	        }
 	    ]
 	});
@@ -113930,10 +114031,16 @@ Ext.define('webUi.view.common.FooterContact', {
  * This is the Header before user login
  */
 Ext.define('webUi.view.common.Footer', {
-    extend:  Ext.panel.Panel ,
+    extend:  Ext.container.Container ,
+               
+		                              
+		                                  
+		                              
+      
     xtype: 'd-footer',
-    margin: 0,
-    minHeight: 50,
+	style: {
+	    backgroundColor: '#969897'
+	},
     layout: {
         type: 'hbox',
         align: 'middle'
@@ -113955,76 +114062,40 @@ Ext.define('webUi.view.common.Footer', {
 });
 
 /**
- * This is the Header before user login
- */
-Ext.define('webUi.view.common.InfoBar', {
-    extend:  Ext.panel.Panel ,
-    xtype: 'd-info-bar',
-    itemId: 'infoBar',
-    minHeight: 40,
-    width: '100%',
-	border: true,
-	html: 'Info Bar',
-	bodyPadding: '0 5 0 5'
-});
-
-/**
- * This is the Header before user login
- */
-Ext.define('webUi.view.common.GuestHeader', {
-    extend:  Ext.panel.Panel ,
-    xtype: 'd-guest-header',
-    minHeight: 120,
-	layout: {
-	    type: 'vbox'
-	},
-	items: [
-	    {
-	    	xtype: 'd-footer',
-	    	flex: 3
-	    },
-	    {
-	    	xtype: 'd-info-bar',
-	    	flex: 1
-	    }
-	]
-});
-/**
  * This is the rootpanel for the whole application
  */
 Ext.define('webUi.view.Rootpanel', {
     extend:  Ext.container.Container ,
               
-                                     
+                                      
+                                   
+                                        
+                                  
       
     xtype: 'd-rootpanel',
-
+    border: false,
     layout: {
         type: 'border',
-        padding: 2
+        padding: 0
     },
 
     items: [
 	    {
 	        region: 'north',
-	        xtype: 'd-guest-header',
+	        xtype: 'd-header',
 	        header : false,
-	        height: '10%',
+	        height: 150,
 	        border: false
 	    },
 	    {
 	        region: 'center',
-	        xtype: 'panel',
-//	        title: 'Body',
-	        border: true,
-	        bodyPadding : 15,
-	        html: 'This is center panel'
+	        xtype: 'd-center-panel',
 	    },
 	    {
 	        region: 'south',
 	        xtype: 'd-footer',
 	        header : false,
-	        height: '5%',
+	        height: 50,
 	        border: false
 	    }
     ]
@@ -114035,12 +114106,7 @@ Ext.define('webUi.view.Viewport', {
 	           
 		                           
 		                            
-		                       
-		                                
-		                           
-		                              
-		                                  
-		                              
+		                      
 	  
     layout: {
         type: 'fit'
