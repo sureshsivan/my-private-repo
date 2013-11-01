@@ -7,33 +7,32 @@ Ext.define('webUi.view.Rootpanel', {
         'Ext.layout.container.Border'
     ],
     xtype: 'd-rootpanel',
-
+    border: false,
     layout: {
         type: 'border',
-        padding: 2
+        padding: 0
     },
 
     items: [
 	    {
 	        region: 'north',
-	        xtype: 'd-guest-header',
+	        xtype: 'd-header',
 	        header : false,
-	        height: '10%',
+	        height: 150,
 	        border: false
 	    },
 	    {
 	        region: 'center',
-	        xtype: 'panel',
-//	        title: 'Body',
-	        border: true,
-	        bodyPadding : 15,
-	        html: 'This is center panel'
+	        xtype: 'container',
+			style: {
+			    backgroundColor: '#e6e6e6'
+			}
 	    },
 	    {
 	        region: 'south',
 	        xtype: 'd-footer',
 	        header : false,
-	        height: '5%',
+	        height: 50,
 	        border: false
 	    }
     ]

@@ -9,7 +9,8 @@ Ext.define('webUi.controller.Main', {
     		'loadAppParams': this.onLoadAppParams,
     		'appParamsLoaded': this.onAppParamsLoaded,
     		'appParamsLoadError': this.onAppParamsLoadError,
-    		'kickOffui': this.onKickOffUi
+    		'kickOffui': this.onKickOffUi,
+    		'showStartPage': this.onShowStartPage
     	});
 	},
 	
@@ -74,6 +75,10 @@ Ext.define('webUi.controller.Main', {
 		var vp = Ext.create('webUi.view.Viewport'),
 			rp = Ext.create('webUi.view.Rootpanel');
 		vp.add(rp);
+		this.fireEvent('showStartPage');
+	},
+	onShowStartPage: function(){
+		console.log('onShowStartPage');
 	}
 		
 });

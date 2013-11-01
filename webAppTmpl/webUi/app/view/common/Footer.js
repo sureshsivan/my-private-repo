@@ -2,10 +2,16 @@
  * This is the Header before user login
  */
 Ext.define('webUi.view.common.Footer', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
+    requires: [
+		'webUi.view.common.Copyright',
+		'webUi.view.common.FooterContact',
+		'webUi.view.common.FooterLogo'
+    ],
     xtype: 'd-footer',
-    margin: 0,
-    minHeight: 50,
+	style: {
+	    backgroundColor: '#969897'
+	},
     layout: {
         type: 'hbox',
         align: 'middle'
