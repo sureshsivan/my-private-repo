@@ -4,7 +4,7 @@
 Ext.define('webUi.view.HhidStart',{
 	extend: 'Ext.container.Container',
 	header: true,
-	border: 2,
+	border: '2 0',
 	padding: 10,
 	style: {
 	    borderColor: 'red',
@@ -12,12 +12,19 @@ Ext.define('webUi.view.HhidStart',{
 	},
 	layout: {
 		type: 'vbox',
-		align: 'center',
-		pack: 'center'
+		align: 'left',
+		pack: 'center',
+		padding: '0 0 0 50'
 	},
 	items:[
 	    {
-	    	html: 'Summa Text'
+	    	html: webUi.util.AppSingleton.getMsg('app.welcomeMsg')
+	    }, 
+	    {
+	    	html: webUi.util.AppSingleton.getMsg('app.welcome.site.info')
+	    }, 
+	    {
+	    	html: webUi.util.AppSingleton.getMsg('app.welcome.start.info')
 	    }, 
 	    {
 	    	xtype: 'container',
@@ -25,7 +32,7 @@ Ext.define('webUi.view.HhidStart',{
 	    	layout: {
 	    		type: 'hbox',
 	    		align: 'middle',
-	    		pack: 'center'
+	    		pack: 'left'	
 	    	},
 	    	items:[
 	    	    {
@@ -33,16 +40,15 @@ Ext.define('webUi.view.HhidStart',{
 	    	    	name: 'summa',
 	    	    	emptyText: 'Enter HHID or email ID',
 	    	    	width: '40%',
-	    	    	height: 30,
-	    	    	margin: 20
+	    	    	height: 30
 	    	    }, 
 	    	    {
 	    	    	xtype: 'button',
 	    	    	name: 'summas',
-	    	    	height: 30,
 	    	    	text: 'Go',
-	    	    	padding: '0 10'
-	    	    	
+	    	    	padding: '0 10',
+	    	    	height: 30,
+	    	    	margin: 20
 	    	    }
 	    	]
 	    	
