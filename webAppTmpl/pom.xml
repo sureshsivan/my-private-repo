@@ -48,6 +48,8 @@
 		
 		<!-- build -->
 		<sencha.extjs.build.dir.name>build</sencha.extjs.build.dir.name>
+		<sencha.extjs.lib.dir.name>ext</sencha.extjs.lib.dir.name>
+		<sencha.extjs.src.dir.name>app</sencha.extjs.src.dir.name>
 		<!-- testing/production -->
 		<sencha.build.param.args.environment>testing</sencha.build.param.args.environment>
 		<!-- true/false -->
