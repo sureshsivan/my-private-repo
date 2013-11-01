@@ -4,7 +4,10 @@
 Ext.define('webUi.view.Rootpanel', {
     extend: 'Ext.container.Container',
     requires:[
-        'Ext.layout.container.Border'
+        'Ext.layout.container.Border',
+        'webUi.view.common.Header',
+        'webUi.view.common.CenterPanel',
+        'webUi.view.common.Footer'
     ],
     xtype: 'd-rootpanel',
     border: false,
@@ -23,10 +26,7 @@ Ext.define('webUi.view.Rootpanel', {
 	    },
 	    {
 	        region: 'center',
-	        xtype: 'container',
-			style: {
-			    backgroundColor: '#e6e6e6'
-			}
+	        xtype: 'd-center-panel',
 	    },
 	    {
 	        region: 'south',

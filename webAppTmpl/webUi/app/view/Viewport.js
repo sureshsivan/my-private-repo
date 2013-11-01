@@ -3,9 +3,7 @@ Ext.define('webUi.view.Viewport', {
 	requires: [
 		'Ext.layout.container.Fit',
 		'webUi.view.common.InfoBar',
-		'webUi.view.Rootpanel',
-		'webUi.view.common.Header',
-		'webUi.view.common.Footer'
+		'webUi.view.Rootpanel'
 	],
     layout: {
         type: 'fit'

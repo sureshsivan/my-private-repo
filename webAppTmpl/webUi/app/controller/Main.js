@@ -78,7 +78,8 @@ Ext.define('webUi.controller.Main', {
 		this.fireEvent('showStartPage');
 	},
 	onShowStartPage: function(){
-		console.log('onShowStartPage');
+		Ext.getCmp('centerPanel').clearItems();
+		Ext.getCmp('infoBar').clearItems();
 	}
 		
 });
