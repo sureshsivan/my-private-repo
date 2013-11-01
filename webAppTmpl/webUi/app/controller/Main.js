@@ -1,5 +1,8 @@
 Ext.define('webUi.controller.Main', {
     extend: 'Ext.app.Controller',
+	requires:[
+	    'webUi.view.HhidStart'
+	],
     init: function(){
     	this.application.addListener({
     		'appStart': this.onAppStart,
@@ -80,6 +83,9 @@ Ext.define('webUi.controller.Main', {
 	onShowStartPage: function(){
 		Ext.getCmp('centerPanel').clearItems();
 		Ext.getCmp('infoBar').clearItems();
+		var cc = Ext.create('webUi.view.HhidStart');
+		console.log('created');
+		Ext.getCmp('centerPanel').add(cc);
 	}
 		
 });
