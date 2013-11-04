@@ -61978,5 +61978,5 @@ Ext.application({
 });
 
 // @tag full-page
-// @require /home/ubuntu/git/my-private-repo/webAppTmpl/mobileUi/app.js
+// @require C:\Users\TCS\git\my-private-repo\webAppTmpl\mobileUi\app.js
 

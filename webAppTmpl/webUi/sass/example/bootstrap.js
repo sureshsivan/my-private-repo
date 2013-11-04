@@ -118,7 +118,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "webUi.view.common.FooterLogo": [],
   "webUi.view.common.GuestBar": [],
   "webUi.view.common.Header": [],
-  "webUi.view.common.InfoBar": []
+  "webUi.view.common.InfoBar": [],
+  "webUi.view.ui.LoginWindow": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.BoxReorderer": [],
@@ -294,6 +295,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "webUi.view.common.InfoBar": [
     "widget.d-infobar"
+  ],
+  "webUi.view.ui.LoginWindow": [
+    "widget.d-login-form"
   ]
 });
 Ext.Loader.loadScript("../../ext/packages/ext-theme-neptune/overrides/Component.js");

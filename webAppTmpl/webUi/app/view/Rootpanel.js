@@ -27,6 +27,7 @@ Ext.define('webUi.view.Rootpanel', {
 	    {
 	        region: 'center',
 	        xtype: 'd-center-panel',
+	        layout: 'fit'
 	    },
 	    {
 	        region: 'south',

@@ -1,7 +1,7 @@
 Ext.define('webUi.controller.Main', {
     extend: 'Ext.app.Controller',
 	requires:[
-	    'webUi.view.HhidStart'
+	    'webUi.view.ui.LoginWindow'
 	],
     init: function(){
     	this.application.addListener({
@@ -83,9 +83,11 @@ Ext.define('webUi.controller.Main', {
 	onShowStartPage: function(){
 		Ext.getCmp('centerPanel').clearItems();
 		Ext.getCmp('infoBar').clearItems();
-		var cc = Ext.create('webUi.view.HhidStart');
-		console.log('created');
-		Ext.getCmp('centerPanel').add(cc);
+//		var login = Ext.create('webUi.view.ui.LoginWindow');
+//		login.show();
+//		var cc = Ext.create('webUi.view.HhidStart');
+		Ext.getCmp('centerPanel').layout = 'ux.center';
+		Ext.getCmp('centerPanel').add(Ext.create('webUi.view.ui.LoginWindow'));
 	}
 		
 });

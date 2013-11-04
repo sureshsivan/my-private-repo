@@ -1,4 +1,4 @@
-$image-search-path: '/home/ubuntu/git/my-private-repo/webAppTmpl/webUi/build/webUi/testing/resources';
+$image-search-path: 'C:/Users/TCS/git/my-private-repo/webAppTmpl/webUi/build/webUi/testing/resources';
 $theme-name:  'ext-theme-neptune' !default;
 $include-ext-abstractcomponent: true;
 $include-ext-abstractmanager: true;
@@ -580,6 +580,7 @@ $include-webui-view-common-footerlogo: true;
 $include-webui-view-common-guestbar: true;
 $include-webui-view-common-header: true;
 $include-webui-view-common-infobar: true;
+$include-webui-view-ui-loginwindow: true;
 /* including package ext-theme-base */
 @import '../../../ext/packages/ext-theme-base/sass/etc/all';
 /* including package ext-theme-neutral */

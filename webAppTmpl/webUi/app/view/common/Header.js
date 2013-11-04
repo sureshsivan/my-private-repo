@@ -8,6 +8,7 @@ Ext.define('webUi.view.common.Header', {
 		'webUi.view.common.InfoBar'
 	],
     xtype: 'd-header',
+    id: 'headerBar',
 	layout: {
 	    type: 'vbox'
 	},
