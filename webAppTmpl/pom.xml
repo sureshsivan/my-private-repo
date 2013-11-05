@@ -39,6 +39,24 @@
 		<jstl.version>1.2</jstl.version>
 		<jackson.version>1.9.13</jackson.version>
 		
+		<hibernate.version>4.1.9.Final</hibernate.version>
+		<hsqldb.version>2.2.9</hsqldb.version>
+		<hibernateAnnotations.version>3.3.1.GA</hibernateAnnotations.version>
+		<dom4j.version>1.6.1</dom4j.version>
+		<commonsLogging.version>1.1.1</commonsLogging.version>
+		<commonsCollections.version>3.2.1</commonsCollections.version>
+		<cglib.version>2.2</cglib.version>
+		<asm.version>4.0</asm.version>
+		<ehcache.version>1.2.3</ehcache.version>
+		<hibernateTools.version>3.2.3.GA</hibernateTools.version>
+		<jta.version>1.1</jta.version>
+		<oscache.version>2.1</oscache.version>
+		<persistenceApi.version>1.0</persistenceApi.version>
+<!-- 		<hibernate.version></hibernate.version> -->
+<!-- 		<hibernate .version></hibernate.version> -->
+<!-- 		<hibernate .version></hibernate.version> -->
+		
+		
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<commons-fileupload.version>1.2.2</commons-fileupload.version>
 		<commons-io.version>1.3.2</commons-io.version>
