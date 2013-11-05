@@ -1,0 +1,34 @@
+/* 
+* Custom CSS for the application Widgets
+*/
+@CHARSET "UTF-8";
+
+.header{
+	background-color: 34a0ce;
+}
+
+.infoBar{
+	
+}
+
+.bigField {
+	height: 30
+}
+
+.headerTxt {
+	font-weight: bold;
+	font-size: 32px;
+	color: #77B30E;
+}
+
+.infoTxt {
+	color: #7F888A;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: 100;
+}
+
+.bold {
+	font-size: 16px;
+	font-weight: bold;
+}

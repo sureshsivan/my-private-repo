@@ -116857,5 +116857,5 @@ function startAppLaunch(){
 	webUi.getApplication().fireEvent('appStart');
 }
 //@tag page-full-page
-//@require ../../webUi/app.js
+//@require ../../app.js
 

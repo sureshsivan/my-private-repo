@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <property name="args.environment" value="testing"/>
+  <property name="skip.sass" value="false"/>
+  <property name="skip.slice" value="${sencha.build.param.skip.slice}"/>
+  <ant inheritRefs="true" target="build" inheritAll="true"/>
+  <delete dir="../web/src/main/webapp/desktop"/>
+  <copy todir="../web/src/main/webapp/desktop">
+    <fileset dir="build/webUi/testing">
+      <exclude name="**/*.rb"/>
+      <exclude name="**/.*"/>
+      <exclude name="**/.*/**"/>
+    </fileset>
+  </copy>
+</target>
+</project>
