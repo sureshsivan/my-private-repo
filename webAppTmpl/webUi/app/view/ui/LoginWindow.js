@@ -7,24 +7,27 @@ Ext.define('webUi.view.ui.LoginWindow', {
 	xtype : 'd-login-form',
 	title : 'Login',
 	frame : true,
-	width : '30%',
+	width : 400,
 	height: '20%',
+	minHeight: 180,
 	bodyPadding : 10,
 	defaultType : 'textfield',
-	
 	items : [
 	    {
 			allowBlank : false,
 			fieldLabel : 'User ID',
-			name : 'user',
-			emptyText : 'user id'
+			name : 'userId',
+			emptyText : 'Type Email ID',
+			width: 300
+				
 	    },
 	    {
 			allowBlank : false,
 			fieldLabel : 'Password',
-			name : 'pass',
-			emptyText : 'password',
-			inputType : 'password'
+			name : 'password',
+			emptyText : 'Type Password',
+			inputType : 'password',
+			width: 300
 	    }
 	],
 

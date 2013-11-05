@@ -9,10 +9,7 @@ Ext.define('webUi.view.common.InfoBar', {
     minHeight: 40,
     width: '100%',
 	border: 0,
-	style: {
-	    backgroundColor: '#45494a'
-	},
-	
+	cls: 'infoBar',
 	clearItems: function(){
 		console.log('[InfoBar] clearing Items...........');
 	}

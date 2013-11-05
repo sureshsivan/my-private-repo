@@ -9,9 +9,7 @@ Ext.define('webUi.view.common.Footer', {
 		'webUi.view.common.FooterLogo'
     ],
     xtype: 'd-footer',
-	style: {
-	    backgroundColor: '#969897'
-	},
+    cls: 'footer',
     layout: {
         type: 'hbox',
         align: 'middle'

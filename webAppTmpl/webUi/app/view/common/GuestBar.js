@@ -9,8 +9,6 @@ Ext.define('webUi.view.common.GuestBar', {
 	},
 	width: '100%',
 	border: false,
-	style: {
-	    backgroundColor: '#189ee7'
-	},
+	cls: 'header',
 	items: []
 });
