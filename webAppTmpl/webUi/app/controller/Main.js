@@ -81,11 +81,8 @@ Ext.define('webUi.controller.Main', {
 		this.fireEvent('showStartPage');
 	},
 	onShowStartPage: function(){
-		Ext.getCmp('centerPanel').clearItems();
-		Ext.getCmp('infoBar').clearItems();
-//		var login = Ext.create('webUi.view.ui.LoginWindow');
-//		login.show();
-//		var cc = Ext.create('webUi.view.HhidStart');
+		webUi.util.AppSingleton.resetInfoBar();
+		webUi.util.AppSingleton.resetCenterPanel();
 		Ext.getCmp('centerPanel').layout = 'ux.center';
 		Ext.getCmp('centerPanel').add(Ext.create('webUi.view.ui.LoginWindow'));
 	}

@@ -862,7 +862,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "webUi.util.rb.model.KeyValPair": [],
   "webUi.util.rb.model.Property": [],
   "webUi.util.rb.reader.Property": [],
-  "webUi.view.HhidStart": [],
   "webUi.view.Rootpanel": [],
   "webUi.view.Viewport": [],
   "webUi.view.common.CenterPanel": [],
@@ -1895,7 +1894,6 @@ Ext.ClassManager.addNameAliasMappings({
   "webUi.util.rb.reader.Property": [
     "reader.property"
   ],
-  "webUi.view.HhidStart": [],
   "webUi.view.Rootpanel": [
     "widget.d-rootpanel"
   ],
@@ -1928,6 +1926,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.d-login-form"
   ]
 });
+Ext.setVersion("app-custom", "1.0.0");
 Ext.setVersion("ext-theme-base", "4.2.1");
 Ext.setVersion("ext-theme-neptune", "4.2.1");
 Ext.setVersion("ext-theme-neutral", "4.2.1");

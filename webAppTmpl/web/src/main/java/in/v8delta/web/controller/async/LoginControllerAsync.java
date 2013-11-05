@@ -5,12 +5,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller()
+@Controller
 public class LoginControllerAsync {
 	
 	@RequestMapping(value = "loginService", method = RequestMethod.POST)
 	public @ResponseBody String doUserLogin(){
-		return "";
+		return "{success: true," +
+					"user: {" +
+						"'name': 'Suresh'," +
+						"'id': 'Suresh.sivanantham@gmail.com'" +
+				"}}";
 	}
 	
 }

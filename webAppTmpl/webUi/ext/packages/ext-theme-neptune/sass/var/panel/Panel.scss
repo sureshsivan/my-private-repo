@@ -1,4 +1,4 @@
-$panel-header-font-family: $font-family !default;
+$panel-header-font-family: arial, helvetica, verdana, sans-serif !default;
 $panel-header-color: #fff !default;
 $panel-header-text-transform: none !default;
 $panel-header-line-height: 15px !default;
@@ -7,7 +7,7 @@ $panel-header-padding: 9px 9px 10px !default;
 $panel-border-width: 1px !default;
 $panel-header-border-width: 1px !default;
 $panel-body-border-width: 1px !default;
-$panel-frame-border-width: 2px !default;
+$panel-frame-border-width: 5px !default;
 $panel-frame-header-border-width: $panel-frame-border-width !default;
 $panel-tool-spacing: 6px !default;
 $panel-frame-padding: 0 !default;

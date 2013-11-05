@@ -1,14 +1,7 @@
-$d-blue: #01aef2;
-$d-hash: #727176;
-$d-yellow: #ebc822;
-$d-red: #b33b56;
-$d-pink: #ac3ba5;
-$d-green: #81ba09;
-$neptune-base-color: #157fcc;
 $color: #000 !default;
-$font-family: tahoma, helvetica, arial, verdana, sans-serif !default;
+$font-family: helvetica, arial, verdana, sans-serif !default;
 $font-size: 13px !default;
-$base-color: $d-blue !default;
+$base-color: #157fcc !default;
 $base-highlight-color: mix(#fff, $base-color, 15%) !default;
 $base-light-color: mix(#fff, $base-color, 65%) !default;
 $base-dark-color: mix(#000, $base-color, 14%) !default;

@@ -10,6 +10,7 @@ Ext.define('webUi.util.AppSingleton', {
 	isBundleLoaded : false,
 	uiRsrcUrl: '/web-1.0/appConfig/resources',
 	appParamUrl: '/web-1.0/appConfig/params',
+	loginUrl: '/web-1.0/loginService',
 	bundle: null,
 	isBundleLoaded: false,
 	appParam: null,
@@ -117,7 +118,12 @@ Ext.define('webUi.util.AppSingleton', {
 			msg = msg.concat(value);
 		});
 		Ext.getBody().mask(msg);
+	},
+    resetInfoBar: function(){
+		Ext.getCmp('infoBar').clearItems();
+	},
+	resetCenterPanel: function(){
+		Ext.getCmp('centerPanel').clearItems();
 	}
-    
 
 });
