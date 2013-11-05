@@ -16,25 +16,12 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 8032550450613762604L;
 
-	private String username;
+	private Long id;
 	private String email;
 	private String password;
 
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
-
-	/**
-	 * @param username
-	 *            the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
+	private boolean isAdmin;
+	
 	/**
 	 * @return the email
 	 */
@@ -70,8 +57,8 @@ public class User implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", email=" + email
-				+ ", password=" + password + "]";
+		return "User [email=" + this.email
+				+ ", isAdmin=" + this.isAdmin + "]";
 	}
 
 }
