@@ -4,6 +4,9 @@
  */
 Ext.define('webUi.view.ui.LoginWindow', {
 	extend : 'Ext.form.Panel',
+	requires: [
+	    'Ext.ux.layout.Center'
+	],
 	xtype : 'd-login-form',
 	title : 'Login',
 	url	: webUi.util.AppSingleton.loginUrl, 

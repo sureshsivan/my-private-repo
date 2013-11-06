@@ -1,10 +1,5 @@
 Ext.define('webUi.view.Viewport', {
     extend: 'Ext.container.Viewport',
-	requires: [
-		'Ext.layout.container.Fit',
-		'webUi.view.common.InfoBar',
-		'webUi.view.Rootpanel'
-	],
     layout: {
         type: 'fit'
     },

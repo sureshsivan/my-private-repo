@@ -3,7 +3,9 @@
  */
 Ext.define('webUi.util.AppSingleton', {
 	singleton : true,
-	
+	requires: [
+		'Ext.util.HashMap'
+	],	
 
 	currentBundle : '',
 	lang : 'en',
@@ -43,6 +45,7 @@ Ext.define('webUi.util.AppSingleton', {
 	},
     getMsg: function(key){
 		if(this.bundle == null){
+			console.log('Trying for the key.....' , key);
 			this.handleError(this.getAppConfigMsg('msgBundleNotLoaded'));
 			return '';
 		}
@@ -124,6 +127,13 @@ Ext.define('webUi.util.AppSingleton', {
 	},
 	resetCenterPanel: function(){
 		Ext.getCmp('centerPanel').clearItems();
+	},
+	loadUi: function(){
+		console.log('Loading UI....');
+		Ext.require([
+		    'webUi.view.Viewport',
+		    'webUi.view.Rootpanel'
+		]);
 	}
 
 });

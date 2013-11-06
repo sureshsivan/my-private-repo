@@ -10,5 +10,5 @@ Ext.define('webUi.view.common.Copyright', {
         type: 'fit'
     },
     html: webUi.util.AppSingleton.getMsg('app.copyright'),
-    padding: '0 0 0 20'
+    padding: '0 0 0 20',
 });

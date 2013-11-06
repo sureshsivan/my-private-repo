@@ -1,8 +1,8 @@
 Ext.define('webUi.controller.Main', {
     extend: 'Ext.app.Controller',
-	requires:[
-	    'webUi.view.ui.LoginWindow'
-	],
+	requires: [
+	    'webUi.util.rb.ResourceBundle',
+	],	
     init: function(){
     	this.application.addListener({
     		'appStart': this.onAppStart,
@@ -74,6 +74,7 @@ Ext.define('webUi.controller.Main', {
 	},
 	
 	onKickOffUi: function(){
+		webUi.util.AppSingleton.loadUi();
 		console.log('UI kick Off Start');
 		var vp = Ext.create('webUi.view.Viewport'),
 			rp = Ext.create('webUi.view.Rootpanel');
