@@ -50,7 +50,7 @@ Ext.define('webUi.util.AppSingleton', {
 			return '';
 		}
     	var msg = this.bundle.get(key);
-    	if((msg != null) && (msg !== 'undefined') && 
+    	if((msg) && 
     			(arguments.length > 0) && (Ext.isArray(arguments[1])) && (arguments[1].length > 0)){
     		var phCnt = arguments[1].length;
     		for(ph=0; ph<phCnt; ph++){
@@ -66,7 +66,7 @@ Ext.define('webUi.util.AppSingleton', {
 			return '';
 		}
     	var msg = this.appParam.get(key);
-    	msg = (((msg != null) && (msg != 'undefined')) ? msg : this.getAppConfigMsg('msgKeyNotFound') + key);
+    	msg = ((msg) ? msg : this.getAppConfigMsg('msgKeyNotFound') + key);
     	return msg;
     },
     handleError: function(msg, logMsg){

@@ -2,7 +2,7 @@ package in.v8delta.template.myWebAppTmpl.core.utils;
 
 /**
  * 
- * All the Strings used in the app are externalized here
+ * All the common Strings used in the code are externalized here
  * 
  * @author v8-suresh
  *
