@@ -3,6 +3,7 @@ package in.v8delta.web.filter;
 import in.v8delta.template.myWebAppTmpl.core.log.LoggerAgent;
 import in.v8delta.template.myWebAppTmpl.core.utils.AppConstants;
 import in.v8delta.template.myWebAppTmpl.core.utils.LogUtil;
+import in.v8delta.web.util.WebUtils;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -37,9 +38,11 @@ public abstract class BaseFilter implements Filter {
 	private boolean processRequest;
 	private boolean processResponse;
 	
+	private boolean disableForAjax;
+	
 	private Set<Pattern> validUrlPatterns;
 	
-
+	
 	
 	protected BaseFilter() {
 		this.validUrlPatterns = new HashSet<Pattern>();
@@ -60,13 +63,20 @@ public abstract class BaseFilter implements Filter {
 		boolean errorInReqProcess = false;
 		Throwable ex = null;
 		
-		if((this.validUrlPatterns == null) || (this.validUrlPatterns.size() == 0)){
-			isValidUrl = true;
-		} else {
-			for(Pattern pattern : this.validUrlPatterns){
-				if(pattern.matcher(((HttpServletRequest) request).getServletPath()).matches()){
-					isValidUrl = true;
-					break;
+		if((this.enabled) && (this.disableForAjax) && (WebUtils.isAjaxRequest((HttpServletRequest) request))){
+			//	If its a ajax request and "disableForAjax" flag is true, then disable the filter.
+			setEnabled(false);
+		}
+		
+		if(this.enabled){
+			if((this.validUrlPatterns == null) || (this.validUrlPatterns.size() == 0)){
+				isValidUrl = true;
+			} else {
+				for(Pattern pattern : this.validUrlPatterns){
+					if(pattern.matcher(((HttpServletRequest) request).getServletPath()).matches()){
+						isValidUrl = true;
+						break;
+					}
 				}
 			}
 		}
@@ -237,6 +247,20 @@ public abstract class BaseFilter implements Filter {
 	 */
 	public void setProcessResponse(boolean processResponse) {
 		this.processResponse = processResponse;
+	}
+
+	/**
+	 * @return the disableForAjax
+	 */
+	public boolean isDisableForAjax() {
+		return disableForAjax;
+	}
+
+	/**
+	 * @param disableForAjax the disableForAjax to set
+	 */
+	public void setDisableForAjax(boolean disableForAjax) {
+		this.disableForAjax = disableForAjax;
 	}
 
 	protected LoggerAgent getLogger() {

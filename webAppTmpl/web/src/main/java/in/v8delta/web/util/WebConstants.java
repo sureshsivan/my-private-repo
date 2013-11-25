@@ -10,4 +10,8 @@ public interface WebConstants {
 
 	public static final String PROP_KEY_RB_FILE = "app.rbFilePath";
 	public static final String PROP_KEY_APP_PARAM_FILE = "app.appParamsFilePath";
+	
+	public static final String HTTP_HEADER_KEY_AJAX_REQUEST = "X-Requested-With";
+	public static final String HTTP_HEADER_VAL_AJAX_REQUEST = "XMLHttpRequest";
+	
 }

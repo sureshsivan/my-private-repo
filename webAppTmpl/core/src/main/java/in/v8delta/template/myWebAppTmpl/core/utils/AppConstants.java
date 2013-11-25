@@ -56,4 +56,7 @@ public interface AppConstants {
 	
 	public static final String DEFAULT_HASH_ENCODING = ENCODING_SHA_512;
 	
+	
+	
+	
 }
