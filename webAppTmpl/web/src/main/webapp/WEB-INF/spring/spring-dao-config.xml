@@ -10,9 +10,47 @@
 						http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
+<!-- 	<bean id="appDataSource" class="org.apache.commons.dbcp.BasicDataSource" -->
+<!-- 		lazy-init="default"> -->
+<!-- 		<property name="defaultAutoCommit" value="false" /> -->
+<!-- 		<property name="driverClassName" value="${}" /> -->
+<!-- 		<property name="url" value="${}" /> -->
+<!-- 		<property name="username" value="${}" /> -->
+<!-- 		<property name="password" value="${}" /> -->
+<!-- 		<property name="initialSize" value="${}" /> -->
+<!-- 		<property name="maxActive" value="${}" /> -->
+<!-- 		<property name="maxWait" value="${}" /> -->
+<!-- 		<property name="maxIdle" value="${}" /> -->
+<!-- 		<property name="minIdle" value="${}" /> -->
+<!-- 		<property name="testOnBorrow" value="${}" /> -->
+<!-- 		<property name="testOnReturn" value="${}" /> -->
+<!-- 		<property name="testWhileIdle" value="${}" /> -->
+<!-- 		<property name="validationQuery" value="${}" /> -->
+<!-- 		<property name="accessToUnderlyingConnectionAllowed" value="true" /> -->
+<!-- 		<property name="minEvictableIdleTimeMillis" value="${}" /> -->
+<!-- 		<property name="timeBetweenEvictionRunsMillis" value="${}" /> -->
+<!-- 	</bean> -->
 
+
+<!-- 	<bean id="appTrxManager" -->
+<!-- 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> -->
+<!-- 		<property name="dataSource" ref="appDataSource" /> -->
+<!-- 	</bean> -->
+
+
+<!-- IF MYBATIS IS USED AS DAO LAYER -->
+<!-- 	<bean id="appSqlSessionFactory" -->
+<!-- 		class="com.nielsen.media.mediaView.spring.mybatis.SQLSessionFactoryBean"> -->
+<!-- 		<property name="dataSource" ref="appDataSource" /> -->
+<!-- 		<property name="configLocation" value="/WEB-INF/sql/config/sqlMapConfig.xml" /> -->
+<!-- 		<property name="mapperLocations" value="/WEB-INF/sql/queries/*.xml" /> -->
+<!-- 		<!-- PROPERTIES TO INJECT INTO SQL MAPPERS --> -->
+<!-- 		<property name="configurationProperties"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="PROP_1">${}</prop> -->
+<!-- 				<prop key="PROP_2">${}</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 
 </beans>

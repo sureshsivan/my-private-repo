@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
  * 
  * Class which holds the common utility methods for the web module
  * 
- * @author sivasu08
+ * @author v8-suresh
  *
  */
 public class WebUtils {
