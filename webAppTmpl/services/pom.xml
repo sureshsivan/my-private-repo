@@ -23,21 +23,21 @@
 			<artifactId>models</artifactId>
 			<version>${models.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>${hsqldb.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>${hibernateAnnotations.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.hibernate</groupId> -->
+<!-- 			<artifactId>hibernate</artifactId> -->
+<!-- 			<version>${hibernate.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.hsqldb</groupId> -->
+<!-- 			<artifactId>hsqldb</artifactId> -->
+<!-- 			<version>${hsqldb.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.hibernate</groupId> -->
+<!-- 			<artifactId>hibernate-annotations</artifactId> -->
+<!-- 			<version>${hibernateAnnotations.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
@@ -58,41 +58,41 @@
 			<artifactId>cglib</artifactId>
 			<version>${cglib.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>asm</groupId>
-			<artifactId>asm</artifactId>
-			<version>${asm.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>ehcache</groupId>
-			<artifactId>ehcache</artifactId>
-			<version>${ehcache.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>hibernate-tools</groupId>
-			<artifactId>hibernate-tools</artifactId>
-			<version>${hibernateTools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>jta</groupId>
-			<artifactId>jta</artifactId>
-			<version>${jta.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>asm</groupId> -->
+<!-- 			<artifactId>asm</artifactId> -->
+<!-- 			<version>${asm.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>ehcache</groupId> -->
+<!-- 			<artifactId>ehcache</artifactId> -->
+<!-- 			<version>${ehcache.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>hibernate-tools</groupId> -->
+<!-- 			<artifactId>hibernate-tools</artifactId> -->
+<!-- 			<version>${hibernateTools.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>jta</groupId> -->
+<!-- 			<artifactId>jta</artifactId> -->
+<!-- 			<version>${jta.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>oscache</groupId>
-			<artifactId>oscache</artifactId>
-			<version>${oscache.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>persistence-api</groupId>
-			<artifactId>persistence-api</artifactId>
-			<version>${persistenceApi.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>oscache</groupId> -->
+<!-- 			<artifactId>oscache</artifactId> -->
+<!-- 			<version>${oscache.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>persistence-api</groupId> -->
+<!-- 			<artifactId>persistence-api</artifactId> -->
+<!-- 			<version>${persistenceApi.version}</version> -->
+<!-- 		</dependency> -->
 	</dependencies>
 
 </project>

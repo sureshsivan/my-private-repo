@@ -73,11 +73,11 @@
 	<!-- SPRING FILTER CONFIGURATION -->
 	<!-- ################################### -->
 	<filter>
-		<filter-name>my-filter-1</filter-name>
+		<filter-name>sampleFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>my-filter-1</filter-name>
+		<filter-name>sampleFilter</filter-name>
 		<servlet-name>spring</servlet-name>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>

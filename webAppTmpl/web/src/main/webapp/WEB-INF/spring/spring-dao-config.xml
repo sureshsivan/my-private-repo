@@ -44,7 +44,7 @@
 <!-- 		<property name="dataSource" ref="appDataSource" /> -->
 <!-- 		<property name="configLocation" value="/WEB-INF/sql/config/sqlMapConfig.xml" /> -->
 <!-- 		<property name="mapperLocations" value="/WEB-INF/sql/queries/*.xml" /> -->
-<!-- 		<!-- PROPERTIES TO INJECT INTO SQL MAPPERS --> -->
+ 		<!-- PROPERTIES TO INJECT INTO SQL MAPPERS --> 
 <!-- 		<property name="configurationProperties"> -->
 <!-- 			<props> -->
 <!-- 				<prop key="PROP_1">${}</prop> -->
