@@ -1,8 +1,7 @@
 package in.v8delta.domain;
 
-import in.v8delta.template.myWebAppTmpl.core.utils.AppConstants;
-
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 
@@ -11,54 +10,104 @@ import java.io.Serializable;
  * @author v8-suresh
  * 
  */
-
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 8032550450613762604L;
 
-	private Long id;
-	private String email;
+	private Long userId;
+	private String userName;
+	private String userMail;
 	private String password;
 
-	private boolean isAdmin;
+	private String userFirstName;
+	private String userLastName;
+	
+	private List<Role> userRoles;
 	
 	/**
-	 * @return the email
+	 * @return the userId
 	 */
-	public String getEmail() {
-		return email;
+	public Long getUserId() {
+		return userId;
 	}
-
 	/**
-	 * @param email
-	 *            the email to set
+	 * @param userId the userId to set
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	/**
+	 * @return the userMail
+	 */
+	public String getUserMail() {
+		return userMail;
+	}
+	/**
+	 * @param userMail the userMail to set
+	 */
+	public void setUserMail(String userMail) {
+		this.userMail = userMail;
+	}
 	/**
 	 * @return the password
 	 */
 	public String getPassword() {
 		return password;
 	}
-
 	/**
-	 * @param password
-	 *            the password to set
+	 * @param password the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return the userFirstName
 	 */
-	@Override
-	public String toString() {
-		return "User [email=" + this.email
-				+ ", isAdmin=" + this.isAdmin + "]";
+	public String getUserFirstName() {
+		return userFirstName;
 	}
-
+	/**
+	 * @param userFirstName the userFirstName to set
+	 */
+	public void setUserFirstName(String userFirstName) {
+		this.userFirstName = userFirstName;
+	}
+	/**
+	 * @return the userLastName
+	 */
+	public String getUserLastName() {
+		return userLastName;
+	}
+	/**
+	 * @param userLastName the userLastName to set
+	 */
+	public void setUserLastName(String userLastName) {
+		this.userLastName = userLastName;
+	}
+	/**
+	 * @return the userRoles
+	 */
+	public List<Role> getUserRoles() {
+		return userRoles;
+	}
+	/**
+	 * @param userRoles the userRoles to set
+	 */
+	public void setUserRoles(List<Role> userRoles) {
+		this.userRoles = userRoles;
+	}
+	
+	
 }

@@ -13,4 +13,9 @@
 		<setting name="defaultStatementTimeout" value="250" />
 		<setting name="mapUnderscoreToCamelCase" value="false" />
 	</settings>
+	<typeAliases>
+		<typeAlias alias="User" type="in.v8delta.domain.User" />
+		<typeAlias alias="Role" type="in.v8delta.domain.Role" />
+		<typeAlias alias="Project" type="in.v8delta.domain.Project" />
+	</typeAliases>
 </configuration>

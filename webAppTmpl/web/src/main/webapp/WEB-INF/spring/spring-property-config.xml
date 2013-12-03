@@ -9,18 +9,41 @@
 						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 						http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<bean id="appSysProps" class="in.v8delta.template.myWebAppTmpl.core.spring.SystemPropertyInitializer">
-		<property name="location" value="config/#{systemProperties['APP.ENV']}_sysProp.properties" />
+	<bean id="appSysProps"
+		class="in.v8delta.template.myWebAppTmpl.core.spring.SystemPropertyInitializer">
+		<property name="location"
+			value="config/#{systemProperties['APP.ENV']}_sysProp.properties" />
 	</bean>
 
-	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	<bean id="appFilterProps"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="config/#{systemProperties['APP.ENV']}_filter.properties" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_NEVER" />
+		<property name="order" value="10" />
+	</bean>
+
+	<bean id="appDbProps"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="config/#{systemProperties['APP.ENV']}_db.properties" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_NEVER" />
+		<property name="order" value="20" />
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
 				<value>classpath:i18n/messages</value>
 				<value>classpath:i18n/labels</value>
 			</list>
 		</property>
-<!-- 		<property name="cacheSeconds" value="0" /> -->
+		<!-- <property name="cacheSeconds" value="0" /> -->
 	</bean>
 
 </beans>

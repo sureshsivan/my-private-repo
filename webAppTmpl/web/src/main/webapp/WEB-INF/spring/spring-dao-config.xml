@@ -10,47 +10,47 @@
 						http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 
-<!-- 	<bean id="appDataSource" class="org.apache.commons.dbcp.BasicDataSource" -->
-<!-- 		lazy-init="default"> -->
-<!-- 		<property name="defaultAutoCommit" value="false" /> -->
-<!-- 		<property name="driverClassName" value="${}" /> -->
-<!-- 		<property name="url" value="${}" /> -->
-<!-- 		<property name="username" value="${}" /> -->
-<!-- 		<property name="password" value="${}" /> -->
-<!-- 		<property name="initialSize" value="${}" /> -->
-<!-- 		<property name="maxActive" value="${}" /> -->
-<!-- 		<property name="maxWait" value="${}" /> -->
-<!-- 		<property name="maxIdle" value="${}" /> -->
-<!-- 		<property name="minIdle" value="${}" /> -->
-<!-- 		<property name="testOnBorrow" value="${}" /> -->
-<!-- 		<property name="testOnReturn" value="${}" /> -->
-<!-- 		<property name="testWhileIdle" value="${}" /> -->
-<!-- 		<property name="validationQuery" value="${}" /> -->
-<!-- 		<property name="accessToUnderlyingConnectionAllowed" value="true" /> -->
-<!-- 		<property name="minEvictableIdleTimeMillis" value="${}" /> -->
-<!-- 		<property name="timeBetweenEvictionRunsMillis" value="${}" /> -->
-<!-- 	</bean> -->
+	<bean id="appDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		lazy-init="default">
+		<property name="defaultAutoCommit" value="false" />
+		<property name="driverClassName" value="${app.main.db.driver}" />
+		<property name="url" value="${app.main.db.url}" />
+		<property name="username" value="${app.main.db.username}" />
+		<property name="password" value="${app.main.db.password}" />
+		<property name="initialSize" value="${app.main.db.init_pool_size}" />
+		<property name="maxActive" value="${app.main.db.max_pool_size}" />
+		<property name="maxWait" value="${app.main.db.max_wait_size}" />
+		<property name="maxIdle" value="${app.main.db.max_idle_size}" />
+		<property name="minIdle" value="${app.main.db.min_idle_size}" />
+		<property name="testOnBorrow" value="${app.main.db.testOnBorrow}" />
+		<property name="testOnReturn" value="${app.main.db.testOnReturn}" />
+		<property name="testWhileIdle" value="${app.main.db.testWhenIdle}" />
+		<property name="validationQuery" value="${app.main.db.validationQuery}" />
+		<property name="accessToUnderlyingConnectionAllowed" value="true" />
+		<property name="minEvictableIdleTimeMillis" value="${app.main.db.idleEvictTimeMS}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${app.main.db.evictorIntervalMS}" />
+	</bean>
 
 
-<!-- 	<bean id="appTrxManager" -->
-<!-- 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> -->
-<!-- 		<property name="dataSource" ref="appDataSource" /> -->
-<!-- 	</bean> -->
+	<bean id="appTrxManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="appDataSource" />
+	</bean>
 
 
 <!-- IF MYBATIS IS USED AS DAO LAYER -->
-<!-- 	<bean id="appSqlSessionFactory" -->
-<!-- 		class="com.nielsen.media.mediaView.spring.mybatis.SQLSessionFactoryBean"> -->
-<!-- 		<property name="dataSource" ref="appDataSource" /> -->
-<!-- 		<property name="configLocation" value="/WEB-INF/sql/config/sqlMapConfig.xml" /> -->
-<!-- 		<property name="mapperLocations" value="/WEB-INF/sql/queries/*.xml" /> -->
- 		<!-- PROPERTIES TO INJECT INTO SQL MAPPERS --> 
-<!-- 		<property name="configurationProperties"> -->
-<!-- 			<props> -->
-<!-- 				<prop key="PROP_1">${}</prop> -->
-<!-- 				<prop key="PROP_2">${}</prop> -->
-<!-- 			</props> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
+	<bean id="appSqlSessionFactory"
+		class="in.v8delta.util.MyBatisSqlSessionFactory">
+		<property name="dataSource" ref="appDataSource" />
+		<property name="configLocation" value="/WEB-INF/sql/config/sqlMapConfig.xml" />
+		<property name="mapperLocations" value="/WEB-INF/sql/queries/*.xml" />
+<!--  		PROPERTIES TO INJECT INTO SQL MAPPERS  -->
+		<property name="configurationProperties">
+			<props>
+				<prop key="PROP_1">${}</prop>
+				<prop key="PROP_2">${}</prop>
+			</props>
+		</property>
+	</bean>
 
 </beans>
