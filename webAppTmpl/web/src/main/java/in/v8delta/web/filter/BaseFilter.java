@@ -59,6 +59,12 @@ public abstract class BaseFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		if (getLogger().isDebugEnabled()) {
+			getLogger().debug("Do Filter Started");
+		}
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res = (HttpServletResponse) response;
+		
 		boolean isValidUrl = false;
 		boolean errorInReqProcess = false;
 		Throwable ex = null;
@@ -99,6 +105,9 @@ public abstract class BaseFilter implements Filter {
 			}
 		}
 		
+		if (getLogger().isDebugEnabled()) {
+			getLogger().debug("Do Filter Completed");
+		}
 		
 	}
 
@@ -165,8 +174,8 @@ public abstract class BaseFilter implements Filter {
 	/**
 	 * @return the ignorePatterns
 	 */
-	public Set<Pattern> getValidUrlPatterns() {
-		return validUrlPatterns;
+	public String getValidUrlPatterns() {
+		return validUrlPatterns.toString();
 	}
 
 	/**

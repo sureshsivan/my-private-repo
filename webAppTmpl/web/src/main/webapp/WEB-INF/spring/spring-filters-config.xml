@@ -10,13 +10,22 @@
 						http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 
-<!-- 	<bean id="sampleFilter" class="com.nielsen.media.mediaView.filter.sampleFilter"> -->
-<!-- 		<property name="enabled" value="${sampleFilter.enabled}" /> -->
-<!-- 		<property name="preventException" value="${sampleFilter.preventException}" /> -->
-<!-- 		<property name="processRequest" value="${sampleFilter.processRequest}" /> -->
-<!-- 		<property name="processResponse" value="${sampleFilter.processResponse}" /> -->
-<!-- 		<property name="disableForAjax" value="${sampleFilter.disableForAjax}" /> -->
-<!-- 		<property name="validUrlPatterns" value="${sampleFilter.validUrlPatterns}" /> -->
+	<bean id="sampleFilter" class="in.v8delta.web.filter.SampleFilter">
+		<property name="enabled" value="#{systemProperties['sampleFilter.enabled']}" />
+		<property name="preventException" value="#{systemProperties['sampleFilter.preventException']}" />
+		<property name="processRequest" value="#{systemProperties['sampleFilter.processRequest']}" />
+		<property name="processResponse" value="#{systemProperties['sampleFilter.processResponse']}" />
+		<property name="disableForAjax" value="#{systemProperties['sampleFilter.disableForAjax']}" />
+		<property name="validUrlPatterns" value="#{systemProperties['sampleFilter.validUrlPatterns']}" />
+	</bean>
+
+<!-- 	<bean id="sampleFilter" class="in.v8delta.web.filter.SampleFilter"> -->
+<!-- 		<property name="enabled" value="false" /> -->
+<!-- 		<property name="preventException" value="true" /> -->
+<!-- 		<property name="processRequest" value="true" /> -->
+<!-- 		<property name="processResponse" value="true" /> -->
+<!-- 		<property name="disableForAjax" value="true" /> -->
+<!-- 		<property name="validUrlPatterns" value="" /> -->
 <!-- 	</bean> -->
 
 </beans>

@@ -30,7 +30,7 @@
 		<property name="targetMethod" value="initLogging" />
 		<property name="arguments">
 			<list>
-				<value>classpath:config/logging-config.xml</value>
+				<value>classpath:config/#{systemProperties['APP.ENV']}_logging-config.xml</value>
 			</list>
 		</property>
 	</bean>
