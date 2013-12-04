@@ -55,8 +55,8 @@ public class EncoderUtil {
 	 * 
 	 * @return
 	 */
-	public static Encoder getAppEncoder(){
-		switch (AppDefaults.HASH_ENCODING) {
+	public static Encoder getAppEncoder(HashingType hashingType){
+		switch (hashingType) {
 		case MD5:
 			return getMD5Encoder();
 		case SHA_256:
@@ -67,6 +67,17 @@ public class EncoderUtil {
 			return getSHA512Encoder();
 		default:
 			return getSHA512Encoder();
+		}
+	}
+	
+	public static void main(String[] args) {
+		try {
+			for (int i = 0; i < 10; i++) {
+				System.out.println(new String(getAppEncoder(HashingType.SHA_256).encode("admin")));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	

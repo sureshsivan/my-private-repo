@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
-<mapper namespace="com.nielsen.media.mediaView.tam.prompting.scheduleMapper">
-	<resultMap id="UserWithRoleMap" type="User">
+<mapper namespace=in.v8delta.mapper.Users>
+	<resultMap id="UserWithRolesMap" type="User">
 		<id property="userId" column="USER_ID" />
 		<result property="userName" column="USER_NAME" />
 		<result property="userMail" column="USER_MAIL" />
-		<result property="password" column="PASSWORD" />
 		<result property="userFirstName" column="USER_FIRST_NAME" />
 		<result property="userLastName" column="USER_LAST_NAME" />
-		<collection property="userRoles" column="rm_id" ofType="Role" 
-			javaType="ArrayList" resultMap="RoleMap" />
+		<result property="userRoles" resultMap="in.v8delta.mapper.Users.RoleMap" />
 	</resultMap>
 
 	<resultMap id="RoleMap" type="Role">
@@ -22,19 +20,44 @@
 
 	<select id="getAllUsers" resultType="hashmap">
 		SELECT
-		*
-		FROM
+			*
+			FROM
 		USER
 	</select>
 	<select id="getUserByAnyIdentity" resultType="hashmap">
 		SELECT
-		*
+			*
 		FROM
-		USER
+			USER
 		WHERE
-		( USER_ID = #{userIdentity} OR
-		USER_NAME = #{userIdentity} OR
-		USER_MAIL = #{userIdentity} ) AND
-		PASSWORD = #{password}
+			( USER_ID = #{userIdentity} OR
+			USER_NAME = #{userIdentity} OR
+			USER_MAIL = #{userIdentity} ) 
+				AND
+			PASSWORD = #{password}
+	</select>
+	<select id="getUserWithRolesByAnyIdentity" resultType="UserWithRolesMap">
+		SELECT
+			u.USER_ID			USER_ID,
+			u.USER_NAME			USER_NAME,
+			u.USER_MAIL			USER_MAIL,
+			u.USER_FIRST_NAME	USER_FIRS_TNAME,
+			u.USER_LAST_NAME	USER_LAST_NAME,
+			ur.USER_ROLE_ID		ROLE_ID,
+			r.ROLE_NAME			ROLE_NAME,
+			r.ROLE_DESC			ROLE_DESC
+		FROM
+				USER u
+			JOIN
+				USER_ROLE ur
+					ON u.USER_ID = ur.USER_ID
+			JOIN 
+				ROLE r
+					ON ur.USER_ROLE_ID = r.ROLE_ID 
+		WHERE
+			( u.USER_ID = #{userIdentity} OR
+			u.USER_NAME = #{userIdentity} OR
+			u.USER_MAIL = #{userIdentity} ) AND
+			u.PASSWORD = #{password}
 	</select>
 </mapper>
