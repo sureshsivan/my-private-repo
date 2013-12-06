@@ -37,14 +37,29 @@
 		<property name="dataSource" ref="appDataSource" />
 	</bean>
 
+	<!-- IF HIBERNATE IS USED AS DAO LAYER -->
+<!-- 	<bean id="hibernateSessionFactories" -->
+<!-- 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"> -->
+<!-- 		<property name="dataSource" ref="myDataSource" /> -->
+<!-- 		<property name="mappingResources"> -->
+<!-- 			<list> -->
+<!-- 				<value>*.hbm.xml</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 		<property name="hibernateProperties"> -->
+<!-- 			<value> -->
+<!-- 				hibernate.dialect=<yours> -->
+<!-- 			</value> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 
-<!-- IF MYBATIS IS USED AS DAO LAYER -->
-	<bean id="appSqlSessionFactory"
-		class="in.v8delta.util.MyBatisSqlSessionFactory">
+
+	<!-- IF MYBATIS IS USED AS DAO LAYER -->
+	<bean id="appSqlSessionFactory" class="in.v8delta.util.MyBatisSqlSessionFactory">
 		<property name="dataSource" ref="appDataSource" />
 		<property name="configLocation" value="/WEB-INF/sql/config/sqlMapConfig.xml" />
 		<property name="mapperLocations" value="/WEB-INF/sql/queries/*.xml" />
-<!--  		PROPERTIES TO INJECT INTO SQL MAPPERS  -->
+		<!-- PROPERTIES TO INJECT INTO SQL MAPPERS -->
 		<property name="configurationProperties">
 			<props>
 				<prop key="PROP_1">${}</prop>

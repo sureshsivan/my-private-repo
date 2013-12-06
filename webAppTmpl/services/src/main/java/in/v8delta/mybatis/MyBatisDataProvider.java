@@ -1,5 +1,6 @@
 package in.v8delta.mybatis;
 
+import in.v8delta.dataprovider.DataProvider;
 import in.v8delta.processor.ResultProcessor;
 
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,12 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
  * @author v8-suresh
  *
  */
-public interface MyBatisDataProvider {
+public interface MyBatisDataProvider extends DataProvider{
 
-	public void addSessionFactory(String sessionFactoryKey, SqlSessionFactory sessionFactory);
-	public void addResultProcessor(ResultProcessor resultProcessor);
-	
-	public SqlSessionFactory resolveSessionFactoryFromKey(String sessionFactoryKey);
-	public SqlSessionFactory resolveSessionFactoryFromQueryName(String queryName);
 	
 }
