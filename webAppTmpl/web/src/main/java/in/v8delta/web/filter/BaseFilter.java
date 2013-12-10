@@ -32,13 +32,13 @@ public abstract class BaseFilter implements Filter {
 
 	private FilterConfig filterConfig;
 
-	private boolean enabled;
-	private boolean preventException;
+	private boolean enabled = true;
+	private boolean preventException = false;
 
-	private boolean processRequest;
-	private boolean processResponse;
+	private boolean processRequest = true;
+	private boolean processResponse = true;
 	
-	private boolean disableForAjax;
+	private boolean disableForAjax = false;
 	
 	private Set<Pattern> validUrlPatterns;
 	

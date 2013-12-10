@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 
 /**
  * Factory Class for Loggers
@@ -55,5 +56,38 @@ public class LogFactory {
 		}
 		return loggerAgent;
 	}
+	
+	
+	/**
+	 * Logger which aware of Request Context - informations such as 
+	 *		ip Address, Session ... Data from Request 
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public static LoggerAgent getRequestContextAwareLogger(String name){
+		return null;
+	}
+	
+	/**
+	 * 
+	 * Adds a key/valus pair to Logging Context print in logger statement
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public static void addLoggerMessageKey(String key, String value){
+		MDC.put(key, value);
+	}
+	
+	/**
+	 * Removes the key from Logging Context
+	 * 
+	 * @param key
+	 */
+	public static void removeLoggerMessageKey(String key){
+		MDC.remove(key);
+	}
+	
 	
 }

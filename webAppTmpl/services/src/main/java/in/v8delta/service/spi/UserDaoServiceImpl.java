@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+
 import in.v8delta.domain.User;
 import in.v8delta.service.UserDaoService;
 
@@ -15,6 +17,23 @@ import in.v8delta.service.UserDaoService;
  *
  */
 public class UserDaoServiceImpl implements UserDaoService{
+
+	private SessionFactory sessionFactory = null;
+	
+			
+	/**
+	 * @return the sessionFactory
+	 */
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	/**
+	 * @param sessionFactory the sessionFactory to set
+	 */
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	public User retrieveUserByAnyIdentity(String identity, String password) {
 		// TODO Auto-generated method stub

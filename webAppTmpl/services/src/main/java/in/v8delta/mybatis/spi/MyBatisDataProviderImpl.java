@@ -166,6 +166,26 @@ public class MyBatisDataProviderImpl implements MyBatisDataProvider{
 		
 		return factory;
 	}
+
+	public Object lookupByIdentity(String queryName, Map<String, Object> args) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Object> lookupAll(String queryName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object updateByIdentity(String queryName, Map<String, Object> args) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object deleteByIdentity(String queryName, Map<String, Object> args) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	
