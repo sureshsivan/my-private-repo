@@ -18,9 +18,9 @@
 	<bean id="appFilterProps"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location"
-			value="config/#{systemProperties['APP.ENV']}_filter.properties" />
+			value="classpath:config/#{systemProperties['APP.ENV']}_filter.properties" />
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
-		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreResourceNotFound" value="false" />
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_NEVER" />
 		<property name="order" value="10" />
 	</bean>
@@ -28,7 +28,7 @@
 	<bean id="appDbProps"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location"
-			value="config/#{systemProperties['APP.ENV']}_db.properties" />
+			value="classpath:config/#{systemProperties['APP.ENV']}_db.properties" />
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 		<property name="ignoreResourceNotFound" value="true" />
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_NEVER" />

@@ -38,9 +38,9 @@
 	</bean>
 	
 	
-	<bean id="hibernateSessionFactoriy"
+	<bean id="hibernateSessionFactory"
 		class="in.v8delta.util.HibernateSqlSessionFactory">
-		<property name="dataSource" ref="myDataSource" />
+		<property name="dataSource" ref="appDataSource" />
 		<property name="mappingResources">
 			<list>
 				<value>/WEB-INF/sql/hbm/*.hbm.xml</value>
@@ -50,13 +50,13 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+<!-- 				<prop key="hibernate.hbm2ddl.auto">create</prop> -->
 			</props>
 		</property>
 	</bean>	
 	
 <bean id="userDao" class="in.v8delta.service.spi.UserDaoServiceImpl">
-	<property name="sessionFactory" ref="hibernateSessionFactoriy"></property>
+	<property name="sessionFactory" ref="hibernateSessionFactory"></property>
 </bean>
 	
 

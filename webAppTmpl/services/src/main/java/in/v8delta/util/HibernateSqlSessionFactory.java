@@ -7,7 +7,7 @@ import in.v8delta.template.myWebAppTmpl.core.utils.LogUtil;
 import java.util.Map.Entry;
 
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 /**
  * 
@@ -25,17 +25,17 @@ public class HibernateSqlSessionFactory extends LocalSessionFactoryBean{
 	}
 
 	
-	@Override
-	protected SessionFactory buildSessionFactory() throws Exception {
-		SessionFactory sessionFactory = super.buildSessionFactory();
-		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug("Session Factory Build with Hibernate Properties");
-			for(Entry<Object, Object> entry : this.getHibernateProperties().entrySet()){
-				LOGGER.debug(entry.getKey() + AppConstants.STR_COLON + entry.getValue());
-			}
-		}
-		return sessionFactory;
-	}
+//	@Override
+//	protected SessionFactory buildSessionFactory() throws Exception {
+//		SessionFactory sessionFactory = super.buildSessionFactory();
+//		if(LOGGER.isDebugEnabled()){
+//			LOGGER.debug("Session Factory Build with Hibernate Properties");
+//			for(Entry<Object, Object> entry : this.getHibernateProperties().entrySet()){
+//				LOGGER.debug(entry.getKey() + AppConstants.STR_COLON + entry.getValue());
+//			}
+//		}
+//		return sessionFactory;
+//	}
 	
 	
 }

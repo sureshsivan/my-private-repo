@@ -29,7 +29,7 @@
 		<models.version>1.0</models.version>
 		<services.version>1.0</services.version>
 		<web.version>1.0</web.version>
-		<spring.version>3.0.5.RELEASE</spring.version>
+		<spring.version>3.2.5.RELEASE</spring.version>
 		<junit.version>4.11</junit.version>
 		<jdk.version>1.6</jdk.version>
 		<servlet.version>3.0.1</servlet.version>
@@ -39,11 +39,13 @@
 		<jstl.version>1.2</jstl.version>
 		<jackson.version>1.9.13</jackson.version>
 		
-		<hibernate.version>4.1.9.Final</hibernate.version>
+		<hibernate.version>4.2.8.Final</hibernate.version>
+		<hibernate-ehcache.version>4.2.8.Final</hibernate-ehcache.version>
 		<hsqldb.version>2.2.9</hsqldb.version>
 		<hibernateAnnotations.version>3.3.1.GA</hibernateAnnotations.version>
 		<dom4j.version>1.6.1</dom4j.version>
 		<commonsLogging.version>1.1.1</commonsLogging.version>
+		
 		<commonsCollections.version>3.2.1</commonsCollections.version>
 		<cglib.version>2.2</cglib.version>
 		<asm.version>4.0</asm.version>

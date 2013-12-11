@@ -11,13 +11,22 @@
 
 
 	<bean id="sampleFilter" class="in.v8delta.web.filter.SampleFilter">
-		<property name="enabled" value="#{systemProperties['sampleFilter.enabled']}" />
-		<property name="preventException" value="#{systemProperties['sampleFilter.preventException']}" />
-		<property name="processRequest" value="#{systemProperties['sampleFilter.processRequest']}" />
-		<property name="processResponse" value="#{systemProperties['sampleFilter.processResponse']}" />
-		<property name="disableForAjax" value="#{systemProperties['sampleFilter.disableForAjax']}" />
-		<property name="validUrlPatterns" value="#{systemProperties['sampleFilter.validUrlPatterns']}" />
+		<property name="enabled" value="${sampleFilter.enabled}" />
+		<property name="preventException" value="${sampleFilter.preventException}" />
+		<property name="processRequest" value="${sampleFilter.processRequest}" />
+		<property name="processResponse" value="${sampleFilter.processResponse}" />
+		<property name="disableForAjax" value="${sampleFilter.disableForAjax}" />
+		<property name="validUrlPatterns" value="${sampleFilter.validUrlPatterns}" />
 	</bean>
+
+<!-- 	<bean id="sampleFilter" class="in.v8delta.web.filter.SampleFilter"> -->
+<!-- 		<property name="enabled" value="#{systemProperties['sampleFilter.enabled']}" /> -->
+<!-- 		<property name="preventException" value="#{systemProperties['sampleFilter.preventException']}" /> -->
+<!-- 		<property name="processRequest" value="#{systemProperties['sampleFilter.processRequest']}" /> -->
+<!-- 		<property name="processResponse" value="#{systemProperties['sampleFilter.processResponse']}" /> -->
+<!-- 		<property name="disableForAjax" value="#{systemProperties['sampleFilter.disableForAjax']}" /> -->
+<!-- 		<property name="validUrlPatterns" value="#{systemProperties['sampleFilter.validUrlPatterns']}" /> -->
+<!-- 	</bean> -->
 
 <!-- 	<bean id="sampleFilter" class="in.v8delta.web.filter.SampleFilter"> -->
 <!-- 		<property name="enabled" value="false" /> -->
