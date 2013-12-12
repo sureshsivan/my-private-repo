@@ -41,9 +41,15 @@
 	<bean id="hibernateSessionFactory"
 		class="in.v8delta.util.HibernateSqlSessionFactory">
 		<property name="dataSource" ref="appDataSource" />
-		<property name="mappingResources">
+<!-- 		<property name="mappingResources"> -->
+<!-- 			<list> -->
+<!-- 				<value>/WEB-INF/sql/hbm/*.hbm.xml</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+		<property name="mappingLocations">
 			<list>
-				<value>/WEB-INF/sql/hbm/*.hbm.xml</value>
+				<value>/WEB-INF/sql/hbm/User.hbm.xml</value>
+				<value>/WEB-INF/sql/hbm/Role.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
