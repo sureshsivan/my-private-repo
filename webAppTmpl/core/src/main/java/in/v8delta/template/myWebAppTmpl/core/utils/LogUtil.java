@@ -3,6 +3,7 @@ package in.v8delta.template.myWebAppTmpl.core.utils;
 import in.v8delta.template.myWebAppTmpl.core.log.LogFactory;
 import in.v8delta.template.myWebAppTmpl.core.log.LoggerAgent;
 import in.v8delta.template.myWebAppTmpl.core.log.LoggerType;
+import in.v8delta.template.myWebAppTmpl.core.log.spi.Log4JLogFactory;
 
 /**
  * 
@@ -12,7 +13,7 @@ import in.v8delta.template.myWebAppTmpl.core.log.LoggerType;
  *
  */
 @SuppressWarnings({"unused", "rawtypes"})
-public class LogUtil {
+public final class LogUtil {
 
 	/**
 	 * String Constants for various logging levels available in application
@@ -24,43 +25,39 @@ public class LogUtil {
 	public static final String LOG_LVL_ERROR = "error";
 	public static final String LOG_LVL_FATAL = "fatal";
 	
+	public static final String REQ_CTX_AWARE_LOGGER_THREAD_KEY = "reqCtxAwareLogger";
 	
-	/**
-	 * Util method to get Log4J Logger from String 
-	 * @param name
-	 * @return
-	 */
-	private static LoggerAgent getLog4JLogger(String name){
-		return LogFactory.getLogger(LoggerType.LOG_4_J_LOGGER, name);
+	public static final String SESSION_ID_LOGGING_CONTEXT_KEY = "sessionId";
+	public static final String IP_ADDRESS_LOGGING_CONTEXT_KEY = "ipAddress";
+	public static final String USER_ID_LOGGING_CONTEXT_KEY = "userId";
+	
+	private static final LogUtil INSTANCE = new LogUtil();
+
+	// TODO - A better way to inject this from spring
+	private LogFactory logFactory = new Log4JLogFactory();
+	
+	private LogUtil() {
+		
+	}
+	
+	public static LogUtil getInstance() {
+		return INSTANCE;
 	}
 	
 	/**
-	 * Util method to get Log4J Logger from Class 
-	 * @param name
-	 * @return
+	 * @return the logFactory
 	 */
-	private static LoggerAgent getLog4JLogger(final Class cls){
-		return getLog4JLogger(cls.getName());
+	public LogFactory getLogFactory() {
+		return logFactory;
 	}
-	
-	
+
 	/**
-	 * Util method to get JDK Logger from String 
-	 * @param name
-	 * @return
+	 * @param logFactory the logFactory to set
 	 */
-	private static LoggerAgent getJdkLogger(String name){
-		return LogFactory.getLogger(LoggerType.JDK_LOGGER, name);
+	public void setLogFactory(LogFactory logFactory) {
+		this.logFactory = logFactory;
 	}
-	
-	/**
-	 * Util method to get JDK Logger from Class 
-	 * @param name
-	 * @return
-	 */
-	private static LoggerAgent getJdkLogger(final Class cls){
-		return getJdkLogger(cls.getName());
-	}
+
 	
 	/**
 	 * Single Gateway method get the Logger Agent for the Application
@@ -69,16 +66,13 @@ public class LogUtil {
 	 * @return
 	 */
 	public static LoggerAgent getAppLogger(String name){
-		switch (AppDefaults.LOGGER_TYPE) {
-		case LOG_4_J_LOGGER:
-			return getLog4JLogger(name); 
-		case JDK_LOGGER:
-			return getLog4JLogger(name);
-		case OTHER_LOGGER:
-			return getLog4JLogger(name); 
-		default:
-			return getLog4JLogger(name);
-		}
+		//	means its request context aware thread(Generated from servlet)
+//		if(ThreadContextVars.get(REQ_CTX_AWARE_LOGGER_THREAD_KEY) != null){
+//			return getInstance().getLogFactory().getRequestContextAwareLogger(name);	
+//		} else {
+//			return getInstance().getLogFactory().getLogger(name);
+//		}
+		return getInstance().getLogFactory().getLogger(name);
 	}
 
 	/**

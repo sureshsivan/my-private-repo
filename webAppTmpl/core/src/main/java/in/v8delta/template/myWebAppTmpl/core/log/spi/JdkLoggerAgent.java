@@ -1,4 +1,6 @@
-package in.v8delta.template.myWebAppTmpl.core.log;
+package in.v8delta.template.myWebAppTmpl.core.log.spi;
+
+import in.v8delta.template.myWebAppTmpl.core.log.LoggerAgent;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
