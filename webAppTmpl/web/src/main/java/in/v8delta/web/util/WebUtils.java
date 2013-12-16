@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author v8-suresh
  *
  */
+@Deprecated
 public class WebUtils {
 
 	/**

@@ -1,13 +1,12 @@
 package in.v8delta.service.spi;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.hibernate.SessionFactory;
-
 import in.v8delta.domain.User;
 import in.v8delta.service.UserDaoService;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  * 
@@ -36,23 +35,21 @@ public class UserDaoServiceImpl implements UserDaoService{
 	}
 
 	public User retrieveUserByAnyIdentity(String identity, String password) {
-		// TODO Auto-generated method stub
+		Session s = this.sessionFactory.openSession();
+		s.createQuery("from User");
 		return null;
 	}
 
 	public List<User> retrieveAllUsers() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public List<User> retrieveUsersbyRoleId(String roleId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public boolean authenticateUserbyAnyIdentity(String identity,
 			String password) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

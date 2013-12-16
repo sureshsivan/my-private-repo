@@ -6,6 +6,7 @@ package in.v8delta.web.util;
  * @author v8-suresh
  *
  */
+@Deprecated
 public interface WebConstants {
 
 	public static final String PROP_KEY_RB_FILE = "app.rbFilePath";

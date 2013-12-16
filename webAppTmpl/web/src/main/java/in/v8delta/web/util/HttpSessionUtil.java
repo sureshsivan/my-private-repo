@@ -1,10 +1,8 @@
 package in.v8delta.web.util;
 
-import in.v8delta.template.myWebAppTmpl.core.log.LogFactory;
-import in.v8delta.web.filter.BaseFilter;
+import in.v8delta.template.myWebAppTmpl.core.utils.LogUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 
@@ -13,12 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * @author v8-suresh
  *
  */
+@Deprecated
 public final class HttpSessionUtil{
 
 	
 	public static void requestPreProcessForLogger(HttpServletRequest request){
-		LogFactory.addLoggerMessageKey(WebConstants.LOG_KEY_SESSION_ID, request.getSession().getId());
-		LogFactory.addLoggerMessageKey(WebConstants.LOG_KEY_IP_ADDRESS, request.getLocalAddr());
+		LogUtil.getInstance().getLogFactory().addLoggerMessageKey(WebConstants.LOG_KEY_SESSION_ID, request.getSession().getId());
+		LogUtil.getInstance().getLogFactory().addLoggerMessageKey(WebConstants.LOG_KEY_IP_ADDRESS, request.getLocalAddr());
 		
 	}
 	
