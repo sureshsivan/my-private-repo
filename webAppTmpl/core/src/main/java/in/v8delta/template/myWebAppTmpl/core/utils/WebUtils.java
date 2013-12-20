@@ -1,5 +1,7 @@
 package in.v8delta.template.myWebAppTmpl.core.utils;
 
+import in.v8delta.web.util.WebConstants;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
