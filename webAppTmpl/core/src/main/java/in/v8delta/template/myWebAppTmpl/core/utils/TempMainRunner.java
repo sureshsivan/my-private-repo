@@ -1,7 +1,5 @@
 package in.v8delta.template.myWebAppTmpl.core.utils;
 
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-
 import in.v8delta.template.myWebAppTmpl.core.concurrent.processor.TaskProcessor;
 import in.v8delta.template.myWebAppTmpl.core.concurrent.processor.TaskProcessorImpl;
 import in.v8delta.template.myWebAppTmpl.core.concurrent.task.AsyncCapableTask;
