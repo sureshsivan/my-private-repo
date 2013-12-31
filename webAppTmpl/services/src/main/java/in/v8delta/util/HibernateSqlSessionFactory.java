@@ -1,12 +1,8 @@
 package in.v8delta.util;
 
 import in.v8delta.template.myWebAppTmpl.core.log.LoggerAgent;
-import in.v8delta.template.myWebAppTmpl.core.utils.AppConstants;
 import in.v8delta.template.myWebAppTmpl.core.utils.LogUtil;
 
-import java.util.Map.Entry;
-
-import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 /**

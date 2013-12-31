@@ -32,38 +32,33 @@
 	</bean>
 
 
-	<bean id="appTrxManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="appDataSource" />
-	</bean>
+<!-- 	<bean id="appTrxManager" -->
+<!-- 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> -->
+<!-- 		<property name="dataSource" ref="appDataSource" /> -->
+<!-- 	</bean> -->
 	
 	
-	<bean id="hibernateSessionFactory"
-		class="in.v8delta.util.HibernateSqlSessionFactory">
-		<property name="dataSource" ref="appDataSource" />
-<!-- 		<property name="mappingResources"> -->
+<!-- 	<bean id="hibernateSessionFactory" -->
+<!-- 		class="in.v8delta.util.HibernateSqlSessionFactory"> -->
+<!-- 		<property name="dataSource" ref="appDataSource" /> -->
+<!-- 		<property name="mappingLocations"> -->
 <!-- 			<list> -->
-<!-- 				<value>/WEB-INF/sql/hbm/*.hbm.xml</value> -->
+<!-- 				<value>/WEB-INF/sql/hbm/User.hbm.xml</value> -->
+<!-- 				<value>/WEB-INF/sql/hbm/Role.hbm.xml</value> -->
 <!-- 			</list> -->
 <!-- 		</property> -->
-		<property name="mappingLocations">
-			<list>
-				<value>/WEB-INF/sql/hbm/User.hbm.xml</value>
-				<value>/WEB-INF/sql/hbm/Role.hbm.xml</value>
-			</list>
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.show_sql">true</prop>
+<!-- 		<property name="hibernateProperties"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> -->
+<!-- 				<prop key="hibernate.show_sql">true</prop> -->
 <!-- 				<prop key="hibernate.hbm2ddl.auto">create</prop> -->
-			</props>
-		</property>
-	</bean>	
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean>	 -->
 	
-<bean id="userDao" class="in.v8delta.service.spi.UserDaoServiceImpl">
-	<property name="sessionFactory" ref="hibernateSessionFactory"></property>
-</bean>
+<!-- <bean id="userDao" class="in.v8delta.service.spi.UserDaoServiceImpl"> -->
+<!-- 	<property name="sessionFactory" ref="hibernateSessionFactory"></property> -->
+<!-- </bean> -->
 	
 
 	<!-- IF HIBERNATE IS USED AS DAO LAYER -->

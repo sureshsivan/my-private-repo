@@ -12,7 +12,7 @@
 	<bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
 		<!-- Turn this off to always load via SpringTemplateLoader -->
 		<property name="preferFileSystemAccess" value="false"></property>
-		<property name="templateLoaderPath" value="classpath:templates/email"></property>
+		<property name="templateLoaderPath" value="classpath:templates/email/"></property>
 	</bean>
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
