@@ -7,8 +7,10 @@ import in.v8delta.template.myWebAppTmpl.core.log.LoggerAgent;
 import in.v8delta.template.myWebAppTmpl.core.utils.AppConstants;
 import in.v8delta.template.myWebAppTmpl.core.utils.LogUtil;
 
+import java.util.Locale;
 import java.util.Map;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
@@ -105,8 +107,11 @@ public class EmailEngine implements AsyncCapableTask{
 	}
 
 	public void executeTask() throws Exception {
-		Template subjectTemplate = getFreemarkerConfiguration().getTemplate(getMailSubjectTemplateName(), null, AppConstants.CHARSET_UTF_8); 
-		Template bodyTemplate = getFreemarkerConfiguration().getTemplate(getMailBodyTemplateName(), null, AppConstants.CHARSET_UTF_8);
+		
+		Locale l = Locale.getDefault();
+		
+		Template subjectTemplate = getFreemarkerConfiguration().getTemplate(getMailSubjectTemplateName(), l, AppConstants.CHARSET_UTF_8); 
+		Template bodyTemplate = getFreemarkerConfiguration().getTemplate(getMailBodyTemplateName(), l, AppConstants.CHARSET_UTF_8);
 		
 		String mailSubject = FreeMarkerTemplateUtils.processTemplateIntoString(subjectTemplate, getEmailProps());
 		String mailBody = FreeMarkerTemplateUtils.processTemplateIntoString(bodyTemplate, getEmailProps());

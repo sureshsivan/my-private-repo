@@ -32,8 +32,8 @@
 	<bean id="eMailer" class="in.v8delta.template.myWebAppTmpl.core.mail.EmailEngine">
 		<property name="async" value="${mail.async}"></property>
 		<property name="enabled" value="${mail.enabled}"></property>
-		<property name="mailSubjectTemplateName" value="${mail.mailSubjectTemplateName}"></property>
-		<property name="mailBodyTemplateName" value="${mail.mailBodyTemplateName}"></property>
+		<property name="mailSubjectTemplateName" value="${mail.default.mailSubjectTemplateName}"></property>
+		<property name="mailBodyTemplateName" value="${mail.default.mailBodyTemplateName}"></property>
 		<property name="javaMailSender" ref="mailSender"></property>
 		<property name="freemarkerConfiguration" ref="freemarkerConfiguration"></property>
 	</bean>
