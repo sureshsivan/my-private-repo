@@ -16,6 +16,9 @@
         <dependent-module archiveName="jspUtils-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jspUtils/jspUtils">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="webJar-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/webJar/webJar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="web"/>
         <property name="java-output-path" value="/web/target/classes"/>
     </wb-module>

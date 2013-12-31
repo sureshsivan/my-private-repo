@@ -93,6 +93,7 @@
 <!-- 		<module>webUi</module> -->
 <!-- 		<module>mobileUi</module> -->
 		<module>web</module>
+		<module>webJar</module>
 	</modules>
 
 </project>
