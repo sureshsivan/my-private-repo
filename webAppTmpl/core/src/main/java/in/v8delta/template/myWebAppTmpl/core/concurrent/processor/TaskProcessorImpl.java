@@ -64,6 +64,7 @@ public class TaskProcessorImpl implements TaskProcessor{
 				task.run();
 			}
 		}
+		System.out.println("ACTIVE COUNT : " + ((ThreadPoolTaskExecutor)this.taskExecutor).getActiveCount());
 		System.out.println("ALL TASKS PROCESSED");
 	}
 }

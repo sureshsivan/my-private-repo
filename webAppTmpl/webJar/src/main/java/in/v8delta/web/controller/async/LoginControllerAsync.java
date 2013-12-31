@@ -1,11 +1,10 @@
 package in.v8delta.web.controller.async;
 
 import in.v8delta.service.UserDaoService;
-import in.v8delta.service.spi.UserDaoServiceImpl;
 import in.v8delta.template.myWebAppTmpl.core.concurrent.processor.TaskProcessor;
 import in.v8delta.template.myWebAppTmpl.core.concurrent.processor.TaskProcessorImpl;
 import in.v8delta.template.myWebAppTmpl.core.concurrent.task.AsyncCapableTask;
-import in.v8delta.template.myWebAppTmpl.core.concurrent.task.EmailEngine;
+import in.v8delta.template.myWebAppTmpl.core.mail.EmailEngine;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,27 +16,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LoginControllerAsync {
 
 	@Autowired
-	UserDaoService userDao;
+	private UserDaoService userDao;
+	
+	@Autowired
+	private TaskProcessor emailSenderTaskProcessor;
 	
 	@RequestMapping(value = "loginService", method = RequestMethod.POST)
 	public @ResponseBody String doUserLogin(){
 		
-		AsyncCapableTask emailAsync = new EmailEngine();
-		emailAsync.setAsync(true);
-		emailAsync.setEnabled(true);
-
-		AsyncCapableTask emailSync = new EmailEngine();
-		emailSync.setAsync(false);
-		emailSync.setEnabled(true);
 		
-		TaskProcessor tp = new TaskProcessorImpl();
-		tp.addTask(emailAsync);
-		tp.addTask(emailSync);
-		tp.addTask(emailAsync);
-		
-		tp.processTasks();
-		
-		System.out.println("PROCESSING COMPLETED");
+		this.emailSenderTaskProcessor.processTasks();
 		
 		return "{success: true," +
 					"user: {" +
@@ -45,5 +33,21 @@ public class LoginControllerAsync {
 						"'id': 'Suresh.sivanantham@gmail.com'" +
 				"}}";
 	}
-	
+
+	public UserDaoService getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(UserDaoService userDao) {
+		this.userDao = userDao;
+	}
+
+	public TaskProcessor getEmailSenderTaskProcessor() {
+		return emailSenderTaskProcessor;
+	}
+
+	public void setEmailSenderTaskProcessor(TaskProcessor emailSenderTaskProcessor) {
+		this.emailSenderTaskProcessor = emailSenderTaskProcessor;
+	}
+
 }

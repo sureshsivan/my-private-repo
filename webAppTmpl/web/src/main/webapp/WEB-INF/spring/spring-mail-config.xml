@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+						http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<!-- Turn this off to always load via SpringTemplateLoader -->
+		<property name="preferFileSystemAccess" value="false"></property>
+		<property name="templateLoaderPath" value="classpath:templates/email"></property>
+	</bean>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host}"></property>
+		<property name="username" value="${mail.username}"></property>
+		<property name="password" value="${mail.password}"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+				<prop key="mail.smtp.port">${mail.smtp.port}</prop>
+				<prop key="mail.smtp.host">${mail.host}</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="eMailer" class="in.v8delta.template.myWebAppTmpl.core.mail.EmailEngine">
+		<property name="async" value="${mail.async}"></property>
+		<property name="enabled" value="${mail.enabled}"></property>
+		<property name="mailSubjectTemplateName" value="${mail.mailSubjectTemplateName}"></property>
+		<property name="mailBodyTemplateName" value="${mail.mailBodyTemplateName}"></property>
+		<property name="javaMailSender" ref="mailSender"></property>
+		<property name="freemarkerConfiguration" ref="freemarkerConfiguration"></property>
+	</bean>
+
+	<bean id="emailSenderTaskProcessor" class="in.v8delta.template.myWebAppTmpl.core.concurrent.processor.TaskProcessorImpl"/>
+
+  	<bean id="emailSenderTaskProcessorInjector" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    	<property name="targetObject" ref="emailSenderTaskProcessor"/>
+    	<property name="targetMethod" value="addTask"/>
+    	<property name="arguments" ref="eMailer"/>
+  	</bean>
+  	<bean id="emailSenderTaskProcessorInjector2" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    	<property name="targetObject" ref="emailSenderTaskProcessor"/>
+    	<property name="targetMethod" value="addTask"/>
+    	<property name="arguments" ref="eMailer"/>
+  	</bean>
+  	<bean id="emailSenderTaskProcessorInjector3" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    	<property name="targetObject" ref="emailSenderTaskProcessor"/>
+    	<property name="targetMethod" value="addTask"/>
+    	<property name="arguments" ref="eMailer"/>
+  	</bean>
+  	<bean id="emailSenderTaskProcessorInjector4" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    	<property name="targetObject" ref="emailSenderTaskProcessor"/>
+    	<property name="targetMethod" value="addTask"/>
+    	<property name="arguments" ref="eMailer"/>
+  	</bean>
+</beans>

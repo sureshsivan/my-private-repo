@@ -1,5 +1,7 @@
 package in.v8delta.template.myWebAppTmpl.core.concurrent.task;
 
+import java.util.Map;
+
 
 /**
  * Interface Which is responsible for handling thread based tasks
@@ -15,7 +17,7 @@ public interface AsyncCapableTask extends Runnable{
 	public boolean isEnabled();
 	public void setEnabled(boolean enabled);
 	
-	public void executeTask();
+	public void executeTask() throws Exception;
 	
 	public void preProcessTask();
 	public void postProcessTaskSuccess();
