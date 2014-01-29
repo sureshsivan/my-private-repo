@@ -10,7 +10,7 @@ Ext.define('webUi.view.Rootpanel', {
         'webUi.view.common.Footer'
     ],
     xtype: 'd-rootpanel',
-    border: false,
+    border: true,
     layout: {
         type: 'border',
         padding: 0
