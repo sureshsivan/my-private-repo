@@ -90,8 +90,8 @@
 		<module>services</module>
 		<module>models</module>
 		<module>jspUtils</module>
-<!-- 		<module>webUi</module> -->
-<!-- 		<module>mobileUi</module> -->
+ 		<!--<module>webUi</module>-->
+ 		<!--<module>mobileUi</module>-->
 		<module>web</module>
 		<module>webJar</module>
 	</modules>
